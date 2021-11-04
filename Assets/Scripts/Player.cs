@@ -1,4 +1,7 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -14,6 +17,24 @@ public class Player : MonoBehaviour
     [SerializeField] float playerJumpLimitTime;
     [SerializeField] GroundCheck headCheck;
     [SerializeField] AnimationCurve playerJumpCurve;
+    [SerializeField] float stepOnRate;
+
+    [SerializeField] int playerMaxHp;
+    [SerializeField] GameObject heartPrefab;
+    [SerializeField] Transform heartBar;
+
+
+    [SerializeField] Text text1;
+    [SerializeField] Text text2;
+    [SerializeField] Text text3;
+    [SerializeField] Text text4;
+    [SerializeField] Text text5;
+    [SerializeField] Text text6;
+    [SerializeField] Text text7;
+    [SerializeField] Text text8;
+    [SerializeField] Text text9;
+
+
 
     enum XPositionStatus
     {
@@ -30,10 +51,25 @@ public class Player : MonoBehaviour
     private bool isJump = false;
     private float playerJumpPos;
     private float playerJumpTime;
+    private float playerJumpHeight;
+
+    private bool isStepJump = false;
+
+    private int playerHp;
+    private GameObject[] playerHpPrefabs;
+
+    private float invincibleTime = 2f;
+    private bool IsInvincible
+    {
+        get; set;
+    }
 
     // Start is called before the first frame update
     void Start()
     {
+        // プレイヤー状態の初期化
+        InitPlayerStatus();
+
         if (Application.isEditor)
         {
             playerRg2d.gravityScale = 0f;
@@ -229,20 +265,108 @@ public class Player : MonoBehaviour
         return _playerJumpSpeed;
     }
 
-
+    /// <summary>
+    /// 敵に触れた時の処理
+    /// </summary>
+    /// <param name="collision"></param>
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Enemy")
+        float playerHeight = gameObject.GetComponent<CapsuleCollider2D>().size.y;
+        playerHeight = playerHeight * transform.localScale.y;// プレイヤーのスケールをかけてあげることで高さを求め
+
+        // 踏みつける判定の高さ
+        float stepOnHeight = playerHeight * (stepOnRate / 100f);
+        float stepOnPos = transform.position.y - playerHeight / 2 + stepOnHeight;
+
+        foreach (var contact in collision.contacts)
         {
-            playerAnimator.Play("PlayerHit");
+            if (contact.point.y < stepOnPos)
+            {
+                ObjectCollision oc = collision.gameObject.GetComponent<ObjectCollision>();
+                if (oc != null)
+                {
+                    text1.text = "stepOnHeight = " + stepOnHeight;
+                    text2.text = "transform.position.y = " + transform.position.y;
+                    text3.text = "playerHeight = " + playerHeight;
+                    text4.text = "stepOnPos = " + stepOnPos;
+                    text5.text = "contact.point.y = " + contact.point.y;
+
+                    oc.playerStepOn = true;
+
+                    playerRg2d.AddForce(transform.up * 500f);
+                }
+            }
+            else
+            {
+                OnAttacked(collision);
+            }
         }
     }
 
+    /// <summary>
+    /// 敵に触れ続ける時の処理
+    /// </summary>
+    /// <param name="collision"></param>
     private void OnCollisionStay2D(Collision2D collision)
     {
+        //OnAttacked(collision);
+    }
+
+    /// <summary>
+    /// 敵に攻撃された時
+    /// </summary>
+    /// <param name="collision"></param>
+    private void OnAttacked(Collision2D collision)
+    {
+        // 無敵期間中
+        if (IsInvincible) return;
+
         if (collision.gameObject.tag == "Enemy")
         {
-            playerAnimator.Play("PlayerHit");
+            if (playerHp > 0)
+            {
+                // まだ生きてる時
+                StartCoroutine(ExeInvincibleTime());
+                playerAnimator.Play("PlayerHit");
+                playerHp--;
+                playerHpPrefabs[playerHp].GetComponent<Animator>().Play("PlayerHpHit");
+            }
+
+            if (playerHp <= 0)
+            {
+                // 死んだ時
+                StartCoroutine(OnPlayerDie());
+            }
         }
+    }
+    /// <summary>
+    /// プレイヤーの初期状態の初期化
+    /// </summary>
+    private void InitPlayerStatus()
+    {
+        // プレイヤーのHP
+        playerHp = playerMaxHp;
+        playerHpPrefabs = new GameObject[playerMaxHp];
+        for (int i = 0; i < playerMaxHp; i++)
+        {
+            playerHpPrefabs[i] = Instantiate(heartPrefab, heartBar);
+        }
+    }
+
+    /// <summary>
+    /// 攻撃された時の無敵時間
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator ExeInvincibleTime()
+    {
+        IsInvincible = true;
+        yield return new WaitForSeconds(invincibleTime);
+        IsInvincible = false;
+    }
+
+    private IEnumerator OnPlayerDie()
+    {
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
