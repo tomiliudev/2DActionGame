@@ -51,9 +51,6 @@ public class Player : MonoBehaviour
     private bool isJump = false;
     private float playerJumpPos;
     private float playerJumpTime;
-    private float playerJumpHeight;
-
-    private bool isStepJump = false;
 
     private int playerHp;
     private GameObject[] playerHpPrefabs;
