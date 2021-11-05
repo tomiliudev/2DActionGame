@@ -129,10 +129,11 @@ public class Player : MonoBehaviour
                 break;
         }
 
-        if(touch.deltaPosition.x > 1f)
+        if (touch.deltaPosition.x > 1f)
         {
             xPositionStatus = XPositionStatus.right;
-        }else if (touch.deltaPosition.x < -1f)
+        }
+        else if (touch.deltaPosition.x < -1f)
         {
             xPositionStatus = XPositionStatus.left;
         }
@@ -238,7 +239,7 @@ public class Player : MonoBehaviour
                 isJump = false;
             }
         }
-        else if(isJump)
+        else if (isJump)
         {
             bool canHight = playerJumpPos + playerJumpLimitHight > transform.position.y;
             bool canTime = playerJumpLimitTime > playerJumpTime;
@@ -288,7 +289,7 @@ public class Player : MonoBehaviour
                     text4.text = "stepOnPos = " + stepOnPos;
                     text5.text = "contact.point.y = " + contact.point.y;
 
-                    oc.playerStepOn = true;
+                    oc.isPlayerStepOn = true;
 
                     playerRg2d.AddForce(transform.up * 500f);
                 }
