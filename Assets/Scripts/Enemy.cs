@@ -2,49 +2,25 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] SpriteRenderer sr;
-    [SerializeField] Rigidbody2D rb2D;
-    [SerializeField] CircleCollider2D cc2D;
-    [SerializeField] float moveSpeed;
-    [SerializeField] float gravity;
-    [SerializeField] EnemyCollisionCheck ecc;
-    [SerializeField] ObjectCollision objectCollision;
+    [SerializeField] protected SpriteRenderer sr;
+    [SerializeField] protected Rigidbody2D rb2D;
+    [SerializeField] protected CircleCollider2D cc2D;
+    [SerializeField] protected float moveSpeed;
+    [SerializeField] protected float gravity;
+    [SerializeField] protected EnemyCollisionCheck ecc;
+    [SerializeField] protected ObjectCollision objectCollision;
+    [SerializeField] protected Animator animator;
 
-    private bool isRight;
-    private bool isDead;
-
-    void FixedUpdate()
+    protected bool IsEnemyDead()
     {
-        if (isDead) return;
+        bool isDead = false;
         if (objectCollision.isPlayerStepOn)
         {
             isDead = true;
-            rb2D.velocity = new Vector2(0, -gravity);
+            rb2D.velocity = new Vector2(0f, -3f);
             cc2D.enabled = false;
+            if (animator != null) animator.enabled = false;
         }
-
-        if (sr.isVisible)
-        {
-            if (ecc.IsOn)
-            {
-                isRight = !isRight;
-            }
-
-            float xVector = -1f;
-            if (isRight)
-            {
-                xVector = 1f;
-                transform.localScale = new Vector3(-10f, 10f, 1f);
-            }
-            else
-            {
-                transform.localScale = new Vector3(10f, 10f, 1f);
-            }
-            rb2D.velocity = new Vector2(xVector * moveSpeed, -gravity);
-        }
-        else
-        {
-            rb2D.Sleep();
-        }
+        return isDead;
     }
 }

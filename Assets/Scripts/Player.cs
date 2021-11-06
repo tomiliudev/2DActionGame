@@ -264,10 +264,12 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
-    /// 敵に触れた時の処理
+    /// 敵との接触判定
+    /// プレイヤーの足元で踏みつけた場合は跳ねる
+    /// それ以外の場合は敵に攻撃される
     /// </summary>
     /// <param name="collision"></param>
-    void OnCollisionEnter2D(Collision2D collision)
+    void CheckContactJudgment(Collision2D collision)
     {
         float playerHeight = gameObject.GetComponent<CapsuleCollider2D>().size.y;
         playerHeight = playerHeight * transform.localScale.y;// プレイヤーのスケールをかけてあげることで高さを求め
@@ -301,13 +303,23 @@ public class Player : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// 敵に触れた時の処理
+    /// </summary>
+    /// <param name="collision"></param>
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        CheckContactJudgment(collision);
+    }
+
     /// <summary>
     /// 敵に触れ続ける時の処理
     /// </summary>
     /// <param name="collision"></param>
     private void OnCollisionStay2D(Collision2D collision)
     {
-        //OnAttacked(collision);
+        CheckContactJudgment(collision);
     }
 
     /// <summary>

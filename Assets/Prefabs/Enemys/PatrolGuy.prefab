@@ -84,7 +84,7 @@ GameObject:
   - component: {fileID: 109629449863652744}
   - component: {fileID: 109629449863652748}
   - component: {fileID: 109629449863652749}
-  - component: {fileID: 109629449863652850}
+  - component: {fileID: 1524803782435951698}
   m_Layer: 0
   m_Name: PatrolGuy
   m_TagString: Enemy
@@ -228,7 +228,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boundHight: 3
   isPlayerStepOn: 0
---- !u!114 &109629449863652850
+--- !u!114 &1524803782435951698
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -237,7 +237,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 109629449863652747}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26df1e2778b124b0190101523e5e1b75, type: 3}
+  m_Script: {fileID: 11500000, guid: 75a96b16743de446db9a1e46a96ddfa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   sr: {fileID: 109629449863652750}
@@ -247,3 +247,4 @@ MonoBehaviour:
   gravity: 3
   ecc: {fileID: 109629448808575614}
   objectCollision: {fileID: 109629449863652749}
+  animator: {fileID: 109629449863652745}
