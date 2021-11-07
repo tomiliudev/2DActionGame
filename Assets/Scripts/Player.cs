@@ -404,10 +404,12 @@ public class Player : MonoBehaviour
     {
         IsInvincible = true;
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Player"));
+        playerAnimator.SetBool("invincible", true);
 
         yield return new WaitForSeconds(invincibleTime);
         IsInvincible = false;
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Player"), false);
+        playerAnimator.SetBool("invincible", false);
     }
 
     private IEnumerator OnPlayerDie()
