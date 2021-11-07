@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
 {
     [SerializeField] Animator playerAnimator;
     [SerializeField] Rigidbody2D playerRg2d;
+    [SerializeField] CapsuleCollider2D playerCollider;
     [SerializeField] float playerRunSpeed;
     [SerializeField] GroundCheck groundCheck;
     [SerializeField] AnimationCurve playerRunCurve;
@@ -310,7 +311,7 @@ public class Player : MonoBehaviour
     /// <param name="collision"></param>
     void CheckContactJudgment(Collision2D collision)
     {
-        float playerHeight = gameObject.GetComponent<CapsuleCollider2D>().size.y;
+        float playerHeight = playerCollider.size.y;
         playerHeight = playerHeight * transform.localScale.y;// プレイヤーのスケールをかけてあげることで高さを求め
 
         // 踏みつける判定の高さ
@@ -402,13 +403,17 @@ public class Player : MonoBehaviour
     private IEnumerator ExeInvincibleTime()
     {
         IsInvincible = true;
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Player"));
+
         yield return new WaitForSeconds(invincibleTime);
         IsInvincible = false;
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Player"), false);
     }
 
     private IEnumerator OnPlayerDie()
     {
         yield return new WaitForSeconds(1f);
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Player"), false);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 

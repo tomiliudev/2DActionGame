@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 109629448808575612}
   - component: {fileID: 109629448808575615}
   - component: {fileID: 109629448808575614}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EnemyCollisionCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -85,7 +85,7 @@ GameObject:
   - component: {fileID: 109629449863652748}
   - component: {fileID: 109629449863652749}
   - component: {fileID: 1524803782435951698}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PatrolGuy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
