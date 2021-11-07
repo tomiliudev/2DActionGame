@@ -36,11 +36,11 @@ public class PatrolGuyEnemy : Enemy
                 if (isRight)
                 {
                     xVector = 1f;
-                    transform.localScale = new Vector3(-10f, 10f, 1f);
+                    transform.localScale = new Vector3(-1f, 1f, 1f);
                 }
                 else
                 {
-                    transform.localScale = new Vector3(10f, 10f, 1f);
+                    transform.localScale = new Vector3(1f, 1f, 1f);
                 }
                 rb2D.velocity = new Vector2(xVector * moveSpeed, -gravity);
             }
