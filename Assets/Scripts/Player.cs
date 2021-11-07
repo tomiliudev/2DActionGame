@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -23,7 +25,6 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject heartPrefab;
     [SerializeField] Transform heartBar;
 
-
     [SerializeField] Text text1;
     [SerializeField] Text text2;
     [SerializeField] Text text3;
@@ -34,8 +35,6 @@ public class Player : MonoBehaviour
     [SerializeField] Text text8;
     [SerializeField] Text text9;
 
-
-
     enum XPositionStatus
     {
         none,
@@ -44,6 +43,12 @@ public class Player : MonoBehaviour
     };
     XPositionStatus xPositionStatus = XPositionStatus.none;
     XPositionStatus beforeXPositionStatus = XPositionStatus.none;
+
+    enum TouchType
+    {
+        runTouch,
+        jumpTouch
+    }
 
     private float _playerRunSpeed = 0f;
     private float dushTime;
@@ -61,11 +66,19 @@ public class Player : MonoBehaviour
         get; set;
     }
 
+    // 画面タッチのfingerIdを管理する
+    Dictionary<TouchType, int> fingerIdDic = new Dictionary<TouchType, int>();
+
+
     // Start is called before the first frame update
     void Start()
     {
         // プレイヤー状態の初期化
         InitPlayerStatus();
+
+        // fingerIdの初期化
+        fingerIdDic.Add(TouchType.runTouch, -1);
+        fingerIdDic.Add(TouchType.jumpTouch, -1);
 
         if (Application.isEditor)
         {
@@ -79,6 +92,16 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        if(Input.touchCount <= 0)
+        {
+            // 画面に何もタッチしていない時にすべて-1でリセットする
+            List<TouchType> keys = fingerIdDic.Keys.ToList();
+            foreach(TouchType key in keys)
+            {
+                fingerIdDic[key] = -1;
+            }
+        }
+
         Jump_SmartPhoneVersion();
     }
 
@@ -108,19 +131,24 @@ public class Player : MonoBehaviour
 
     float Run_SmartPhoneVersion()
     {
-        if (Input.touchCount <= 0)
+        int touchIndex = Input.touchCount - 1;
+        if (touchIndex < 0)
         {
             OnRunFinish();
             return 0f;
         }
 
-        Touch touch = Input.GetTouch(0);
+        TouchType touchType = TouchType.runTouch;
+        Touch touch = GetTouchInfo(touchType);
 
         if (touch.position.x > Screen.width / 2)
         {
             OnRunFinish();
             return 0f;
         }
+
+        // fingerIdを記録しておく
+        fingerIdDic[touchType] = touch.fingerId;
 
         switch (touch.phase)
         {
@@ -207,16 +235,27 @@ public class Player : MonoBehaviour
         int touchIndex = Input.touchCount - 1;
         if (touchIndex < 0) return;
 
-        Touch touch = Input.GetTouch(touchIndex);
+        TouchType touchType = TouchType.jumpTouch;
+        Touch touch = GetTouchInfo(touchType);
 
         if (touch.position.x < Screen.width / 2)
         {
             return;
         }
 
-        if (touch.phase == TouchPhase.Began && groundCheck.IsInGround)
+        // fingerIdを記録しておく
+        fingerIdDic[touchType] = touch.fingerId;
+
+        switch (touch.phase)
         {
-            playerRg2d.AddForce(transform.up * 1000f);
+            case TouchPhase.Began:
+                if (groundCheck.IsInGround)
+                {
+                    playerRg2d.AddForce(transform.up * 1000f);
+                }
+                break;
+            case TouchPhase.Ended:
+                break;
         }
     }
 
@@ -285,14 +324,7 @@ public class Player : MonoBehaviour
                 ObjectCollision oc = collision.gameObject.GetComponent<ObjectCollision>();
                 if (oc != null)
                 {
-                    text1.text = "stepOnHeight = " + stepOnHeight;
-                    text2.text = "transform.position.y = " + transform.position.y;
-                    text3.text = "playerHeight = " + playerHeight;
-                    text4.text = "stepOnPos = " + stepOnPos;
-                    text5.text = "contact.point.y = " + contact.point.y;
-
                     oc.isPlayerStepOn = true;
-
                     playerRg2d.AddForce(transform.up * 500f);
                 }
             }
@@ -378,5 +410,32 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    /// <summary>
+    /// タッチ情報を返却する
+    /// </summary>
+    /// <param name="touchType"></param>
+    /// <returns></returns>
+    private Touch GetTouchInfo(TouchType touchType)
+    {
+        Touch touch = Input.GetTouch(0);
+
+        // 画面にタッチした指の数が２の場合
+        if (Input.touchCount == 2)
+        {
+            if (fingerIdDic[touchType] == -1)
+            {
+                // fingerId==-1なら２本目のタッチ情報を取得する
+                touch = Input.GetTouch(1);
+            }
+            else
+            {
+                // fingerIdがあるならInput.touchesから該当のfingerIdのタッチ情報を取得してくる
+                touch = Input.touches.First(x => x.fingerId == fingerIdDic[touchType]);
+            }
+        }
+
+        return touch;
     }
 }
