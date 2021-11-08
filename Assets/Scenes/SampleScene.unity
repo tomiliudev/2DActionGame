@@ -1178,6 +1178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ff2d2212fd484286abb9a5a65631d8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraArea: {fileID: 1617985999}
   playerAnimator: {fileID: 188458241}
   playerRg2d: {fileID: 1056263897}
   playerCollider: {fileID: 1056263896}

@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] PolygonCollider2D cameraArea;
     [SerializeField] Animator playerAnimator;
     [SerializeField] Rigidbody2D playerRg2d;
     [SerializeField] CapsuleCollider2D playerCollider;
@@ -54,6 +55,7 @@ public class Player : MonoBehaviour
     private float _playerRunSpeed = 0f;
     private float dushTime;
 
+    private bool isDie;
     private bool isJump = false;
     private float playerJumpPos;
     private float playerJumpTime;
@@ -101,6 +103,13 @@ public class Player : MonoBehaviour
             {
                 fingerIdDic[key] = -1;
             }
+        }
+
+        if (transform.localPosition.y < cameraArea.points.ElementAt(2).y)
+        {
+            if (isDie) return;
+            // 画面の下側より落ちた場合ゲームオーバー
+            StartCoroutine(OnGameOver());
         }
 
         Jump_SmartPhoneVersion();
@@ -364,21 +373,29 @@ public class Player : MonoBehaviour
         // 無敵期間中
         if (IsInvincible) return;
 
+        // 死んだら何もしない
+        if (isDie) return;
+
         if (collision.gameObject.tag == "Enemy")
         {
             if (playerHp > 0)
             {
                 // まだ生きてる時
-                StartCoroutine(ExeInvincibleTime());
+
+                // 無敵時間
+                StartCoroutine(DoInvincibleTime());
+
+                // HPバー
+                DoHpBarAnimation(-1);
+
+                // PlayerHit
                 playerAnimator.Play("PlayerHit");
-                playerHp--;
-                playerHpPrefabs[playerHp].GetComponent<Animator>().Play("PlayerHpHit");
             }
 
             if (playerHp <= 0)
             {
                 // 死んだ時
-                StartCoroutine(OnPlayerDie());
+                StartCoroutine(OnGameOver());
             }
         }
     }
@@ -400,7 +417,7 @@ public class Player : MonoBehaviour
     /// 攻撃された時の無敵時間
     /// </summary>
     /// <returns></returns>
-    private IEnumerator ExeInvincibleTime()
+    private IEnumerator DoInvincibleTime()
     {
         IsInvincible = true;
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Player"));
@@ -412,8 +429,11 @@ public class Player : MonoBehaviour
         playerAnimator.SetBool("invincible", false);
     }
 
-    private IEnumerator OnPlayerDie()
+    // ゲームオーバー
+    private IEnumerator OnGameOver()
     {
+        isDie = true;
+        DoHpBarAnimation(-playerHp);
         yield return new WaitForSeconds(1f);
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Player"), false);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -444,5 +464,27 @@ public class Player : MonoBehaviour
         }
 
         return touch;
+    }
+
+    /// <summary>
+    /// プレイヤーHPの増減を制御する
+    /// </summary>
+    /// <param name="hp">例：-3では、HP３個減る</param>
+    private void DoHpBarAnimation(int hp)
+    {
+        for (int i = 0; i < Mathf.Abs(hp); i++)
+        {
+            if (hp < 0)
+            {
+                playerHp--;
+                if (playerHp < 0) playerHp = 0;
+                playerHpPrefabs[playerHp].GetComponent<Animator>().Play("PlayerHpHit");
+            }
+            else
+            {
+                playerHp++;
+                if (playerHp > playerMaxHp) playerHp = playerMaxHp;
+            }
+        }
     }
 }
