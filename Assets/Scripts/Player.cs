@@ -7,7 +7,6 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] PolygonCollider2D cameraArea;
     [SerializeField] Animator playerAnimator;
     [SerializeField] Rigidbody2D playerRg2d;
     [SerializeField] CapsuleCollider2D playerCollider;
@@ -61,6 +60,7 @@ public class Player : MonoBehaviour
     private float playerJumpTime;
 
     private int playerHp;
+    public int PlayerHp { get { return playerHp; } }
     private GameObject[] playerHpPrefabs;
 
     private float invincibleTime = 2f;
@@ -103,13 +103,6 @@ public class Player : MonoBehaviour
             {
                 fingerIdDic[key] = -1;
             }
-        }
-
-        if (transform.localPosition.y < cameraArea.points.ElementAt(2).y)
-        {
-            if (isDie) return;
-            // 画面の下側より落ちた場合ゲームオーバー
-            StartCoroutine(OnGameOver());
         }
 
         Jump_SmartPhoneVersion();
@@ -395,7 +388,8 @@ public class Player : MonoBehaviour
             if (playerHp <= 0)
             {
                 // 死んだ時
-                StartCoroutine(OnGameOver());
+                isDie = true;
+                Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Player"), false);
             }
         }
     }
@@ -429,16 +423,6 @@ public class Player : MonoBehaviour
         playerAnimator.SetBool("invincible", false);
     }
 
-    // ゲームオーバー
-    private IEnumerator OnGameOver()
-    {
-        isDie = true;
-        DoHpBarAnimation(-playerHp);
-        yield return new WaitForSeconds(1f);
-        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Player"), false);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
-
     /// <summary>
     /// タッチ情報を返却する
     /// </summary>
@@ -470,7 +454,7 @@ public class Player : MonoBehaviour
     /// プレイヤーHPの増減を制御する
     /// </summary>
     /// <param name="hp">例：-3では、HP３個減る</param>
-    private void DoHpBarAnimation(int hp)
+    public void DoHpBarAnimation(int hp)
     {
         for (int i = 0; i < Mathf.Abs(hp); i++)
         {
