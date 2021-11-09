@@ -6,7 +6,7 @@ public class Stage1UiView : MonoBehaviour
 {
     [Header("カウントダウン秒")] [SerializeField] Text countDownTime;
 
-    float countDownSec = 600f;
+    float countDownSec = 10f;
     public int CountDownSec
     {
         get { return (int)countDownSec; }

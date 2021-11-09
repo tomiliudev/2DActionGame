@@ -389,7 +389,6 @@ public class Player : MonoBehaviour
             {
                 // 死んだ時
                 isDie = true;
-                Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Player"), false);
             }
         }
     }

@@ -8,15 +8,15 @@ public class SceneController : MonoBehaviour
     [SerializeField] Stage1UiView stage1UiView;
     [SerializeField] PolygonCollider2D cameraArea;
     [SerializeField] Player player;
-
     [SerializeField] Treasure treasure;
+    [SerializeField] GameObject gameOverObj;
 
     bool isGameOver = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Player"), false);
     }
 
     // Update is called once per frame
@@ -52,9 +52,10 @@ public class SceneController : MonoBehaviour
         if (isGameOver) yield break;
         isGameOver = true;
 
+        gameOverObj.SetActive(true);
+
         player.DoHpBarAnimation(-player.PlayerHp);
         yield return new WaitForSeconds(1f);
-        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Player"), false);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
