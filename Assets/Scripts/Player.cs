@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Player : MonoBehaviour
@@ -35,6 +34,8 @@ public class Player : MonoBehaviour
     [SerializeField] Text text7;
     [SerializeField] Text text8;
     [SerializeField] Text text9;
+
+    public bool IsGameClear { get; set; }
 
     enum XPositionStatus
     {
@@ -78,6 +79,7 @@ public class Player : MonoBehaviour
     {
         // プレイヤー状態の初期化
         InitPlayerStatus();
+        InitPlayerHp();
 
         // fingerIdの初期化
         fingerIdDic.Add(TouchType.runTouch, -1);
@@ -105,7 +107,16 @@ public class Player : MonoBehaviour
             }
         }
 
-        Jump_SmartPhoneVersion();
+        if (!IsGameClear)
+        {
+            // ゲームクリアしてないなら操作可能
+            Jump_SmartPhoneVersion();
+        }
+        else
+        {
+            // プレイヤー状態の初期化
+            InitPlayerStatus();
+        }
     }
 
     void FixedUpdate()
@@ -113,13 +124,16 @@ public class Player : MonoBehaviour
         playerAnimator.SetBool("jump", isJump);
         playerAnimator.SetBool("ground", groundCheck.IsInGround);
 
-        if (Application.isEditor)
+        if (!IsGameClear)
         {
-            playerRg2d.velocity = new Vector2(Run(), Jump());
-        }
-        else
-        {
-            playerRg2d.velocity = new Vector2(Run_SmartPhoneVersion(), playerRg2d.velocity.y);
+            if (Application.isEditor)
+            {
+                playerRg2d.velocity = new Vector2(Run(), Jump());
+            }
+            else
+            {
+                playerRg2d.velocity = new Vector2(Run_SmartPhoneVersion(), playerRg2d.velocity.y);
+            }
         }
     }
 
@@ -369,6 +383,9 @@ public class Player : MonoBehaviour
         // 死んだら何もしない
         if (isDie) return;
 
+        // ゲームクリアしたら何もしない
+        if (IsGameClear) return;
+
         if (collision.gameObject.tag == "Enemy")
         {
             if (playerHp > 0)
@@ -392,10 +409,8 @@ public class Player : MonoBehaviour
             }
         }
     }
-    /// <summary>
-    /// プレイヤーの初期状態の初期化
-    /// </summary>
-    private void InitPlayerStatus()
+
+    private void InitPlayerHp ()
     {
         // プレイヤーのHP
         playerHp = playerMaxHp;
@@ -404,6 +419,21 @@ public class Player : MonoBehaviour
         {
             playerHpPrefabs[i] = Instantiate(heartPrefab, heartBar);
         }
+    }
+
+    /// <summary>
+    /// プレイヤーの初期状態の初期化
+    /// </summary>
+    private void InitPlayerStatus ()
+    {
+        isDie = false;
+        isJump = false;
+
+        playerRg2d.velocity = new Vector2(0f, 0f);
+        playerAnimator.SetBool("run", false);
+        playerAnimator.SetBool("jump", false);
+        playerAnimator.SetBool("ground", true);
+        playerAnimator.Play("PlayerIddle");
     }
 
     /// <summary>

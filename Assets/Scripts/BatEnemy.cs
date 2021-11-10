@@ -27,6 +27,13 @@ public class BatEnemy : Enemy
             // 敵が死んだら何もしない
             if (base.IsEnemyDead()) yield break;
 
+            // ゲームクリアしたら何もしない
+            if (base.IsGameClear)
+            {
+                base.rb2D.velocity = Vector2.zero;
+                yield break;
+            }
+
             if (base.sr.isVisible)
             {
                 if(base.animator != null) base.animator.SetBool("isGo", true);

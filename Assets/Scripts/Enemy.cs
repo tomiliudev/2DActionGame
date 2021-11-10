@@ -11,6 +11,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected ObjectCollision objectCollision;
     [SerializeField] protected Animator animator;
 
+    public bool IsGameClear { get; set; }
+
     protected bool IsEnemyDead()
     {
         bool isDead = false;

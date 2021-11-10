@@ -25,6 +25,13 @@ public class PatrolGuyEnemy : Enemy
             // 敵が死んだら何もしない
             if (base.IsEnemyDead()) yield break;
 
+            // ゲームクリアしたら何もしない
+            if (base.IsGameClear)
+            {
+                base.rb2D.Sleep();
+                yield break;
+            }
+
             if (base.sr.isVisible)
             {
                 if (base.ecc != null && base.ecc.IsOn)

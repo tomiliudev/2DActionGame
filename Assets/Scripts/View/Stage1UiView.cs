@@ -6,6 +6,8 @@ public class Stage1UiView : MonoBehaviour
 {
     [Header("カウントダウン秒")] [SerializeField] Text countDownTime;
 
+    public bool IsGameClear { get; set; }
+
     float countDownSec = 10f;
     public int CountDownSec
     {
@@ -20,6 +22,12 @@ public class Stage1UiView : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        OnCountDown();
+    }
+
+    private void OnCountDown()
+    {
+        if (IsGameClear) return;
         if (countDownSec > 0f)
         {
             countDownSec -= Time.deltaTime;

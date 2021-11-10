@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,10 +9,13 @@ public class SceneController : MonoBehaviour
     [SerializeField] Stage1UiView stage1UiView;
     [SerializeField] PolygonCollider2D cameraArea;
     [SerializeField] Player player;
+    [SerializeField] GameObject enemyListObj;
     [SerializeField] Treasure treasure;
     [SerializeField] GameObject gameOverObj;
+    [SerializeField] GameObject gameClearObj;
 
     bool isGameOver = false;
+    bool isGameClear = false;
 
     // Start is called before the first frame update
     void Start()
@@ -24,7 +28,8 @@ public class SceneController : MonoBehaviour
     {
         if (treasure.IsGetTreasure)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            // 宝箱ゲットしたらゲームクリア
+            OnGameClear();
         }
 
         if (stage1UiView.CountDownSec <= 0)
@@ -49,6 +54,7 @@ public class SceneController : MonoBehaviour
     // ゲームオーバー
     private IEnumerator OnGameOver()
     {
+        if (isGameClear) yield break;
         if (isGameOver) yield break;
         isGameOver = true;
 
@@ -57,5 +63,47 @@ public class SceneController : MonoBehaviour
         player.DoHpBarAnimation(-player.PlayerHp);
         yield return new WaitForSeconds(1f);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    private void OnGameClear()
+    {
+        if (isGameOver) return;
+
+        if (isGameClear)
+        {
+            if (Input.touchSupported && Input.touchCount > 0)
+            {
+                if (Input.GetTouch(0).phase == TouchPhase.Began)
+                {
+                    // 画面タッチで次のステージへ
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                }
+            }
+
+            if (Application.isEditor)
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    // 画面タッチで次のステージへ
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                }
+            }
+
+            return;
+        }
+
+        isGameClear = true;
+
+        gameClearObj.SetActive(true);
+
+        // プレイヤーと敵にIsGameClearを通知
+        player.IsGameClear = true;
+        List<Enemy> enemies = enemyListObj.GetComponentsInChildren<Enemy>().ToList();
+        foreach (Enemy enemy in enemies)
+        {
+            enemy.IsGameClear = true;
+        }
+
+        stage1UiView.IsGameClear = true;
     }
 }
