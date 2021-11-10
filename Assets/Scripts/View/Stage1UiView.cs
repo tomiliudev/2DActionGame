@@ -8,7 +8,7 @@ public class Stage1UiView : MonoBehaviour
 
     public bool IsGameClear { get; set; }
 
-    float countDownSec = 10f;
+    float countDownSec = 600f;
     public int CountDownSec
     {
         get { return (int)countDownSec; }
