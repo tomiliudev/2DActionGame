@@ -4448,6 +4448,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PatrolGuy (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 109629449863652747, guid: beb5e78287df94cdbb2c733970a7a7da, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 109629449863652751, guid: beb5e78287df94cdbb2c733970a7a7da, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -4584,6 +4588,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PatrolGuy
       objectReference: {fileID: 0}
+    - target: {fileID: 109629449863652747, guid: beb5e78287df94cdbb2c733970a7a7da, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 109629449863652751, guid: beb5e78287df94cdbb2c733970a7a7da, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -4640,6 +4648,10 @@ PrefabInstance:
     - target: {fileID: 4747338750769323013, guid: d729faca365894a72be39b65a0d79c10, type: 3}
       propertyPath: m_Name
       value: Bat
+      objectReference: {fileID: 0}
+    - target: {fileID: 4747338750769323013, guid: d729faca365894a72be39b65a0d79c10, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4747338750769323014, guid: d729faca365894a72be39b65a0d79c10, type: 3}
       propertyPath: m_RootOrder
