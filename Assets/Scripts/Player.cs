@@ -110,7 +110,7 @@ public class Player : MonoBehaviour
         if (!IsGameClear)
         {
             // ゲームクリアしてないなら操作可能
-            Jump_SmartPhoneVersion();
+            //Jump_SmartPhoneVersion();
         }
         else
         {
@@ -132,7 +132,8 @@ public class Player : MonoBehaviour
             }
             else
             {
-                playerRg2d.velocity = new Vector2(Run_SmartPhoneVersion(), playerRg2d.velocity.y);
+                //playerRg2d.velocity = new Vector2(Run_SmartPhoneVersion(), playerRg2d.velocity.y);
+                playerRg2d.velocity = new Vector2(Run_SmartPhoneVersion(), Jump_SmartPhoneVersion2());
             }
         }
     }
@@ -247,6 +248,11 @@ public class Player : MonoBehaviour
         return _playerRunSpeed;
     }
 
+    #region AddForce Jump
+    /// <summary>
+    /// AddForceをつかったジャンプ
+    /// 問題点：高くジャンプすると床のコライダーを突き抜けてしまう現象が発生する
+    /// </summary>
     void Jump_SmartPhoneVersion()
     {
         int touchIndex = Input.touchCount - 1;
@@ -274,6 +280,60 @@ public class Player : MonoBehaviour
             case TouchPhase.Ended:
                 break;
         }
+    }
+    #endregion
+
+    /// <summary>
+    /// rigidbody.velocityを使ったジャンプ
+    /// </summary>
+    /// <returns></returns>
+    float Jump_SmartPhoneVersion2()
+    {
+        float _playerJumpSpeed = -playerGravity;
+
+        if (groundCheck.IsInGround && Input.touchCount > 0)
+        {
+            TouchType touchType = TouchType.jumpTouch;
+            Touch touch = GetTouchInfo(touchType);
+
+            if (touch.position.x > Screen.width / 2)
+            {
+                // fingerIdを記録しておく
+                fingerIdDic[touchType] = touch.fingerId;
+
+                switch (touch.phase)
+                {
+                    case TouchPhase.Began:
+                        isJump = true;
+                        _playerJumpSpeed = playerJumpSpeed;
+                        playerJumpPos = transform.position.y;
+                        playerJumpTime = 0f;
+                        break;
+                    case TouchPhase.Ended:
+                        break;
+                }
+            }
+        }
+
+        if (isJump)
+        {
+            bool canHight = playerJumpPos + playerJumpLimitHight > transform.position.y;
+            bool canTime = playerJumpLimitTime > playerJumpTime;
+
+            if (canHight && canTime && !headCheck.IsInGround)
+            {
+                _playerJumpSpeed = playerJumpSpeed;
+                playerJumpTime += Time.deltaTime;
+            }
+            else
+            {
+                isJump = false;
+            }
+
+            _playerJumpSpeed *= playerJumpCurve.Evaluate(playerJumpTime);
+        }
+
+        return _playerJumpSpeed;
     }
 
     float Jump()
