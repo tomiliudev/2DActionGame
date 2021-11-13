@@ -29,17 +29,9 @@ public class BatEnemy : Enemy
         yield return new WaitForEndOfFrame();
         while (true)
         {
-            // 敵が死んだら何もしない
-            if (base.IsEnemyDead()) yield break;
-
-            // ゲームクリアしたら何もしない
-            if (base.IsGameClear)
-            {
-                base.rb2D.velocity = Vector2.zero;
-                yield break;
-            }
-
             yield return new WaitForFixedUpdate();
+
+            if (!base.IsCanMove) yield break;
 
             if (base.sr.isVisible)
             {
@@ -50,9 +42,17 @@ public class BatEnemy : Enemy
 
                 if (hit)
                 {
-                    Debug.Log(hit.transform.gameObject.name);
                     if (base.animator != null) base.animator.SetBool("isGo", true);
                     base.rb2D.velocity = playerVector;
+
+                    if (playerVector.x < 0f)
+                    {
+                        transform.localScale = new Vector2(-1f, transform.localScale.y);
+                    }
+                    else
+                    {
+                        transform.localScale = new Vector2(1f, transform.localScale.y);
+                    }
                 }
             }
             else

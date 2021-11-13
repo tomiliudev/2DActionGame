@@ -22,15 +22,7 @@ public class PatrolGuyEnemy : Enemy
         {
             yield return new WaitForFixedUpdate();
 
-            // 敵が死んだら何もしない
-            if (base.IsEnemyDead()) yield break;
-
-            // ゲームクリアしたら何もしない
-            if (base.IsGameClear)
-            {
-                base.rb2D.Sleep();
-                yield break;
-            }
+            if (!base.IsCanMove) yield break;
 
             if (base.sr.isVisible)
             {

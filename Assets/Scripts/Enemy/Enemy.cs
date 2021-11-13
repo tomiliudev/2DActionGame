@@ -14,6 +14,26 @@ public class Enemy : MonoBehaviour
 
     public bool IsGameClear { get; set; }
 
+    private bool isCanMove = true;
+    protected bool IsCanMove
+    {
+        get { return this.isCanMove; }
+    }
+
+    protected void FixedUpdate()
+    {
+        // 敵が死んだら何もしない
+        if (IsEnemyDead()) isCanMove = false;
+
+        // ゲームクリアしたら何もしない
+        if (IsGameClear)
+        {
+            rb2D.velocity = Vector2.zero;
+            isCanMove = false;
+        }
+    }
+
+
     protected bool IsEnemyDead()
     {
         bool isDead = false;
