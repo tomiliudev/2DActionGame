@@ -1,8 +1,13 @@
+using System;
 using UnityEngine;
 
 public class GroundCheck : MonoBehaviour
 {
-    private const string GroundTag = "Ground";
+    enum GroundTagType {
+        Ground,
+        Platform
+    }
+
     private bool isInGround;
     public bool IsInGround
     {
@@ -48,7 +53,7 @@ public class GroundCheck : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == GroundTag)
+        if(Enum.IsDefined(typeof(GroundTagType), collision.tag))
         {
             isEnterGround = true;
         }
@@ -56,7 +61,7 @@ public class GroundCheck : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.tag == GroundTag)
+        if (Enum.IsDefined(typeof(GroundTagType), collision.tag))
         {
             isStayGround = true;
         }
@@ -64,7 +69,7 @@ public class GroundCheck : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.tag == GroundTag)
+        if (Enum.IsDefined(typeof(GroundTagType), collision.tag))
         {
             isExitGround = true;
         }

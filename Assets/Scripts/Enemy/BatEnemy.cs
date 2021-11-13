@@ -10,6 +10,9 @@ public class BatEnemy : Enemy
     // Start is called before the first frame update
     void Start()
     {
+        playerPostion = GameObject.FindWithTag(playerTag).transform.position;
+        selfPosition = transform.localPosition;
+        var playerVector = playerPostion - selfPosition;
         StartCoroutine(FollowPlayer());
     }
 
@@ -19,10 +22,21 @@ public class BatEnemy : Enemy
     /// <returns></returns>
     IEnumerator FollowPlayer()
     {
+
+        
+
+
         yield return new WaitForEndOfFrame();
         while (true)
         {
             yield return new WaitForFixedUpdate();
+
+            playerPostion = GameObject.FindWithTag(playerTag).transform.position;
+            selfPosition = transform.localPosition;
+            var playerVector = playerPostion - selfPosition;
+            Physics2D.Raycast(transform.localPosition, playerPostion - selfPosition, 20f);
+
+
 
             // 敵が死んだら何もしない
             if (base.IsEnemyDead()) yield break;
@@ -37,9 +51,7 @@ public class BatEnemy : Enemy
             if (base.sr.isVisible)
             {
                 if(base.animator != null) base.animator.SetBool("isGo", true);
-                playerPostion = GameObject.FindWithTag(playerTag).transform.position;
-                selfPosition = transform.localPosition;
-                var playerVector = playerPostion - selfPosition;
+                
 
                 yield return new WaitForFixedUpdate();
                 base.rb2D.velocity = playerVector;
