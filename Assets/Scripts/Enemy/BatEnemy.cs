@@ -3,16 +3,11 @@ using UnityEngine;
 
 public class BatEnemy : Enemy
 {
-    private const string playerTag = "Player";
-    private Vector2 playerPostion;
-    private Vector2 selfPosition;
-
-    private Transform playerTransform;
+    private bool isFollowPlayer;
 
     // Start is called before the first frame update
     void Start()
     {
-        playerTransform = GameObject.FindWithTag(playerTag).transform;
         StartCoroutine(FollowPlayer());
     }
 
@@ -35,17 +30,17 @@ public class BatEnemy : Enemy
 
             if (base.sr.isVisible)
             {
-                playerPostion = playerTransform.position;
-                selfPosition = transform.position;
-                var playerVector = playerPostion - selfPosition;
-                var hit = Physics2D.Raycast(transform.position, playerVector, 5f, LayerMask.GetMask("Player"));
+                if (!isFollowPlayer && base.GetPlayerHit())
+                {
+                    isFollowPlayer = true;
+                }
 
-                if (hit)
+                if (isFollowPlayer)
                 {
                     if (base.animator != null) base.animator.SetBool("isGo", true);
-                    base.rb2D.velocity = playerVector;
+                    base.rb2D.velocity = base.playerVector;
 
-                    if (playerVector.x < 0f)
+                    if (base.playerVector.x < 0f)
                     {
                         transform.localScale = new Vector2(-1f, transform.localScale.y);
                     }

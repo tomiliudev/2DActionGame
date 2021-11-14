@@ -12,12 +12,27 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected ObjectCollision objectCollision;
     [SerializeField] protected Animator animator;
 
+    protected const string playerTag = "Player";
+
     public bool IsGameClear { get; set; }
 
     private bool isCanMove = true;
     protected bool IsCanMove
     {
         get { return this.isCanMove; }
+    }
+
+    protected Transform playerTransform;
+    protected Vector3 playerVector;
+
+    private void Awake()
+    {
+        playerTransform = GameObject.FindWithTag(playerTag).transform;
+    }
+
+    void Start()
+    {
+        
     }
 
     protected void FixedUpdate()
@@ -31,8 +46,10 @@ public class Enemy : MonoBehaviour
             rb2D.velocity = Vector2.zero;
             isCanMove = false;
         }
-    }
 
+        // プレイヤーのベクトル
+        playerVector = playerTransform.position - transform.position;
+    }
 
     protected bool IsEnemyDead()
     {
@@ -46,5 +63,14 @@ public class Enemy : MonoBehaviour
             if (animator != null) animator.enabled = false;
         }
         return isDead;
+    }
+
+    /// <summary>
+    /// プレイヤーへRayを飛ばす
+    /// </summary>
+    /// <returns></returns>
+    protected RaycastHit2D GetPlayerHit()
+    {
+        return Physics2D.Raycast(transform.position, playerVector, 5f, LayerMask.GetMask("Player"));
     }
 }
