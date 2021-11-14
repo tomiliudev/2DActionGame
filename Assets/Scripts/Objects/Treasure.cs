@@ -9,6 +9,7 @@ public class Treasure : MonoBehaviour
         if (collision.tag == "Player")
         {
             IsGetTreasure = true;
+            Destroy(gameObject);
         }
     }
 }

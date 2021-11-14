@@ -180,7 +180,7 @@ MonoBehaviour:
   ecc: {fileID: 7093392002339172005}
   objectCollision: {fileID: 8154438474186868970}
   animator: {fileID: 3906090396950797092}
-  groundCheck: {fileID: 0}
+  groundCheck: {fileID: 1366413832728222555}
 --- !u!1 &3950685377694646723
 GameObject:
   m_ObjectHideFlags: 0

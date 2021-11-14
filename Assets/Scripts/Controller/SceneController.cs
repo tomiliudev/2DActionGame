@@ -10,23 +10,25 @@ public class SceneController : MonoBehaviour
     [SerializeField] PolygonCollider2D cameraArea;
     [SerializeField] Player player;
     [SerializeField] GameObject enemyListObj;
-    [SerializeField] Treasure treasure;
+    [SerializeField] Transform treasureList;
     [SerializeField] GameObject gameOverObj;
     [SerializeField] GameObject gameClearObj;
 
     bool isGameOver = false;
     bool isGameClear = false;
+    List<Treasure> treasures = new List<Treasure>();
 
     // Start is called before the first frame update
     void Start()
     {
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Player"), false);
+        treasures = treasureList.GetComponentsInChildren<Treasure>().ToList();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (treasure.IsGetTreasure)
+        if (treasures.All(x => x.IsGetTreasure))
         {
             // 宝箱ゲットしたらゲームクリア
             OnGameClear();
