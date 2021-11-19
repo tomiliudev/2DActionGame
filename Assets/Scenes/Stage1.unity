@@ -123,11 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &100648163 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1955463096824374398, guid: 0b0cfbeacc4034b4cbf6399627783d05, type: 3}
-  m_PrefabInstance: {fileID: 1955463096871280797}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &105008194
 GameObject:
   m_ObjectHideFlags: 0
@@ -160,10 +155,7 @@ MonoBehaviour:
   stageUiView: {fileID: 466429054}
   cameraArea: {fileID: 1617985999}
   player: {fileID: 1056263895}
-  enemyListObj: {fileID: 743848544}
   treasureList: {fileID: 418991640}
-  gameOverObj: {fileID: 100648163}
-  gameClearObj: {fileID: 2137768431}
 --- !u!4 &105008196
 Transform:
   m_ObjectHideFlags: 0
@@ -3786,11 +3778,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: beb5e78287df94cdbb2c733970a7a7da, type: 3}
---- !u!1 &2137768431 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1955463094835487090, guid: 0b0cfbeacc4034b4cbf6399627783d05, type: 3}
-  m_PrefabInstance: {fileID: 1955463096871280797}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &109629449709562034
 PrefabInstance:
   m_ObjectHideFlags: 0
