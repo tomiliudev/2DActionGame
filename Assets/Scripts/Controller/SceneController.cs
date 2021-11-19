@@ -6,21 +6,20 @@ using UnityEngine.SceneManagement;
 
 public class SceneController : MonoBehaviour
 {
-    [SerializeField] Stage1UiView stage1UiView;
+    [SerializeField] StageUiView stageUiView;
     [SerializeField] PolygonCollider2D cameraArea;
     [SerializeField] Player player;
-    [SerializeField] GameObject enemyListObj;
     [SerializeField] Transform treasureList;
-    [SerializeField] GameObject gameOverObj;
-    [SerializeField] GameObject gameClearObj;
 
-    bool isGameOver = false;
-    bool isGameClear = false;
+    GameManager gm;
+
     List<Treasure> treasures = new List<Treasure>();
 
     // Start is called before the first frame update
     void Start()
     {
+        gm = GameManager.Instance;
+
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Player"), false);
         treasures = treasureList.GetComponentsInChildren<Treasure>().ToList();
     }
@@ -28,19 +27,21 @@ public class SceneController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!gm.IsInitialized) return;
+
         if (treasures.All(x => x.IsGetTreasure))
         {
             // 宝箱ゲットしたらゲームクリア
             OnGameClear();
         }
 
-        if (stage1UiView.CountDownSec <= 0)
+        if (stageUiView.CountDownSec <= 0)
         {
             // 時間になったらゲームオーバー
             StartCoroutine(OnGameOver());
         }
 
-        if (player.PlayerHp <= 0)
+        if (gm.PlayerCurrentHp <= 0)
         {
             // プレイヤーHPが0になったらゲームオーバー
             StartCoroutine(OnGameOver());
@@ -56,13 +57,16 @@ public class SceneController : MonoBehaviour
     // ゲームオーバー
     private IEnumerator OnGameOver()
     {
-        if (isGameClear) yield break;
-        if (isGameOver) yield break;
-        isGameOver = true;
+        if (gm.IsGameClear) yield break;
+        if (gm.IsGameOver) yield break;
+        gm.IsGameOver = true;
 
-        gameOverObj.SetActive(true);
+        int currentHp = gm.PlayerCurrentHp;
+        for (int i = 1; i <= currentHp; i++)
+        {
+            gm.PlayerCurrentHp--;
+        }
 
-        player.DoHpBarAnimation(-player.PlayerHp);
         yield return new WaitForSeconds(1f);
 
         GameManager.Instance.LoadSceneTo(SceneManager.GetActiveScene().name);
@@ -70,9 +74,9 @@ public class SceneController : MonoBehaviour
 
     private void OnGameClear()
     {
-        if (isGameOver) return;
+        if (gm.IsGameOver) return;
 
-        if (isGameClear)
+        if (gm.IsGameClear)
         {
             if (Input.touchSupported && Input.touchCount > 0)
             {
@@ -97,18 +101,6 @@ public class SceneController : MonoBehaviour
             return;
         }
 
-        isGameClear = true;
-
-        gameClearObj.SetActive(true);
-
-        // プレイヤーと敵にIsGameClearを通知
-        player.IsGameClear = true;
-        List<Enemy> enemies = enemyListObj.GetComponentsInChildren<Enemy>().ToList();
-        foreach (Enemy enemy in enemies)
-        {
-            enemy.IsGameClear = true;
-        }
-
-        stage1UiView.IsGameClear = true;
+        gm.IsGameClear = true;
     }
 }

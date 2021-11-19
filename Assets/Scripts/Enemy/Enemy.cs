@@ -14,7 +14,7 @@ public class Enemy : MonoBehaviour
 
     protected const string playerTag = "Player";
 
-    public bool IsGameClear { get; set; }
+    GameManager gm;
 
     private bool isCanMove = true;
     protected bool IsCanMove
@@ -28,20 +28,25 @@ public class Enemy : MonoBehaviour
     private void Awake()
     {
         playerTransform = GameObject.FindWithTag(playerTag).transform;
+        gm = GameManager.Instance;
     }
 
-    void Start()
+    private void Start()
     {
-        
+        // protected やpublicをつけて、子クラスのStartでbase.Startで呼ばない限り、継承元のStartは呼ばれないみたい
+        // しかも呼ばれる回数はゲームシーンにある子の数＋親の数になる
+        // Awakeも同じ
     }
 
     protected void FixedUpdate()
     {
+        if (!gm.IsInitialized) return;
+
         // 敵が死んだら何もしない
         if (IsEnemyDead()) isCanMove = false;
 
         // ゲームクリアしたら何もしない
-        if (IsGameClear)
+        if (gm.IsGameClear)
         {
             rb2D.velocity = Vector2.zero;
             isCanMove = false;

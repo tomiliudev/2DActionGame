@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -21,21 +20,7 @@ public class Player : MonoBehaviour
     [SerializeField] AnimationCurve playerJumpCurve;
     [SerializeField] float stepOnRate;
 
-    [SerializeField] int playerMaxHp;
-    [SerializeField] GameObject heartPrefab;
-    [SerializeField] Transform heartBar;
-
-    [SerializeField] Text text1;
-    [SerializeField] Text text2;
-    [SerializeField] Text text3;
-    [SerializeField] Text text4;
-    [SerializeField] Text text5;
-    [SerializeField] Text text6;
-    [SerializeField] Text text7;
-    [SerializeField] Text text8;
-    [SerializeField] Text text9;
-
-    public bool IsGameClear { get; set; }
+    GameManager gm;// GameManagerのインスタンス
 
     enum XPositionStatus
     {
@@ -60,10 +45,6 @@ public class Player : MonoBehaviour
     private float playerJumpPos;
     private float playerJumpTime;
 
-    private int playerHp;
-    public int PlayerHp { get { return playerHp; } }
-    private GameObject[] playerHpPrefabs;
-
     private float invincibleTime = 2f;
     private bool IsInvincible
     {
@@ -77,9 +58,10 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gm = GameManager.Instance;
+
         // プレイヤー状態の初期化
         InitPlayerStatus();
-        InitPlayerHp();
 
         // fingerIdの初期化
         fingerIdDic.Add(TouchType.runTouch, -1);
@@ -107,7 +89,7 @@ public class Player : MonoBehaviour
             }
         }
 
-        if (!IsGameClear)
+        if (!gm.IsGameClear)
         {
             // ゲームクリアしてないなら操作可能
             //Jump_SmartPhoneVersion();
@@ -124,7 +106,7 @@ public class Player : MonoBehaviour
         playerAnimator.SetBool("jump", isJump);
         playerAnimator.SetBool("ground", groundCheck.IsInGround);
 
-        if (!IsGameClear)
+        if (!gm.IsGameClear)
         {
             if (Application.isEditor)
             {
@@ -444,40 +426,27 @@ public class Player : MonoBehaviour
         if (isDie) return;
 
         // ゲームクリアしたら何もしない
-        if (IsGameClear) return;
+        if (gm.IsGameClear) return;
 
         if (collision.gameObject.tag == "Enemy")
         {
-            if (playerHp > 0)
+            if (gm.PlayerCurrentHp > 0)
             {
-                // まだ生きてる時
-
                 // 無敵時間
                 StartCoroutine(DoInvincibleTime());
 
-                // HPバー
-                DoHpBarAnimation(-1);
+                // HPを１減らす
+                gm.PlayerCurrentHp--;
 
                 // PlayerHit
                 playerAnimator.Play("PlayerHit");
             }
 
-            if (playerHp <= 0)
+            if (gm.PlayerCurrentHp <= 0)
             {
                 // 死んだ時
                 isDie = true;
             }
-        }
-    }
-
-    private void InitPlayerHp ()
-    {
-        // プレイヤーのHP
-        playerHp = playerMaxHp;
-        playerHpPrefabs = new GameObject[playerMaxHp];
-        for (int i = 0; i < playerMaxHp; i++)
-        {
-            playerHpPrefabs[i] = Instantiate(heartPrefab, heartBar);
         }
     }
 
@@ -537,27 +506,5 @@ public class Player : MonoBehaviour
         }
 
         return touch;
-    }
-
-    /// <summary>
-    /// プレイヤーHPの増減を制御する
-    /// </summary>
-    /// <param name="hp">例：-3では、HP３個減る</param>
-    public void DoHpBarAnimation(int hp)
-    {
-        for (int i = 0; i < Mathf.Abs(hp); i++)
-        {
-            if (hp < 0)
-            {
-                playerHp--;
-                if (playerHp < 0) playerHp = 0;
-                playerHpPrefabs[playerHp].GetComponent<Animator>().Play("PlayerHpHit");
-            }
-            else
-            {
-                playerHp++;
-                if (playerHp > playerMaxHp) playerHp = playerMaxHp;
-            }
-        }
     }
 }
