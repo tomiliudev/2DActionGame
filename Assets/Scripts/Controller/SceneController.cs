@@ -64,7 +64,8 @@ public class SceneController : MonoBehaviour
 
         player.DoHpBarAnimation(-player.PlayerHp);
         yield return new WaitForSeconds(1f);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
+        GameManager.Instance.LoadSceneTo(SceneManager.GetActiveScene().name);
     }
 
     private void OnGameClear()
@@ -78,7 +79,8 @@ public class SceneController : MonoBehaviour
                 if (Input.GetTouch(0).phase == TouchPhase.Began)
                 {
                     // 画面タッチで次のステージへ
-                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                    //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                    GameManager.Instance.LoadToNextStage();
                 }
             }
 
@@ -87,7 +89,8 @@ public class SceneController : MonoBehaviour
                 if (Input.GetMouseButtonDown(0))
                 {
                     // 画面タッチで次のステージへ
-                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                    //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                    GameManager.Instance.LoadToNextStage();
                 }
             }
 
