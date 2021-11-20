@@ -4,9 +4,13 @@ public class Treasure : MonoBehaviour
 {
     public bool IsGetTreasure { get; private set; }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void Start()
     {
-        if (collision.tag == "Player")
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.tag == "Player")
         {
             IsGetTreasure = true;
             Destroy(gameObject);
