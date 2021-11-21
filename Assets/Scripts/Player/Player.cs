@@ -88,29 +88,15 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if(Input.touchCount <= 0)
-        {
-            // 画面に何もタッチしていない時にすべて-1でリセットする
-            List<TouchType> keys = fingerIdDic.Keys.ToList();
-            foreach(TouchType key in keys)
-            {
-                fingerIdDic[key] = -1;
-            }
-        }
-
+        // スマホによるジャンプ操作
+        DoJumpByPhone();
 
         // キーボードによるジャンプ操作
         DoJumpByKeyborad();
 
 
-        if (!gm.IsGameClear)
+        if (gm.IsGameClear)
         {
-            // ゲームクリアしてないなら操作可能
-            //Jump_SmartPhoneVersion();
-        }
-        else
-        {
-            // プレイヤー状態の初期化
             InitPlayerStatus();
         }
     }
@@ -128,8 +114,7 @@ public class Player : MonoBehaviour
             }
             else
             {
-                //playerRg2d.velocity = new Vector2(Run_SmartPhoneVersion(), playerRg2d.velocity.y);
-                playerRg2d.velocity = new Vector2(Run_SmartPhoneVersion(), Jump_SmartPhoneVersion2());
+                playerRg2d.velocity = new Vector2(Run_SmartPhoneVersion(), Jump());
             }
         }
     }
@@ -302,11 +287,8 @@ public class Player : MonoBehaviour
                 {
                     case TouchPhase.Began:
                         isJump = true;
-                        _playerJumpSpeed = playerJumpSpeed;
                         playerJumpPos = transform.position.y;
                         playerJumpTime = 0f;
-                        break;
-                    case TouchPhase.Ended:
                         break;
                 }
             }
@@ -513,6 +495,45 @@ public class Player : MonoBehaviour
         return touch;
     }
 
+    /// <summary>
+    /// スマホによるジャンプ操作
+    /// </summary>
+    private void DoJumpByPhone()
+    {
+        if (Application.isEditor) return;
+        if (Input.touchCount > 0)
+        {
+            if (groundCheck.IsInGround)
+            {
+                TouchType touchType = TouchType.jumpTouch;
+                Touch touch = GetTouchInfo(touchType);
+
+                if (touch.position.x > Screen.width / 2)
+                {
+                    // fingerIdを記録しておく
+                    fingerIdDic[touchType] = touch.fingerId;
+
+                    switch (touch.phase)
+                    {
+                        case TouchPhase.Began:
+                            isJump = true;
+                            playerJumpPos = transform.position.y;
+                            playerJumpTime = 0f;
+                            break;
+                    }
+                }
+            }
+        }
+        else
+        {
+            // 画面に何もタッチしていない時にすべて-1でリセットする
+            List<TouchType> keys = fingerIdDic.Keys.ToList();
+            foreach (TouchType key in keys)
+            {
+                fingerIdDic[key] = -1;
+            }
+        }
+    }
 
     /// <summary>
     /// キーボードによるジャンプ操作
