@@ -8,6 +8,7 @@ public class Platform : MonoBehaviour
 
     private enum e_MoveType
     {
+        freeze,
         up,
         down,
         left,
@@ -33,9 +34,16 @@ public class Platform : MonoBehaviour
 
     private void FixedUpdate()
     {
+        Move();
+    }
+
+    private void Move()
+    {
         Vector2 direction = Vector2.up;
         switch (moveType)
         {
+            case e_MoveType.freeze:
+                return;
             case e_MoveType.up:
                 direction = transform.up;
                 break;

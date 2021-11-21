@@ -41,7 +41,8 @@ public class GroundCheck : MonoBehaviour
         {
             IsInGround = true;
         }
-        else if (isExitGround)
+        //else if (isExitGround)でやると、動かない床ならいいが、高速移動する床での判定はうまく取れない
+        else
         {
             IsInGround = false;
         }
@@ -53,7 +54,7 @@ public class GroundCheck : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(Enum.IsDefined(typeof(GroundTagType), collision.tag))
+        if (Enum.IsDefined(typeof(GroundTagType), collision.tag))
         {
             isEnterGround = true;
         }
@@ -72,6 +73,6 @@ public class GroundCheck : MonoBehaviour
         if (Enum.IsDefined(typeof(GroundTagType), collision.tag))
         {
             isExitGround = true;
-        }
+        } 
     }
 }
