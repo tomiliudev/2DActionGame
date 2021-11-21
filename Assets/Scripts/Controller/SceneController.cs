@@ -8,7 +8,6 @@ public class SceneController : MonoBehaviour
 {
     [SerializeField] StageUiView stageUiView;
     [SerializeField] PolygonCollider2D cameraArea;
-    [SerializeField] Player player;
     [SerializeField] Transform treasureList;
 
     GameManager gm;
@@ -47,7 +46,7 @@ public class SceneController : MonoBehaviour
             StartCoroutine(OnGameOver());
         }
 
-        if (player.transform.localPosition.y < cameraArea.points.ElementAt(2).y)
+        if (gm.player.transform.localPosition.y < cameraArea.points.ElementAt(2).y)
         {
             // 画面の下側より落ちた場合ゲームオーバー
             StartCoroutine(OnGameOver());

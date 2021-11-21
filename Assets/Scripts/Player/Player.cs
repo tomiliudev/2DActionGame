@@ -20,6 +20,15 @@ public class Player : MonoBehaviour
     [SerializeField] AnimationCurve playerJumpCurve;
     [SerializeField] float stepOnRate;
 
+
+    [Header("Jump入力タイプ")][SerializeField] e_JumpInputType eJumpInputType = e_JumpInputType.upKeyDown;
+    private enum e_JumpInputType
+    {
+        upKeyDown,
+        upKeyKeep
+    }
+
+
     GameManager gm;// GameManagerのインスタンス
 
     enum XPositionStatus
@@ -88,6 +97,11 @@ public class Player : MonoBehaviour
                 fingerIdDic[key] = -1;
             }
         }
+
+
+        // キーボードによるジャンプ操作
+        DoJumpByKeyborad();
+
 
         if (!gm.IsGameClear)
         {
@@ -196,6 +210,7 @@ public class Player : MonoBehaviour
     float Run()
     {
         var horizontalKey = Input.GetAxis("Horizontal");
+
         if (horizontalKey > 0)
         {
             xPositionStatus = XPositionStatus.right;
@@ -318,31 +333,20 @@ public class Player : MonoBehaviour
         return _playerJumpSpeed;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
     float Jump()
     {
         float _playerJumpSpeed = -playerGravity;
-        var verticalKey = Input.GetAxis("Vertical");
 
-        if (groundCheck.IsInGround)
-        {
-            if (verticalKey > 0f)
-            {
-                isJump = true;
-                _playerJumpSpeed = playerJumpSpeed;
-                playerJumpPos = transform.position.y;
-                playerJumpTime = 0f;
-            }
-            else
-            {
-                isJump = false;
-            }
-        }
-        else if (isJump)
+        if (isJump)
         {
             bool canHight = playerJumpPos + playerJumpLimitHight > transform.position.y;
             bool canTime = playerJumpLimitTime > playerJumpTime;
 
-            if (verticalKey > 0f && canHight && canTime && !headCheck.IsInGround)
+            if (canHight && canTime && !headCheck.IsInGround)
             {
                 _playerJumpSpeed = playerJumpSpeed;
                 playerJumpTime += Time.deltaTime;
@@ -360,6 +364,7 @@ public class Player : MonoBehaviour
 
         return _playerJumpSpeed;
     }
+
 
     /// <summary>
     /// 敵との接触判定
@@ -506,5 +511,59 @@ public class Player : MonoBehaviour
         }
 
         return touch;
+    }
+
+
+    /// <summary>
+    /// キーボードによるジャンプ操作
+    /// </summary>
+    private void DoJumpByKeyborad()
+    {
+        if (!Application.isEditor) return;
+        switch (eJumpInputType)
+        {
+            case e_JumpInputType.upKeyDown:
+                OnUpArrowDown();
+                break;
+            case e_JumpInputType.upKeyKeep:
+                OnUpArrowKeep();
+                break;
+        }
+    }
+
+    /// <summary>
+    /// 上キー押下によるジャンプ
+    /// </summary>
+    private void OnUpArrowDown()
+    {
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            if (groundCheck.IsInGround)
+            {
+                isJump = true;
+                playerJumpPos = transform.position.y;
+                playerJumpTime = 0f;
+            }
+        }
+    }
+
+    /// <summary>
+    /// 上キー継続押下によるジャンプ
+    /// </summary>
+    private void OnUpArrowKeep()
+    {
+        if (Input.GetAxis("Vertical") > 0f)
+        {
+            if (groundCheck.IsInGround)
+            {
+                isJump = true;
+                playerJumpPos = transform.position.y;
+                playerJumpTime = 0f;
+            }
+        }
+        else
+        {
+            isJump = false;
+        }
     }
 }

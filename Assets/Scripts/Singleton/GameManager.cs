@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : SingletonMonoBehaviour<GameManager>
 {
     public const string playerMaxHpStr = "playerMaxHp";
-
+    
     private StageUiView stageUiView;
 
     private bool isInitialized;
@@ -39,7 +39,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     private int beforePlayerHp;
 
     public Treasure[] treasures;
-
+    public Player player;
 
 
     private void Awake()
@@ -82,6 +82,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         IsGameClear = false;
         IsGameOver = false;
         treasures = FindObjectsOfType<Treasure>();
+        player = FindObjectOfType<Player>();
     }
 
     public void LoadSceneTo(string sceneName)
