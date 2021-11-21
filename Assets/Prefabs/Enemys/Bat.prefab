@@ -122,7 +122,8 @@ MonoBehaviour:
   sr: {fileID: 4747338750769323008}
   rb2D: {fileID: 1908471123}
   cc2D: {fileID: 5850952091819558636}
-  moveSpeed: 3
+  capsuleCollider2D: {fileID: 0}
+  moveSpeed: 300
   gravity: 0
   ecc: {fileID: 0}
   objectCollision: {fileID: 6552551598109162907}
@@ -156,6 +157,7 @@ MonoBehaviour:
   sr: {fileID: 4747338750769323008}
   rb2D: {fileID: 1908471123}
   cc2D: {fileID: 5850952091819558636}
+  capsuleCollider2D: {fileID: 0}
   moveSpeed: 3
   gravity: 0
   ecc: {fileID: 0}

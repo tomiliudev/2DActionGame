@@ -38,7 +38,7 @@ public class BatEnemy : Enemy
                 if (isFollowPlayer)
                 {
                     if (base.animator != null) base.animator.SetBool("isGo", true);
-                    base.rb2D.velocity = base.playerVector;
+                    base.rb2D.velocity = base.playerVector.normalized * base.moveSpeed * Time.fixedDeltaTime;
 
                     if (base.playerVector.x < 0f)
                     {
