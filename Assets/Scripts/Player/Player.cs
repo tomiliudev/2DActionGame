@@ -113,44 +113,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    void OnRunFinish()
-    {
-        playerAnimator.SetBool("run", false);
-        _playerRunSpeed = 0f;
-        dushTime = 0f;
-        xPositionStatus = XPositionStatus.none;
-        beforeXPositionStatus = XPositionStatus.none;
-    }
-
-    float Run_SmartPhoneVersion()
-    {
-        switch (xPositionStatus)
-        {
-            case XPositionStatus.right:
-                playerAnimator.GetComponent<Transform>().localScale = new Vector3(1f, 1f, 1f);
-                playerAnimator.SetBool("run", true);
-                _playerRunSpeed = playerRunSpeed;
-                dushTime += Time.deltaTime;
-                break;
-            case XPositionStatus.left:
-                playerAnimator.GetComponent<Transform>().localScale = new Vector3(-1f, 1f, 1f);
-                playerAnimator.SetBool("run", true);
-                _playerRunSpeed = -playerRunSpeed;
-                dushTime += Time.deltaTime;
-                break;
-        }
-
-        if (beforeXPositionStatus != XPositionStatus.none && xPositionStatus != XPositionStatus.none && beforeXPositionStatus != xPositionStatus)
-        {
-            dushTime = 0f;
-        }
-        beforeXPositionStatus = xPositionStatus;
-
-        _playerRunSpeed *= playerRunCurve.Evaluate(dushTime);
-
-        return _playerRunSpeed;
-    }
-
 
     /// <summary>
     /// 横移動
@@ -189,41 +151,6 @@ public class Player : MonoBehaviour
 
         return _playerRunSpeed;
     }
-
-    #region AddForce Jump
-    /// <summary>
-    /// AddForceをつかったジャンプ
-    /// 問題点：高くジャンプすると床のコライダーを突き抜けてしまう現象が発生する
-    /// </summary>
-    void Jump_SmartPhoneVersion()
-    {
-        int touchIndex = Input.touchCount - 1;
-        if (touchIndex < 0) return;
-
-        TouchType touchType = TouchType.jumpTouch;
-        Touch touch = GetTouchInfo(touchType);
-
-        if (touch.position.x < Screen.width / 2)
-        {
-            return;
-        }
-
-        // fingerIdを記録しておく
-        fingerIdDic[touchType] = touch.fingerId;
-
-        switch (touch.phase)
-        {
-            case TouchPhase.Began:
-                if (groundCheck.IsInGround)
-                {
-                    playerRg2d.AddForce(transform.up * 1000f);
-                }
-                break;
-            case TouchPhase.Ended:
-                break;
-        }
-    }
-    #endregion
 
 
     /// <summary>
