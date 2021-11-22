@@ -37,6 +37,8 @@ public class Player : MonoBehaviour
         right,
         left
     };
+    // xPositionStatusOverriteは進行方向を保持するため
+    XPositionStatus xPositionStatusOverrite = XPositionStatus.none;
     XPositionStatus xPositionStatus = XPositionStatus.none;
     XPositionStatus beforeXPositionStatus = XPositionStatus.none;
 
@@ -88,12 +90,11 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        // スマホによるジャンプ操作
-        DoJumpByPhone();
+        // スマホによる動きの操作（Run、Jump）
+        DoMovementOperationByPhone();
 
-        // キーボードによるジャンプ操作
-        DoJumpByKeyborad();
-
+        // キーボードによる動きの操作（Run、Jump）
+        DoMovementOperationByKeyborad();
 
         if (gm.IsGameClear)
         {
@@ -108,14 +109,7 @@ public class Player : MonoBehaviour
 
         if (!gm.IsGameClear)
         {
-            if (Application.isEditor)
-            {
-                playerRg2d.velocity = new Vector2(Run(), Jump());
-            }
-            else
-            {
-                playerRg2d.velocity = new Vector2(Run_SmartPhoneVersion(), Jump());
-            }
+            playerRg2d.velocity = new Vector2(Run(), Jump());
         }
     }
 
@@ -130,41 +124,6 @@ public class Player : MonoBehaviour
 
     float Run_SmartPhoneVersion()
     {
-        int touchIndex = Input.touchCount - 1;
-        if (touchIndex < 0)
-        {
-            OnRunFinish();
-            return 0f;
-        }
-
-        TouchType touchType = TouchType.runTouch;
-        Touch touch = GetTouchInfo(touchType);
-
-        if (touch.position.x > Screen.width / 2)
-        {
-            OnRunFinish();
-            return 0f;
-        }
-
-        // fingerIdを記録しておく
-        fingerIdDic[touchType] = touch.fingerId;
-
-        switch (touch.phase)
-        {
-            case TouchPhase.Ended:
-                OnRunFinish();
-                break;
-        }
-
-        if (touch.deltaPosition.x > 1f)
-        {
-            xPositionStatus = XPositionStatus.right;
-        }
-        else if (touch.deltaPosition.x < -1f)
-        {
-            xPositionStatus = XPositionStatus.left;
-        }
-
         switch (xPositionStatus)
         {
             case XPositionStatus.right:
@@ -192,31 +151,32 @@ public class Player : MonoBehaviour
         return _playerRunSpeed;
     }
 
+
+    /// <summary>
+    /// 横移動
+    /// </summary>
+    /// <returns></returns>
     float Run()
     {
-        var horizontalKey = Input.GetAxis("Horizontal");
-
-        if (horizontalKey > 0)
+        switch (xPositionStatus)
         {
-            xPositionStatus = XPositionStatus.right;
-            playerAnimator.GetComponent<Transform>().localScale = new Vector3(1f, 1f, 1f);
-            playerAnimator.SetBool("run", true);
-            _playerRunSpeed = playerRunSpeed;
-            dushTime += Time.deltaTime;
-        }
-        else if (horizontalKey < 0)
-        {
-            xPositionStatus = XPositionStatus.left;
-            playerAnimator.GetComponent<Transform>().localScale = new Vector3(-1f, 1f, 1f);
-            playerAnimator.SetBool("run", true);
-            _playerRunSpeed = -playerRunSpeed;
-            dushTime += Time.deltaTime;
-        }
-        else
-        {
-            playerAnimator.SetBool("run", false);
-            _playerRunSpeed = 0f;
-            dushTime = 0f;
+            case XPositionStatus.right:
+                playerAnimator.GetComponent<Transform>().localScale = new Vector3(1f, 1f, 1f);
+                playerAnimator.SetBool("run", true);
+                _playerRunSpeed = playerRunSpeed;
+                dushTime += Time.deltaTime;
+                break;
+            case XPositionStatus.left:
+                playerAnimator.GetComponent<Transform>().localScale = new Vector3(-1f, 1f, 1f);
+                playerAnimator.SetBool("run", true);
+                _playerRunSpeed = -playerRunSpeed;
+                dushTime += Time.deltaTime;
+                break;
+            default:
+                playerAnimator.SetBool("run", false);
+                _playerRunSpeed = 0f;
+                dushTime = 0f;
+                break;
         }
 
         if (beforeXPositionStatus != XPositionStatus.none && xPositionStatus != XPositionStatus.none && beforeXPositionStatus != xPositionStatus)
@@ -265,58 +225,9 @@ public class Player : MonoBehaviour
     }
     #endregion
 
-    /// <summary>
-    /// rigidbody.velocityを使ったジャンプ
-    /// </summary>
-    /// <returns></returns>
-    float Jump_SmartPhoneVersion2()
-    {
-        float _playerJumpSpeed = -playerGravity;
-
-        if (groundCheck.IsInGround && Input.touchCount > 0)
-        {
-            TouchType touchType = TouchType.jumpTouch;
-            Touch touch = GetTouchInfo(touchType);
-
-            if (touch.position.x > Screen.width / 2)
-            {
-                // fingerIdを記録しておく
-                fingerIdDic[touchType] = touch.fingerId;
-
-                switch (touch.phase)
-                {
-                    case TouchPhase.Began:
-                        isJump = true;
-                        playerJumpPos = transform.position.y;
-                        playerJumpTime = 0f;
-                        break;
-                }
-            }
-        }
-
-        if (isJump)
-        {
-            bool canHight = playerJumpPos + playerJumpLimitHight > transform.position.y;
-            bool canTime = playerJumpLimitTime > playerJumpTime;
-
-            if (canHight && canTime && !headCheck.IsInGround)
-            {
-                _playerJumpSpeed = playerJumpSpeed;
-                playerJumpTime += Time.deltaTime;
-            }
-            else
-            {
-                isJump = false;
-            }
-
-            _playerJumpSpeed *= playerJumpCurve.Evaluate(playerJumpTime);
-        }
-
-        return _playerJumpSpeed;
-    }
 
     /// <summary>
-    /// 
+    /// ジャンプ
     /// </summary>
     /// <returns></returns>
     float Jump()
@@ -496,6 +407,62 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
+    /// スマホによる動きの操作（Run、Jump）
+    /// </summary>
+    private void DoMovementOperationByPhone()
+    {
+        if (Application.isEditor) return;
+        DoRunByPhone();
+        DoJumpByPhone();
+    }
+
+    /// <summary>
+    /// スマホによる横移動
+    /// </summary>
+    private void DoRunByPhone()
+    {
+        xPositionStatus = XPositionStatus.none;
+        if (Input.touchCount > 0)
+        {
+            TouchType touchType = TouchType.runTouch;
+            Touch touch = GetTouchInfo(touchType);
+
+            if (touch.position.x < Screen.width / 2)
+            {
+                // fingerIdを記録しておく
+                fingerIdDic[touchType] = touch.fingerId;
+
+                if (touch.deltaPosition.x > 1f)
+                {
+                    xPositionStatus = XPositionStatus.right;
+                    xPositionStatusOverrite = XPositionStatus.right;
+                }
+                else if (touch.deltaPosition.x < -1f)
+                {
+                    xPositionStatus = XPositionStatus.left;
+                    xPositionStatusOverrite = XPositionStatus.left;
+                }
+            }
+
+            if (touch.phase == TouchPhase.Ended)
+            {
+                xPositionStatusOverrite = XPositionStatus.none;
+            }
+
+            /*
+             * deltaPositionは前のPositionとの比較になるので
+             * 指が動かなくなったらプレイヤーも止まってしまう
+             * そのため、オーバーライドすることで一度方向が決まったら
+             * 指が離れるまで、その方向で進むように制御できる
+             */
+            if (xPositionStatusOverrite != XPositionStatus.none)
+            {
+                xPositionStatus = xPositionStatusOverrite;
+            }
+        }
+    }
+
+    /// <summary>
     /// スマホによるジャンプ操作
     /// </summary>
     private void DoJumpByPhone()
@@ -536,11 +503,40 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
+    /// キーボードによる動きの操作（Run、Jump）
+    /// </summary>
+    private void DoMovementOperationByKeyborad()
+    {
+        if (!Application.isEditor) return;
+        DoRunByKeyborad();
+        DoJumpByKeyborad();
+    }
+
+    /// <summary>
+    /// キーボードによる移動操作
+    /// </summary>
+    private void DoRunByKeyborad()
+    {
+        float horizontalKey = Input.GetAxis("Horizontal");
+        if (horizontalKey > 0f)
+        {
+            xPositionStatus = XPositionStatus.right;
+        }
+        else if (horizontalKey < 0f)
+        {
+            xPositionStatus = XPositionStatus.left;
+        }
+        else
+        {
+            xPositionStatus = XPositionStatus.none;
+        }
+    }
+
+    /// <summary>
     /// キーボードによるジャンプ操作
     /// </summary>
     private void DoJumpByKeyborad()
     {
-        if (!Application.isEditor) return;
         switch (eJumpInputType)
         {
             case e_JumpInputType.upKeyDown:
