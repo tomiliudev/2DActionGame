@@ -191,7 +191,7 @@ MonoBehaviour:
   playerAnimator: {fileID: 6968699690720501173}
   playerRg2d: {fileID: 6968699690490263149}
   playerCollider: {fileID: 6968699690490263148}
-  playerRunSpeed: 10
+  playerRunSpeed: 13
   groundCheck: {fileID: 6968699689873146731}
   playerRunCurve:
     serializedVersion: 2
