@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
     [SerializeField] GroundCheck headCheck;
     [SerializeField] AnimationCurve playerJumpCurve;
     [SerializeField] float stepOnRate;
+    [SerializeField] float grippingPower;// 壁に掴む力
 
 
     [Header("Jump入力タイプ")][SerializeField] e_JumpInputType eJumpInputType = e_JumpInputType.upKeyDown;
@@ -27,7 +28,6 @@ public class Player : MonoBehaviour
         upKeyDown,
         upKeyKeep
     }
-
 
     GameManager gm;// GameManagerのインスタンス
 
@@ -52,9 +52,24 @@ public class Player : MonoBehaviour
     private float dushTime;
 
     private bool isDie;
-    private bool isJump = false;
+    private bool isJump;
+    private bool canJumpHeight;
+    private bool isGripWall;// 壁にへばり付く
+    private bool iskickJump;// 壁にへばり付いている時にジャンプ
+    private float kickJumpPos;// 壁キックした時点のｘポジション
+
+    private enum e_WallDirection
+    {
+        none,
+        right,
+        left
+    }
+    private e_WallDirection wallDirection = e_WallDirection.none;// 触れた壁はプレイヤーの右なのか左なのか
+
     private float playerJumpPos;
     private float playerJumpTime;
+
+    
 
     private float invincibleTime = 2f;
     private bool IsInvincible
@@ -109,7 +124,35 @@ public class Player : MonoBehaviour
 
         if (!gm.IsGameClear)
         {
-            playerRg2d.velocity = new Vector2(Run(), Jump());
+            float velocity_x = Run();
+            float velocity_y = Jump();
+
+            // 壁にへばり付いてる時
+            if (isGripWall)
+            {
+                velocity_y =　playerGravity - grippingPower;
+                if (velocity_y < 0f)
+                {
+                    velocity_y = 0f;
+                }
+                else
+                {
+                    velocity_y = -velocity_y;
+                }
+            }
+
+            if (iskickJump)
+            {
+                if (wallDirection == e_WallDirection.left && velocity_x < 0f) velocity_x = 0f;
+                if (wallDirection == e_WallDirection.right && velocity_x > 0f) velocity_x = 0f;
+
+                if (!canJumpHeight)
+                {
+                    iskickJump = false;
+                }
+            }
+
+            playerRg2d.velocity = new Vector2(velocity_x, velocity_y);
         }
     }
 
@@ -163,10 +206,10 @@ public class Player : MonoBehaviour
 
         if (isJump)
         {
-            bool canHight = playerJumpPos + playerJumpLimitHight > transform.position.y;
+            canJumpHeight = playerJumpPos + playerJumpLimitHight > transform.position.y;
             bool canTime = playerJumpLimitTime > playerJumpTime;
 
-            if (canHight && canTime && !headCheck.IsInGround)
+            if (canJumpHeight && canTime && !headCheck.IsInGround)
             {
                 _playerJumpSpeed = playerJumpSpeed;
                 playerJumpTime += Time.deltaTime;
@@ -236,6 +279,61 @@ public class Player : MonoBehaviour
     private void OnCollisionStay2D(Collision2D collision)
     {
         CheckContactJudgment(collision);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        GripWall(collision);
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        GripWall(collision);
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag == "Wall")
+        {
+            isGripWall = false;
+            playerAnimator.SetBool("wallj", false);
+            wallDirection = e_WallDirection.none;
+        }
+    }
+
+    /// <summary>
+    /// 壁をつかむ
+    /// </summary>
+    private void GripWall(Collider2D collision)
+    {
+        if (collision.tag == "Wall")
+        {
+            if (collision.transform.position.x > transform.position.x)
+            {
+                wallDirection = e_WallDirection.right;
+            }
+            if (collision.transform.position.x < transform.position.x)
+            {
+                wallDirection = e_WallDirection.left;
+            }
+
+            /*
+             * 壁にへばり付く条件
+             * ジャンプして到達可能な高さになるまで
+             * かつ地面に足がついていない時
+             */
+            if (!groundCheck.IsInGround && !isJump)
+            {
+                isGripWall = true;
+                isJump = false;
+                playerAnimator.SetBool("wallj", true);
+            }
+            else
+            {
+                isGripWall = false;
+                playerAnimator.SetBool("wallj", false);
+            }
+        }
     }
 
     /// <summary>
@@ -397,7 +495,7 @@ public class Player : MonoBehaviour
         if (Application.isEditor) return;
         if (Input.touchCount > 0)
         {
-            if (groundCheck.IsInGround)
+            if (groundCheck.IsInGround || isGripWall)
             {
                 TouchType touchType = TouchType.jumpTouch;
                 Touch touch = GetTouchInfo(touchType);
@@ -406,14 +504,9 @@ public class Player : MonoBehaviour
                 {
                     // fingerIdを記録しておく
                     fingerIdDic[touchType] = touch.fingerId;
-
-                    switch (touch.phase)
+                    if (touch.phase == TouchPhase.Began)
                     {
-                        case TouchPhase.Began:
-                            isJump = true;
-                            playerJumpPos = transform.position.y;
-                            playerJumpTime = 0f;
-                            break;
+                        DoJump();
                     }
                 }
             }
@@ -482,11 +575,9 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            if (groundCheck.IsInGround)
+            if (groundCheck.IsInGround || isGripWall)
             {
-                isJump = true;
-                playerJumpPos = transform.position.y;
-                playerJumpTime = 0f;
+                DoJump();
             }
         }
     }
@@ -498,16 +589,35 @@ public class Player : MonoBehaviour
     {
         if (Input.GetAxis("Vertical") > 0f)
         {
-            if (groundCheck.IsInGround)
+            if (groundCheck.IsInGround || isGripWall)
             {
-                isJump = true;
-                playerJumpPos = transform.position.y;
-                playerJumpTime = 0f;
+                DoJump();
             }
         }
         else
         {
             isJump = false;
+        }
+    }
+
+    private void DoJump()
+    {
+        isJump = true;
+        playerJumpPos = transform.position.y;
+        playerJumpTime = 0f;
+
+        if (isGripWall)
+        {
+            iskickJump = true;
+            var kickJumpPos = transform.position;
+            if (wallDirection == e_WallDirection.left)
+            {
+                transform.position = new Vector2(kickJumpPos.x + 0.5f, kickJumpPos.y);
+            }
+            if (wallDirection == e_WallDirection.right)
+            {
+                transform.position = new Vector2(kickJumpPos.x - 0.5f, kickJumpPos.y);
+            }
         }
     }
 }

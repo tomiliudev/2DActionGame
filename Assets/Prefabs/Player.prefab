@@ -227,7 +227,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   playerGravity: 13
-  playerJumpSpeed: 10
+  playerJumpSpeed: 12
   playerJumpLimitHight: 2.5
   playerJumpLimitTime: 5
   headCheck: {fileID: 6968699689225800538}
@@ -265,6 +265,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   stepOnRate: 10
+  grippingPower: 10
   eJumpInputType: 0
 --- !u!70 &6968699690490263148
 CapsuleCollider2D:
