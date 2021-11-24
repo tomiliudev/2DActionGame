@@ -145,11 +145,11 @@ public class Player : MonoBehaviour
             {
                 if (wallDirection == e_WallDirection.left && velocity_x < 0f) velocity_x = 0f;
                 if (wallDirection == e_WallDirection.right && velocity_x > 0f) velocity_x = 0f;
+            }
 
-                if (!canJumpHeight)
-                {
-                    iskickJump = false;
-                }
+            if (!canJumpHeight || headCheck.IsInGround || groundCheck.IsInGround)
+            {
+                iskickJump = false;
             }
 
             playerRg2d.velocity = new Vector2(velocity_x, velocity_y);
