@@ -4,6 +4,7 @@ using UnityEngine;
 public class SlimeEnemy : Enemy
 {
     [SerializeField] GroundCheck groundCheck;
+    [SerializeField] GroundCheck headCheck;
 
     private bool isJump = false;
     private float jumpSpeed = -3f;
@@ -69,7 +70,7 @@ public class SlimeEnemy : Enemy
                 {
                     jumpSpeed = jumpForce;
                     bool isCanHeight = transform.position.y < jumpPos + jumpLimitHeight;
-                    if (!isCanHeight)
+                    if (!isCanHeight || headCheck.IsInGround)
                     {
                         jumpSpeed = -jumpForce;
                         isJump = false;
