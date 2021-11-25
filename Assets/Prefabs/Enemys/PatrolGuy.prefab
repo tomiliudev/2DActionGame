@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 109629448808575615}
   - component: {fileID: 109629448808575614}
   m_Layer: 7
-  m_Name: WallCheck
+  m_Name: WallCollisionCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -250,8 +250,8 @@ MonoBehaviour:
   capsuleCollider2D: {fileID: 0}
   moveSpeed: 3
   gravity: 3
-  wallCheck: {fileID: 109629448808575614}
-  groundCheck: {fileID: 2391995400209952709}
+  wallCollisionCheck: {fileID: 109629448808575614}
+  groundCollisionCheck: {fileID: 2391995400209952709}
   objectCollision: {fileID: 109629449863652749}
   animator: {fileID: 109629449863652745}
   filter2d:
@@ -280,7 +280,7 @@ GameObject:
   - component: {fileID: 4099990059758042667}
   - component: {fileID: 2391995400209952709}
   m_Layer: 7
-  m_Name: GroundCheck
+  m_Name: GroundCollisionCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

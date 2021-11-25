@@ -178,7 +178,8 @@ MonoBehaviour:
   capsuleCollider2D: {fileID: 3906090396950797095}
   moveSpeed: 3
   gravity: 3
-  ecc: {fileID: 7093392002339172005}
+  wallCollisionCheck: {fileID: 7093392002339172005}
+  groundCollisionCheck: {fileID: 0}
   objectCollision: {fileID: 8154438474186868970}
   animator: {fileID: 3906090396950797092}
   filter2d:
@@ -209,7 +210,7 @@ GameObject:
   - component: {fileID: 4841744700681243483}
   - component: {fileID: 7093392002339172005}
   m_Layer: 7
-  m_Name: EnemyCollisionCheck
+  m_Name: WallCollisionCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -223,7 +224,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3950685377694646723}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.4, y: -0.15, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3906090396950797094}
@@ -242,7 +243,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.4, y: -0.15}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}

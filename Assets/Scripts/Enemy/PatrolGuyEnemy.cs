@@ -26,8 +26,8 @@ public class PatrolGuyEnemy : Enemy
 
             if (base.sr.isVisible)
             {
-                if (base.wallCheck != null && base.wallCheck.IsOn
-                    || base.groundCheck != null && !base.groundCheck.IsOn
+                if (base.wallCollisionCheck != null && base.wallCollisionCheck.IsOn
+                    || base.groundCollisionCheck != null && !base.groundCollisionCheck.IsOn
                 )
                 {
                     isRight = !isRight;
