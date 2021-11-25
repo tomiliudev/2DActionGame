@@ -73,7 +73,7 @@ public class Enemy : MonoBehaviour
 
             Destroy(gameObject);
 
-            //rb2D.velocity = new Vector2(0f, -3f);
+            //rb2D.velocity = new Vector2(0f, 0f);
             //if (cc2D != null) cc2D.enabled = false;
             //if (capsuleCollider2D != null) capsuleCollider2D.enabled = false;
             //if (animator != null) animator.enabled = false;
