@@ -83,7 +83,7 @@ public class Enemy : MonoBehaviour
     protected bool IsHitPlayer()
     {
         RaycastHit2D[] results = new RaycastHit2D[2];
-        Physics2D.Raycast(transform.position, playerVector, filter2d, results);
+        Physics2D.Raycast(transform.position, playerVector, filter2d, results, 5f);
         var tran = results[0].transform;
         if (tran != null)
         {
