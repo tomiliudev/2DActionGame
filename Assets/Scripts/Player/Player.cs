@@ -119,6 +119,9 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
+        // カメラの移動範囲を超えるとジャンプ無効に
+        if (headCheck.transform.position.y > gm.cameraCollider.points[0].y) isJump = false;
+
         playerAnimator.SetBool("jump", isJump);
         playerAnimator.SetBool("ground", groundCheck.IsInGround);
 
