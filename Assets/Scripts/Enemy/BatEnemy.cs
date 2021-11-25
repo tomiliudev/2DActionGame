@@ -30,7 +30,7 @@ public class BatEnemy : Enemy
 
             if (base.sr.isVisible)
             {
-                if (!isFollowPlayer && base.GetPlayerHit())
+                if (!isFollowPlayer && base.IsHitPlayer())
                 {
                     isFollowPlayer = true;
                 }

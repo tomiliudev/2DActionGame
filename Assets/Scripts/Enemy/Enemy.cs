@@ -12,7 +12,11 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected ObjectCollision objectCollision;
     [SerializeField] protected Animator animator;
 
+
+    [SerializeField] private ContactFilter2D filter2d = default;
+
     protected const string playerTag = "Player";
+    protected const string playerLayer = "Player";
 
     GameManager gm;
 
@@ -72,10 +76,19 @@ public class Enemy : MonoBehaviour
 
     /// <summary>
     /// プレイヤーへRayを飛ばす
+    /// プレイヤーとの間に障害物（床や壁）があるとヒットしない
     /// </summary>
     /// <returns></returns>
-    protected RaycastHit2D GetPlayerHit()
+    protected bool IsHitPlayer()
     {
-        return Physics2D.Raycast(transform.position, playerVector, 5f, LayerMask.GetMask("Player"));
+        RaycastHit2D[] results = new RaycastHit2D[2];
+        Physics2D.Raycast(transform.position, playerVector, filter2d, results);
+        var tran = results[0].transform;
+        if (tran != null)
+        {
+            return playerLayer == LayerMask.LayerToName(tran.gameObject.layer);
+        }
+
+        return false;
     }
 }

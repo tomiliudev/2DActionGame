@@ -51,7 +51,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
     private void Start()
     {
-        LoadSceneTo(e_StageName.Stage1.ToString());
+        LoadSceneTo(e_StageName.Stage2.ToString());
     }
 
     private void Update()

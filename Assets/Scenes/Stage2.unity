@@ -133,7 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 75098809}
   - component: {fileID: 75098810}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallTrigger (3)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -307,7 +307,7 @@ GameObject:
   m_Component:
   - component: {fileID: 103162323}
   - component: {fileID: 103162324}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallTrigger (4)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -411,7 +411,7 @@ GameObject:
   m_Component:
   - component: {fileID: 181030852}
   - component: {fileID: 181030853}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallTrigger (9)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -468,7 +468,7 @@ GameObject:
   m_Component:
   - component: {fileID: 232731242}
   - component: {fileID: 232731243}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallTrigger (16)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -525,7 +525,7 @@ GameObject:
   m_Component:
   - component: {fileID: 245039954}
   - component: {fileID: 245039955}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallTrigger (7)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -582,7 +582,7 @@ GameObject:
   m_Component:
   - component: {fileID: 293844937}
   - component: {fileID: 293844938}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallTrigger (8)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -639,7 +639,7 @@ GameObject:
   m_Component:
   - component: {fileID: 320017641}
   - component: {fileID: 320017642}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallTrigger (1)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -696,7 +696,7 @@ GameObject:
   m_Component:
   - component: {fileID: 351510961}
   - component: {fileID: 351510962}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallTrigger (5)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -999,7 +999,7 @@ GameObject:
   m_Component:
   - component: {fileID: 603180463}
   - component: {fileID: 603180464}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallTrigger (17)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -1123,7 +1123,7 @@ GameObject:
   m_Component:
   - component: {fileID: 734699318}
   - component: {fileID: 734699319}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallTrigger (10)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -1196,7 +1196,9 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1144841570}
+  - {fileID: 828430894}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1210,7 +1212,7 @@ GameObject:
   m_Component:
   - component: {fileID: 824024765}
   - component: {fileID: 824024766}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallTrigger (6)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -1257,6 +1259,68 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.08, y: 9}
   m_EdgeRadius: 0
+--- !u!1001 &828430893
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 743848545}
+    m_Modifications:
+    - target: {fileID: 3906090396950797089, guid: b6f42f8392b02433fa3eeb48661641fd, type: 3}
+      propertyPath: m_Name
+      value: Slime
+      objectReference: {fileID: 0}
+    - target: {fileID: 3906090396950797094, guid: b6f42f8392b02433fa3eeb48661641fd, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3906090396950797094, guid: b6f42f8392b02433fa3eeb48661641fd, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -7.14
+      objectReference: {fileID: 0}
+    - target: {fileID: 3906090396950797094, guid: b6f42f8392b02433fa3eeb48661641fd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.48
+      objectReference: {fileID: 0}
+    - target: {fileID: 3906090396950797094, guid: b6f42f8392b02433fa3eeb48661641fd, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3906090396950797094, guid: b6f42f8392b02433fa3eeb48661641fd, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3906090396950797094, guid: b6f42f8392b02433fa3eeb48661641fd, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3906090396950797094, guid: b6f42f8392b02433fa3eeb48661641fd, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3906090396950797094, guid: b6f42f8392b02433fa3eeb48661641fd, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3906090396950797094, guid: b6f42f8392b02433fa3eeb48661641fd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3906090396950797094, guid: b6f42f8392b02433fa3eeb48661641fd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3906090396950797094, guid: b6f42f8392b02433fa3eeb48661641fd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b6f42f8392b02433fa3eeb48661641fd, type: 3}
+--- !u!4 &828430894 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3906090396950797094, guid: b6f42f8392b02433fa3eeb48661641fd, type: 3}
+  m_PrefabInstance: {fileID: 828430893}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &839482773
 GameObject:
   m_ObjectHideFlags: 3
@@ -1577,7 +1641,7 @@ GameObject:
   - component: {fileID: 1031418574}
   - component: {fileID: 1031418577}
   - component: {fileID: 1031418576}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Grid
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -2004,7 +2068,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1036244334}
   - component: {fileID: 1036244335}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallTrigger (19)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -2061,7 +2125,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1051434568}
   - component: {fileID: 1051434569}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallTrigger (18)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -2112,6 +2176,72 @@ BoxCollider2D:
 Transform:
   m_CorrespondingSourceObject: {fileID: 6968699690490263138, guid: 0cdb95a2609724b10850a5d43ee892ac, type: 3}
   m_PrefabInstance: {fileID: 6968699690539727028}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1144841569
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 743848545}
+    m_Modifications:
+    - target: {fileID: 4747338750769323013, guid: d729faca365894a72be39b65a0d79c10, type: 3}
+      propertyPath: m_Name
+      value: Bat
+      objectReference: {fileID: 0}
+    - target: {fileID: 4747338750769323014, guid: d729faca365894a72be39b65a0d79c10, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4747338750769323014, guid: d729faca365894a72be39b65a0d79c10, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -4.69
+      objectReference: {fileID: 0}
+    - target: {fileID: 4747338750769323014, guid: d729faca365894a72be39b65a0d79c10, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.72
+      objectReference: {fileID: 0}
+    - target: {fileID: 4747338750769323014, guid: d729faca365894a72be39b65a0d79c10, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4747338750769323014, guid: d729faca365894a72be39b65a0d79c10, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4747338750769323014, guid: d729faca365894a72be39b65a0d79c10, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4747338750769323014, guid: d729faca365894a72be39b65a0d79c10, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4747338750769323014, guid: d729faca365894a72be39b65a0d79c10, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4747338750769323014, guid: d729faca365894a72be39b65a0d79c10, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4747338750769323014, guid: d729faca365894a72be39b65a0d79c10, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4747338750769323014, guid: d729faca365894a72be39b65a0d79c10, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6565716509103168734, guid: d729faca365894a72be39b65a0d79c10, type: 3}
+      propertyPath: filter2d.layerMask.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d729faca365894a72be39b65a0d79c10, type: 3}
+--- !u!4 &1144841570 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4747338750769323014, guid: d729faca365894a72be39b65a0d79c10, type: 3}
+  m_PrefabInstance: {fileID: 1144841569}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1184847666 stripped
 Transform:
@@ -2203,7 +2333,7 @@ GameObject:
   - component: {fileID: 1250545152}
   - component: {fileID: 1250545151}
   - component: {fileID: 1250545150}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Tilemap
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -10990,7 +11120,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1305549559}
   - component: {fileID: 1305549560}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallTrigger (14)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -11084,7 +11214,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1543982534}
   - component: {fileID: 1543982535}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallTrigger (12)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -11418,7 +11548,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1770205987}
   - component: {fileID: 1770205988}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallTrigger (13)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -11475,7 +11605,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1782972537}
   - component: {fileID: 1782972538}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallTrigger (2)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -11532,7 +11662,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1802128179}
   - component: {fileID: 1802128180}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallTrigger
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -11589,7 +11719,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1883710037}
   - component: {fileID: 1883710038}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallTrigger (15)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -11864,7 +11994,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1940565764}
   - component: {fileID: 1940565765}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallTrigger (11)
   m_TagString: Wall
   m_Icon: {fileID: 0}

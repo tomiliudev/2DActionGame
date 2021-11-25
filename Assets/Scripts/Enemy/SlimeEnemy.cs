@@ -37,7 +37,7 @@ public class SlimeEnemy : Enemy
 
             if (base.sr.isVisible)
             {
-                isPlayerHit = base.GetPlayerHit();
+                isPlayerHit = base.IsHitPlayer();
 
                 if (groundCheck.IsInGround)
                 {

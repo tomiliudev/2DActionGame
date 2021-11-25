@@ -180,6 +180,20 @@ MonoBehaviour:
   ecc: {fileID: 7093392002339172005}
   objectCollision: {fileID: 8154438474186868970}
   animator: {fileID: 3906090396950797092}
+  filter2d:
+    useTriggers: 0
+    useLayerMask: 1
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 576
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
   groundCheck: {fileID: 1366413832728222555}
 --- !u!1 &3950685377694646723
 GameObject:
