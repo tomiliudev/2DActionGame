@@ -12,6 +12,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected EnemyCollisionCheck groundCollisionCheck;
     [SerializeField] protected ObjectCollision objectCollision;
     [SerializeField] protected Animator animator;
+    [SerializeField] protected PickHeart pickHeart;
 
 
     [SerializeField] private ContactFilter2D filter2d = default;
@@ -21,10 +22,10 @@ public class Enemy : MonoBehaviour
 
     GameManager gm;
 
-    private bool isCanMove = true;
-    protected bool IsCanMove
+    bool isDead = false;
+    protected bool IsDead
     {
-        get { return this.isCanMove; }
+        get { return this.isDead; }
     }
 
     protected Transform playerTransform;
@@ -48,31 +49,35 @@ public class Enemy : MonoBehaviour
         if (!gm.IsInitialized) return;
 
         // 敵が死んだら何もしない
-        if (IsEnemyDead()) isCanMove = false;
+        EnemyDead();
 
         // ゲームクリアしたら何もしない
         if (gm.IsGameClear)
         {
             rb2D.velocity = Vector2.zero;
-            isCanMove = false;
         }
 
         // プレイヤーのベクトル
         playerVector = playerTransform.position - transform.position;
     }
 
-    protected bool IsEnemyDead()
+    protected void EnemyDead()
     {
-        bool isDead = false;
+        if (isDead) return;
         if (objectCollision.isPlayerStepOn)
         {
             isDead = true;
-            rb2D.velocity = new Vector2(0f, -3f);
-            if (cc2D != null) cc2D.enabled = false;
-            if (capsuleCollider2D != null) capsuleCollider2D.enabled = false;
-            if (animator != null) animator.enabled = false;
+
+            var pickHeartObj = Instantiate(pickHeart, transform.parent);
+            pickHeartObj.transform.position = transform.position;
+
+            Destroy(gameObject);
+
+            //rb2D.velocity = new Vector2(0f, -3f);
+            //if (cc2D != null) cc2D.enabled = false;
+            //if (capsuleCollider2D != null) capsuleCollider2D.enabled = false;
+            //if (animator != null) animator.enabled = false;
         }
-        return isDead;
     }
 
     /// <summary>

@@ -22,7 +22,7 @@ public class PatrolGuyEnemy : Enemy
         {
             yield return new WaitForFixedUpdate();
 
-            if (!base.IsCanMove) yield break;
+            if (base.IsDead) yield break;
 
             if (base.sr.isVisible)
             {

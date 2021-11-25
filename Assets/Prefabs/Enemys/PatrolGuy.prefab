@@ -254,6 +254,7 @@ MonoBehaviour:
   groundCollisionCheck: {fileID: 2391995400209952709}
   objectCollision: {fileID: 109629449863652749}
   animator: {fileID: 109629449863652745}
+  pickHeart: {fileID: 4477351285677921095, guid: ca4221de429fa4b8e9c36954e10b0dfc, type: 3}
   filter2d:
     useTriggers: 0
     useLayerMask: 0

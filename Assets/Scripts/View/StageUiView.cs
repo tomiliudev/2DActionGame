@@ -69,6 +69,11 @@ public class StageUiView : MonoBehaviour
         if(playerHpPrefabs != null) playerHpPrefabs[gm.PlayerCurrentHp].GetComponent<Animator>().Play("PlayerHpHit");
     }
 
+    public void HpPickAnim()
+    {
+        if (playerHpPrefabs != null) playerHpPrefabs[gm.PlayerCurrentHp - 1].GetComponent<Animator>().Play("PlayerHpPick");
+    }
+
     public void SetIsGameOver(bool flag)
     {
         gameOverObj.SetActive(flag);

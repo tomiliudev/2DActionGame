@@ -27,11 +27,9 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
             playerCurrentHp = value;
             if (playerCurrentHp < 0) playerCurrentHp = 0;
             if (playerCurrentHp > PlayerMaxHp) playerCurrentHp = PlayerMaxHp;
-            if (beforePlayerHp > playerCurrentHp)
-            {
-                beforePlayerHp = playerCurrentHp;
-                stageUiView.HpHitAnim();
-            }
+            if (beforePlayerHp > playerCurrentHp) stageUiView.HpHitAnim();
+            if (beforePlayerHp < playerCurrentHp) stageUiView.HpPickAnim();
+            beforePlayerHp = playerCurrentHp;
         }
     }
     private int beforePlayerHp;
