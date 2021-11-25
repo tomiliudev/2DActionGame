@@ -1,9 +1,9 @@
+using System.Linq;
 using UnityEngine;
 
 public class EnemyCollisionCheck : MonoBehaviour
 {
-    private const string GroundTag = "Ground";
-    private const string EnemyTag = "Enemy";
+    [SerializeField] string[] tragetTags;
 
     private bool isOn;
     public bool IsOn
@@ -16,7 +16,7 @@ public class EnemyCollisionCheck : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == GroundTag || collision.tag == EnemyTag)
+        if (tragetTags.Contains(collision.tag))
         {
             isOn = true;
         }
@@ -24,7 +24,7 @@ public class EnemyCollisionCheck : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.tag == GroundTag || collision.tag == EnemyTag)
+        if (tragetTags.Contains(collision.tag))
         {
             isOn = false;
         }
