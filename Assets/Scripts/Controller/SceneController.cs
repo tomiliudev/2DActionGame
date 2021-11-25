@@ -1,18 +1,11 @@
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneController : MonoBehaviour
 {
-    [SerializeField] StageUiView stageUiView;
-    [SerializeField] PolygonCollider2D cameraArea;
-    [SerializeField] Transform treasureList;
-
     GameManager gm;
-
-    List<Treasure> treasures = new List<Treasure>();
 
     // Start is called before the first frame update
     void Start()
@@ -20,7 +13,6 @@ public class SceneController : MonoBehaviour
         gm = GameManager.Instance;
 
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Player"), false);
-        treasures = treasureList.GetComponentsInChildren<Treasure>().ToList();
     }
 
     // Update is called once per frame
@@ -28,13 +20,13 @@ public class SceneController : MonoBehaviour
     {
         if (!gm.IsInitialized) return;
 
-        if (treasures.All(x => x.IsGetTreasure))
+        if (gm.treasures.All(x => x.IsGetTreasure))
         {
             // 宝箱ゲットしたらゲームクリア
             OnGameClear();
         }
 
-        if (stageUiView.CountDownSec <= 0)
+        if (gm.stageUiView.CountDownSec <= 0)
         {
             // 時間になったらゲームオーバー
             StartCoroutine(OnGameOver());
@@ -46,7 +38,7 @@ public class SceneController : MonoBehaviour
             StartCoroutine(OnGameOver());
         }
 
-        if (gm.player.transform.localPosition.y < cameraArea.points.ElementAt(2).y)
+        if (gm.player.transform.localPosition.y < gm.cameraCollider.points.ElementAt(2).y)
         {
             // 画面の下側より落ちた場合ゲームオーバー
             StartCoroutine(OnGameOver());

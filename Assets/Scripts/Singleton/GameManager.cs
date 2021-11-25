@@ -6,8 +6,6 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 {
     public const string playerMaxHpStr = "playerMaxHp";
     
-    private StageUiView stageUiView;
-
     private bool isInitialized;
     public bool IsInitialized { get { return isInitialized; } }
 
@@ -38,8 +36,10 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     }
     private int beforePlayerHp;
 
+    public StageUiView stageUiView;
     public Treasure[] treasures;
     public Player player;
+    public PolygonCollider2D cameraCollider;
 
 
     private void Awake()
@@ -51,7 +51,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
     private void Start()
     {
-        LoadSceneTo(e_StageName.Stage2.ToString());
+        LoadSceneTo(e_StageName.Stage1.ToString());
     }
 
     private void Update()
@@ -76,13 +76,16 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     private void Initialize()
     {
         isInitialized = true;
+
         stageUiView = FindObjectOfType<StageUiView>();
+        treasures = FindObjectsOfType<Treasure>();
+        player = FindObjectOfType<Player>();
+        cameraCollider = GameObject.FindGameObjectWithTag("CameraCollider").GetComponent<PolygonCollider2D>();
+
         PlayerCurrentHp = PlayerMaxHp;
         beforePlayerHp = PlayerMaxHp;
         IsGameClear = false;
         IsGameOver = false;
-        treasures = FindObjectsOfType<Treasure>();
-        player = FindObjectOfType<Player>();
     }
 
     public void LoadSceneTo(string sceneName)
