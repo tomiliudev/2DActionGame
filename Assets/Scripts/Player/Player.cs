@@ -157,6 +157,10 @@ public class Player : MonoBehaviour
             }
 
             playerRg2d.velocity = new Vector2(velocity_x, velocity_y);
+
+
+            // プレイヤーの無敵状況を更新
+            UpdateInvincibleInfo();
         }
     }
 
@@ -261,7 +265,7 @@ public class Player : MonoBehaviour
             }
             else
             {
-                OnAttacked(collision);
+                OnDamage(collision);
             }
         }
     }
@@ -273,7 +277,15 @@ public class Player : MonoBehaviour
     /// <param name="collision"></param>
     void OnCollisionEnter2D(Collision2D collision)
     {
-        CheckContactJudgment(collision);
+        switch (collision.transform.tag)
+        {
+            case "Enemy":
+                CheckContactJudgment(collision);
+                break;
+            case "Spike":
+                OnDamage(collision);
+                break;
+        }
     }
 
     /// <summary>
@@ -282,7 +294,15 @@ public class Player : MonoBehaviour
     /// <param name="collision"></param>
     private void OnCollisionStay2D(Collision2D collision)
     {
-        CheckContactJudgment(collision);
+        switch (collision.transform.tag)
+        {
+            case "Enemy":
+                CheckContactJudgment(collision);
+                break;
+            case "Spike":
+                OnDamage(collision);
+                break;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -341,10 +361,10 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
-    /// 敵に攻撃された時
+    /// ダメージ受けた時
     /// </summary>
     /// <param name="collision"></param>
-    private void OnAttacked(Collision2D collision)
+    private void OnDamage(Collision2D collision)
     {
         // 無敵期間中
         if (IsInvincible) return;
@@ -355,25 +375,22 @@ public class Player : MonoBehaviour
         // ゲームクリアしたら何もしない
         if (gm.IsGameClear) return;
 
-        if (collision.gameObject.tag == "Enemy")
+        if (gm.PlayerCurrentHp > 0)
         {
-            if (gm.PlayerCurrentHp > 0)
-            {
-                // 無敵時間
-                StartCoroutine(DoInvincibleTime());
+            // HPを１減らす
+            gm.PlayerCurrentHp--;
 
-                // HPを１減らす
-                gm.PlayerCurrentHp--;
+            // PlayerHit
+            playerAnimator.Play("PlayerHit");
 
-                // PlayerHit
-                playerAnimator.Play("PlayerHit");
-            }
+            // 無敵
+            StartCoroutine(DoInvincibleTime());
+        }
 
-            if (gm.PlayerCurrentHp <= 0)
-            {
-                // 死んだ時
-                isDie = true;
-            }
+        if (gm.PlayerCurrentHp <= 0)
+        {
+            // 死んだ時
+            isDie = true;
         }
     }
 
@@ -396,16 +413,18 @@ public class Player : MonoBehaviour
     /// 攻撃された時の無敵時間
     /// </summary>
     /// <returns></returns>
-    private IEnumerator DoInvincibleTime()
+    public IEnumerator DoInvincibleTime()
     {
         IsInvincible = true;
-        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Player"));
-        playerAnimator.SetBool("invincible", true);
-
         yield return new WaitForSeconds(invincibleTime);
         IsInvincible = false;
-        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Player"), false);
-        playerAnimator.SetBool("invincible", false);
+    }
+
+    private void UpdateInvincibleInfo()
+    {
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Player"), IsInvincible);
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Spike"), LayerMask.NameToLayer("Player"), IsInvincible);
+        playerAnimator.SetBool("invincible", IsInvincible);
     }
 
     /// <summary>

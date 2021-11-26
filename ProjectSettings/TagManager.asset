@@ -9,6 +9,7 @@ TagManager:
   - Platform
   - CameraCollider
   - Wall
+  - Spike
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - Enemy
   - Platform
   - Ground
-  - 
+  - Spike
   - 
   - 
   - 
