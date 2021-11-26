@@ -56,7 +56,6 @@ public class Player : MonoBehaviour
     private bool canJumpHeight;
     private bool isGripWall;// 壁にへばり付く
     private bool iskickJump;// 壁にへばり付いている時にジャンプ
-    private float kickJumpPos;// 壁キックした時点のｘポジション
 
     private enum e_WallDirection
     {
@@ -68,8 +67,7 @@ public class Player : MonoBehaviour
 
     private float playerJumpPos;
     private float playerJumpTime;
-
-    
+    private float jumpLimitHight;
 
     private float invincibleTime = 2f;
     private bool IsInvincible
@@ -212,7 +210,7 @@ public class Player : MonoBehaviour
 
         if (isJump)
         {
-            canJumpHeight = playerJumpPos + playerJumpLimitHight > transform.position.y;
+            canJumpHeight = playerJumpPos + jumpLimitHight > transform.position.y;
             bool canTime = playerJumpLimitTime > playerJumpTime;
 
             if (canJumpHeight && canTime && !headCheck.IsInGround)
@@ -258,7 +256,7 @@ public class Player : MonoBehaviour
                 if (oc != null)
                 {
                     oc.isPlayerStepOn = true;
-                    //playerRg2d.AddForce(transform.up * 5000f);
+                    DoJump(oc.boundHight);
                 }
             }
             else
@@ -512,7 +510,7 @@ public class Player : MonoBehaviour
                     fingerIdDic[touchType] = touch.fingerId;
                     if (touch.phase == TouchPhase.Began)
                     {
-                        DoJump();
+                        DoJump(playerJumpLimitHight);
                     }
                 }
             }
@@ -583,7 +581,7 @@ public class Player : MonoBehaviour
         {
             if (groundCheck.IsInGround || isGripWall)
             {
-                DoJump();
+                DoJump(playerJumpLimitHight);
             }
         }
     }
@@ -597,7 +595,7 @@ public class Player : MonoBehaviour
         {
             if (groundCheck.IsInGround || isGripWall)
             {
-                DoJump();
+                DoJump(playerJumpLimitHight);
             }
         }
         else
@@ -606,11 +604,12 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void DoJump()
+    private void DoJump(float jumpLimitHight)
     {
         isJump = true;
         playerJumpPos = transform.position.y;
         playerJumpTime = 0f;
+        this.jumpLimitHight = jumpLimitHight;
 
         if (isGripWall)
         {

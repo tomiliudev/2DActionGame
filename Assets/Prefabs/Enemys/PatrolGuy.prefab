@@ -230,7 +230,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f4fd927155504f2a807231a5639241b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boundHight: 3
+  boundHight: 1.5
   isPlayerStepOn: 0
 --- !u!114 &1524803782435951698
 MonoBehaviour:
