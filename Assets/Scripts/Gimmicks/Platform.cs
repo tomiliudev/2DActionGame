@@ -45,6 +45,12 @@ public class Platform : MonoBehaviour
     private float targetPositionX;// 目標X座標
     private float targetPositionY;// 目標Y座標
 
+    private Vector2 oldPos = Vector2.zero;
+    public Vector2 SelfVelocity
+    {
+        get; private set;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -152,6 +158,10 @@ public class Platform : MonoBehaviour
         //transform.Translate(direction * moveSpeed * Time.fixedDeltaTime);
 
         rb2d.MovePosition(Vector2.MoveTowards(transform.position, movePos, moveSpeed * Time.fixedDeltaTime));
+
+        // 速度 = 距離 / 時間
+        SelfVelocity = (rb2d.position - oldPos) / Time.fixedDeltaTime;
+        oldPos = rb2d.position;
     }
 
 

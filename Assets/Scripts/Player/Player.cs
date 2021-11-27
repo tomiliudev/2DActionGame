@@ -75,6 +75,9 @@ public class Player : MonoBehaviour
         get; set;
     }
 
+    // 動く床の移動速度
+    private Vector2 platformVelocity;
+
     // 画面タッチのfingerIdを管理する
     Dictionary<TouchType, int> fingerIdDic = new Dictionary<TouchType, int>();
 
@@ -128,40 +131,48 @@ public class Player : MonoBehaviour
 
         if (!gm.IsGameClear)
         {
-            float velocity_x = Run();
-            float velocity_y = Jump();
-
-            // 壁にへばり付いてる時
-            if (isGripWall)
-            {
-                velocity_y =　playerGravity - grippingPower;
-                if (velocity_y < 0f)
-                {
-                    velocity_y = 0f;
-                }
-                else
-                {
-                    velocity_y = -velocity_y;
-                }
-            }
-
-            if (iskickJump)
-            {
-                if (wallDirection == e_WallDirection.left && velocity_x < 0f) velocity_x = 0f;
-                if (wallDirection == e_WallDirection.right && velocity_x > 0f) velocity_x = 0f;
-            }
-
-            if (!canJumpHeight || headCheck.IsInGround || groundCheck.IsInGround)
-            {
-                iskickJump = false;
-            }
-
-            playerRg2d.velocity = new Vector2(velocity_x, velocity_y);
-
+            // プレイヤーの動きの処理
+            UpdateMovement();
 
             // プレイヤーの無敵状況を更新
             UpdateInvincibleInfo();
         }
+    }
+
+    /// <summary>
+    /// プレイヤー動き処理の更新
+    /// </summary>
+    void UpdateMovement()
+    {
+        float velocity_x = Run();
+        float velocity_y = Jump();
+
+        // 壁にへばり付いてる時
+        if (isGripWall)
+        {
+            velocity_y = playerGravity - grippingPower;
+            if (velocity_y < 0f)
+            {
+                velocity_y = 0f;
+            }
+            else
+            {
+                velocity_y = -velocity_y;
+            }
+        }
+
+        if (iskickJump)
+        {
+            if (wallDirection == e_WallDirection.left && velocity_x < 0f) velocity_x = 0f;
+            if (wallDirection == e_WallDirection.right && velocity_x > 0f) velocity_x = 0f;
+        }
+
+        if (!canJumpHeight || headCheck.IsInGround || groundCheck.IsInGround)
+        {
+            iskickJump = false;
+        }
+
+        playerRg2d.velocity = new Vector2(velocity_x, velocity_y) + platformVelocity;
     }
 
 
@@ -272,7 +283,7 @@ public class Player : MonoBehaviour
 
 
     /// <summary>
-    /// 敵に触れた時の処理
+    /// 当たり判定処理
     /// </summary>
     /// <param name="collision"></param>
     void OnCollisionEnter2D(Collision2D collision)
@@ -285,11 +296,14 @@ public class Player : MonoBehaviour
             case "Spike":
                 OnDamage(collision);
                 break;
+            case "Platform":
+                platformVelocity = collision.transform.GetComponent<Platform>().SelfVelocity;
+                break;
         }
     }
 
     /// <summary>
-    /// 敵に触れ続ける時の処理
+    /// 当たり判定処理
     /// </summary>
     /// <param name="collision"></param>
     private void OnCollisionStay2D(Collision2D collision)
@@ -301,6 +315,19 @@ public class Player : MonoBehaviour
                 break;
             case "Spike":
                 OnDamage(collision);
+                break;
+            case "Platform":
+                platformVelocity = collision.transform.GetComponent<Platform>().SelfVelocity;
+                break;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        switch (collision.transform.tag)
+        {
+            case "Platform":
+                platformVelocity = Vector2.zero;
                 break;
         }
     }
