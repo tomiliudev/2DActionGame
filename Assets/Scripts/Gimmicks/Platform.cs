@@ -4,11 +4,22 @@ using UnityEngine;
 public class Platform : MonoBehaviour
 {
     [SerializeField] Rigidbody2D rb2d;
+    [SerializeField] SpriteRenderer sr;
+    [SerializeField] PlatformEffector2D pe2d;
+
     [SerializeField] e_MoveType moveType;
     [SerializeField] float moveSpeed = 3f;
 
     [SerializeField] float moveDistance = 3f;
     [SerializeField] e_FirstDirectionType firstDirection;
+
+    [Header("消える足場")]
+    [SerializeField] bool isHidePlatform;
+    [SerializeField] float hideSpeed;// 消えるスピード
+    [SerializeField] float hideInterval;// 非表示の時間間隔
+    [SerializeField] float appearInterval;// 表示の時間間隔
+    [SerializeField] e_HideType firstHideType;
+    [SerializeField] float delayTime;// 遅延実行時間
 
     GameManager gm;
     PolygonCollider2D cameraCollider;
@@ -51,6 +62,19 @@ public class Platform : MonoBehaviour
         get; private set;
     }
 
+    private Color selfColor;
+    float alpha = 0f;
+    private enum e_HideType
+    {
+        hide,
+        appear
+    }
+    private e_HideType hideType = e_HideType.hide;
+    private float intervalTime;
+    private float _delayTime;
+    private bool isSetLayerMask = false;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -58,6 +82,24 @@ public class Platform : MonoBehaviour
         cameraCollider = gm.cameraCollider;
 
         position = transform.position;
+        selfColor = sr.color;
+
+        hideType = firstHideType;
+
+        SetupFirstMovePos();
+        SetupFirstHideMode();
+    }
+
+    
+    private void FixedUpdate()
+    {
+        Move();
+
+        UpdateHideMode();
+    }
+
+    private void SetupFirstMovePos()
+    {
         switch (moveType)
         {
             case e_MoveType.freeze:
@@ -101,11 +143,6 @@ public class Platform : MonoBehaviour
                 movePos = new Vector2(targetPositionX, position.y);
                 break;
         }
-    }
-
-    private void FixedUpdate()
-    {
-        Move();
     }
 
     private void Move()
@@ -164,7 +201,78 @@ public class Platform : MonoBehaviour
         oldPos = rb2d.position;
     }
 
+    private void SetupFirstHideMode()
+    {
+        if (!isHidePlatform) return;
+        switch (firstHideType)
+        {
+            case e_HideType.hide:
+                sr.color = new Color(selfColor.r, selfColor.g, selfColor.b, 0f);
+                pe2d.colliderMask = new LayerMask();
+                break;
+            case e_HideType.appear:
+                sr.color = new Color(selfColor.r, selfColor.g, selfColor.b, 1f);
+                pe2d.colliderMask = ~0;//(Everything)
+                break;
+        }
+    }
 
+    /// <summary>
+    /// 表示モードを更新
+    /// </summary>
+    private void UpdateHideMode()
+    {
+        if (isHidePlatform)
+        {
+            _delayTime += Time.fixedDeltaTime;
+            if (_delayTime < delayTime) return;
+            switch (hideType)
+            {
+                case e_HideType.hide:
+                    if (sr.color.a <= 0f)
+                    {
+                        intervalTime += Time.fixedDeltaTime;
+                        if (intervalTime >= hideInterval)
+                        {
+                            hideType = e_HideType.appear;
+                            intervalTime = 0f;
+                        }
+                    }
+                    else
+                    {
+                        alpha += -hideSpeed * Time.fixedDeltaTime;
+                    }
+                    break;
+                case e_HideType.appear:
+                    if (sr.color.a >= 1f)
+                    {
+                        intervalTime += Time.fixedDeltaTime;
+                        if (intervalTime >= appearInterval)
+                        {
+                            hideType = e_HideType.hide;
+                            intervalTime = 0f;
+                        }
+                    }
+                    else
+                    {
+                        alpha += hideSpeed * Time.fixedDeltaTime;
+                    }
+                    break;
+            }
+            sr.color = new Color(selfColor.r, selfColor.g, selfColor.b, alpha);
+            if (!isSetLayerMask && sr.color.a > 0f)
+            {
+                isSetLayerMask = true;
+                pe2d.colliderMask = ~0;//(Everything)
+            }
+            if(isSetLayerMask && sr.color.a <= 0f)
+            {
+                isSetLayerMask = false;
+                pe2d.colliderMask = new LayerMask();
+            }
+        }
+    }
+    
     private void OnTriggerExit2D(Collider2D collision)
     {
         if(collision.tag == "CameraCollider")

@@ -99,10 +99,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb2d: {fileID: 5418330001747943508}
+  sr: {fileID: 3620942242636635213}
+  pe2d: {fileID: 5309024033059932309}
   moveType: 0
   moveSpeed: 3
   moveDistance: 3
   firstDirection: 0
+  isHidePlatform: 0
+  hideSpeed: 0
+  hideInterval: 0
 --- !u!61 &3620942242636635215
 BoxCollider2D:
   m_ObjectHideFlags: 0
