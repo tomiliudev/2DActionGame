@@ -53,7 +53,7 @@ public class SlimeEnemy : Enemy
                         jumpLimitHeight = JumpLimitHeightMax;
                     }
                     // 常にジャンプではなく、一定の確率でジャンプする
-                    else if (Random.Range(1, 100) > 80)
+                    else if (Random.Range(1, 100) > 95)
                     {
                         isJump = true;
                         jumpPos = transform.position.y;
@@ -62,8 +62,12 @@ public class SlimeEnemy : Enemy
                     else
                     {
                         isJump = false;
-                        jumpSpeed = -gravity;
+                        jumpSpeed = 0f;
                     }
+                }
+                else if (!isJump)
+                {
+                    jumpSpeed = -jumpForce;
                 }
 
                 if (isJump)

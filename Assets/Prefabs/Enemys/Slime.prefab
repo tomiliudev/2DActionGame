@@ -177,7 +177,7 @@ MonoBehaviour:
   cc2D: {fileID: 0}
   capsuleCollider2D: {fileID: 3906090396950797095}
   moveSpeed: 3
-  gravity: 3
+  gravity: 10
   wallCollisionCheck: {fileID: 7093392002339172005}
   groundCollisionCheck: {fileID: 0}
   objectCollision: {fileID: 8154438474186868970}
@@ -328,7 +328,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.45, y: 0.01}
+  m_Size: {x: 0.7, y: 0.01}
   m_EdgeRadius: 0
 --- !u!114 &1366413832728222555
 MonoBehaviour:
@@ -342,6 +342,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61b9187629175498985b2f6d31d9f4c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isCheckPlatform: 1
 --- !u!1 &4107453802292380623
 GameObject:
   m_ObjectHideFlags: 0
@@ -412,3 +413,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61b9187629175498985b2f6d31d9f4c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isCheckPlatform: 0
