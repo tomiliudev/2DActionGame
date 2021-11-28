@@ -70,6 +70,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61b9187629175498985b2f6d31d9f4c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isCheckPlatform: 0
 --- !u!1 &6968699689873146730
 GameObject:
   m_ObjectHideFlags: 0
@@ -140,6 +141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61b9187629175498985b2f6d31d9f4c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isCheckPlatform: 1
 --- !u!1 &6968699690490263137
 GameObject:
   m_ObjectHideFlags: 0

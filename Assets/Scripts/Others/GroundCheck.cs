@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class GroundCheck : MonoBehaviour
 {
+    [SerializeField] bool isCheckPlatform;
+
     enum GroundTagType {
         Ground,
         Platform
@@ -15,64 +17,49 @@ public class GroundCheck : MonoBehaviour
         {
             return isInGround;
         }
-        set
+        private set
         {
             isInGround = value;
         }
     }
 
-    private bool isEnterGround, isStayGround, isExitGround;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void FixedUpdate()
     {
-        if (isEnterGround || isStayGround)
-        {
-            IsInGround = true;
-        }
-        //else if (isExitGround)でやると、動かない床ならいいが、高速移動する床での判定はうまく取れない
-        else
-        {
-            IsInGround = false;
-        }
 
-        isEnterGround = false;
-        isStayGround = false;
-        isExitGround = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (Enum.IsDefined(typeof(GroundTagType), collision.tag))
-        {
-            isEnterGround = true;
-        }
+        CheckOnGround(collision);
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (Enum.IsDefined(typeof(GroundTagType), collision.tag))
-        {
-            isStayGround = true;
-        }
+        CheckOnGround(collision);
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (Enum.IsDefined(typeof(GroundTagType), collision.tag))
         {
-            isExitGround = true;
+            IsInGround = false;
         } 
+    }
+
+    private void CheckOnGround(Collider2D collision)
+    {
+        GroundTagType tagType;
+        if(Enum.TryParse(collision.tag, out tagType))
+        {
+            switch (tagType)
+            {
+                case GroundTagType.Ground:
+                    IsInGround = true;
+                    break;
+                case GroundTagType.Platform:
+                    IsInGround = isCheckPlatform ? true : false;
+                    break;
+            }
+        }
     }
 }
