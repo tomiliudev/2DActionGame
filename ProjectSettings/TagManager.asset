@@ -10,7 +10,6 @@ TagManager:
   - CameraCollider
   - Wall
   - Spike
-  - Ladder
   layers:
   - Default
   - TransparentFX
@@ -23,7 +22,7 @@ TagManager:
   - Platform
   - Ground
   - Spike
-  - Ladder
+  - 
   - 
   - 
   - 
@@ -51,14 +50,8 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Gimmick
-    uniqueID: 1671720205
-    locked: 0
   - name: Enemy
     uniqueID: 796347903
-    locked: 0
-  - name: Player
-    uniqueID: 673632487
     locked: 0
   - name: UI
     uniqueID: 3818821831
