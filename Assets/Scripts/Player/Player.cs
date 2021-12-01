@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     [SerializeField] float playerJumpSpeed;
     [SerializeField] float playerJumpLimitHight;
     [SerializeField] float playerJumpLimitTime;
+    [SerializeField] float playerClimbSpeed;
     [SerializeField] GroundCheck headCheck;
     [SerializeField] AnimationCurve playerJumpCurve;
     [SerializeField] float stepOnRate;
@@ -64,6 +65,23 @@ public class Player : MonoBehaviour
         left
     }
     private e_WallDirection wallDirection = e_WallDirection.none;// 触れた壁はプレイヤーの右なのか左なのか
+
+    bool isCliming;
+    bool canClimbUp;
+    bool canClimbDown;
+    float ladderTopPos;
+    float ladderBottomPos;
+    Vector2 ladderCenter = Vector2.zero;
+    Vector2 ladderExtents = Vector2.zero;
+    float playerBottomPos;
+    enum e_ClimbType
+    {
+        none,
+        climbUp,
+        climbDown
+    }
+    e_ClimbType climbType = e_ClimbType.none;
+
 
     private float playerJumpPos;
     private float playerJumpTime;
@@ -175,51 +193,6 @@ public class Player : MonoBehaviour
         playerRg2d.velocity = new Vector2(velocity_x, velocity_y) + platformVelocity;
     }
 
-    float Climb()
-    {
-        float climbSpeed = 0f;
-        if (isCliming)
-        {
-            switch (climbType)
-            {
-                case e_ClimbType.climbUp:
-                    if (canClimbUp)
-                    {
-                        climbSpeed = 3f;
-                        playerAnimator.SetFloat("climbSpeed", 1f);
-                        playerAnimator.SetBool("climb", true);
-                    }
-                    else
-                    {
-                        climbSpeed = 0f;
-                        isCliming = false;
-                        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Ground"), LayerMask.NameToLayer("Player"), false);
-                    }
-                    break;
-                case e_ClimbType.climbDown:
-                    if (canClimbDown)
-                    {
-                        climbSpeed = -3f;
-                        playerAnimator.SetFloat("climbSpeed", 1f);
-                        playerAnimator.SetBool("climb", true);
-                    }
-                    else
-                    {
-                        climbSpeed = 0f;
-                        isCliming = false;
-                        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Ground"), LayerMask.NameToLayer("Player"), false);
-                    }
-                    break;
-                case e_ClimbType.none:
-                    playerAnimator.SetFloat("climbSpeed", 0f);
-                    break;
-            }
-        }
-
-        return climbSpeed;
-    }
-
-
     /// <summary>
     /// 横移動
     /// </summary>
@@ -289,6 +262,54 @@ public class Player : MonoBehaviour
         }
 
         return _playerJumpSpeed;
+    }
+
+    /// <summary>
+    /// ハシゴ登る
+    /// </summary>
+    /// <returns></returns>
+    float Climb()
+    {
+        float climbSpeed = 0f;
+        if (isCliming)
+        {
+            switch (climbType)
+            {
+                case e_ClimbType.climbUp:
+                    if (canClimbUp)
+                    {
+                        climbSpeed = playerClimbSpeed;
+                        playerAnimator.SetFloat("climbSpeed", 1f);
+                        playerAnimator.SetBool("climb", true);
+                    }
+                    else
+                    {
+                        climbSpeed = 0f;
+                        isCliming = false;
+                        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Ground"), LayerMask.NameToLayer("Player"), false);
+                    }
+                    break;
+                case e_ClimbType.climbDown:
+                    if (canClimbDown)
+                    {
+                        climbSpeed = -playerClimbSpeed;
+                        playerAnimator.SetFloat("climbSpeed", 1f);
+                        playerAnimator.SetBool("climb", true);
+                    }
+                    else
+                    {
+                        climbSpeed = 0f;
+                        isCliming = false;
+                        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Ground"), LayerMask.NameToLayer("Player"), false);
+                    }
+                    break;
+                case e_ClimbType.none:
+                    playerAnimator.SetFloat("climbSpeed", 0f);
+                    break;
+            }
+        }
+
+        return climbSpeed;
     }
 
 
@@ -378,41 +399,27 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        GripWall(collision);
+        switch (collision.tag)
+        {
+            case "Wall":
+                CheckCanKickWall(collision);
+                break;
+            case "Ladder":
+                CheckCanClimbLadder(collision);
+                break;
+        }
     }
-
-    bool isCliming;
-    bool canClimbUp;
-    bool canClimbDown;
-    float ladderTopPos;
-    float ladderBottomPos;
-    Vector2 ladderCenter = Vector2.zero;
-    Vector2 ladderExtents = Vector2.zero;
-    float playerBottomPos;
-    Vector2 playerCenter = Vector2.zero;
-    Vector2 playerExtents = Vector2.zero;
-    enum e_ClimbType
-    {
-        none,
-        climbUp,
-        climbDown
-    }
-    e_ClimbType climbType = e_ClimbType.none;
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        GripWall(collision);
-
-
-        if (collision.tag == "Ladder")
+        switch (collision.tag)
         {
-            ladderCenter = collision.GetComponent<BoxCollider2D>().bounds.center;
-            ladderExtents = collision.GetComponent<BoxCollider2D>().bounds.extents;
-            ladderTopPos = ladderCenter.y + ladderExtents.y;
-            ladderBottomPos = ladderCenter.y - ladderExtents.y;
-            playerBottomPos = playerCollider.bounds.center.y - playerCollider.bounds.extents.y;
-            canClimbUp = ladderTopPos > playerBottomPos;
-            canClimbDown = ladderBottomPos < playerBottomPos;
+            case "Wall":
+                CheckCanKickWall(collision);
+                break;
+            case "Ladder":
+                CheckCanClimbLadder(collision);
+                break;
         }
     }
 
@@ -430,6 +437,8 @@ public class Player : MonoBehaviour
             canClimbUp = false;
             canClimbDown = false;
             isCliming = false;
+            ladderTopPos = 0f;
+            ladderBottomPos = 0f;
             Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Ground"), LayerMask.NameToLayer("Player"), false);
             playerAnimator.SetFloat("climbSpeed", 1f);
             playerAnimator.SetBool("climb", false);
@@ -437,9 +446,9 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
-    /// 壁をつかむ
+    /// 壁キック可能かをチェック
     /// </summary>
-    private void GripWall(Collider2D collision)
+    private void CheckCanKickWall(Collider2D collision)
     {
         if (collision.tag == "Wall")
         {
@@ -469,6 +478,24 @@ public class Player : MonoBehaviour
                 playerAnimator.SetBool("wallj", false);
             }
         }
+    }
+
+    /// <summary>
+    /// ハシゴを登れるかチェック
+    /// </summary>
+    /// <param name="collision"></param>
+    private void CheckCanClimbLadder(Collider2D collision)
+    {
+        if (ladderTopPos == 0f && ladderBottomPos == 0f)
+        {
+            ladderCenter = collision.GetComponent<BoxCollider2D>().bounds.center;
+            ladderExtents = collision.GetComponent<BoxCollider2D>().bounds.extents;
+            ladderTopPos = ladderCenter.y + ladderExtents.y;
+            ladderBottomPos = ladderCenter.y - ladderExtents.y;
+        }
+        playerBottomPos = playerCollider.bounds.center.y - playerCollider.bounds.extents.y;
+        canClimbUp = ladderTopPos > playerBottomPos;
+        canClimbDown = ladderBottomPos < playerBottomPos;
     }
 
     /// <summary>
@@ -512,10 +539,13 @@ public class Player : MonoBehaviour
     {
         isDie = false;
         isJump = false;
+        isCliming = false;
 
         playerRg2d.velocity = new Vector2(0f, 0f);
         playerAnimator.SetBool("run", false);
         playerAnimator.SetBool("jump", false);
+        playerAnimator.SetFloat("climbSpeed", 1f);
+        playerAnimator.SetBool("climb", false);
         playerAnimator.SetBool("ground", true);
         playerAnimator.Play("PlayerIddle");
     }
@@ -571,14 +601,14 @@ public class Player : MonoBehaviour
     private void DoMovementOperationByPhone()
     {
         if (Application.isEditor) return;
-        DoRunByPhone();
-        DoJumpByPhone();
+        RunOperationUsePhone();
+        JumpOperationUsePhone();
     }
 
     /// <summary>
     /// スマホによる横移動
     /// </summary>
-    private void DoRunByPhone()
+    private void RunOperationUsePhone()
     {
         xPositionStatus = XPositionStatus.none;
         if (Input.touchCount > 0)
@@ -624,7 +654,7 @@ public class Player : MonoBehaviour
     /// <summary>
     /// スマホによるジャンプ操作
     /// </summary>
-    private void DoJumpByPhone()
+    private void JumpOperationUsePhone()
     {
         if (Application.isEditor) return;
         if (Input.touchCount > 0)
@@ -662,9 +692,52 @@ public class Player : MonoBehaviour
     private void DoMovementOperationByKeyborad()
     {
         if (!Application.isEditor) return;
-        DoRunByKeyborad();
-        DoJumpByKeyborad();
+        RunOperationUseKeyborad();
+        JumpOperationUseKeyborad();
+        ClimbOperationUseKeyborad();
+    }
 
+    /// <summary>
+    /// キーボードによる移動操作
+    /// </summary>
+    private void RunOperationUseKeyborad()
+    {
+        float horizontalKey = Input.GetAxis("Horizontal");
+        if (horizontalKey > 0f)
+        {
+            xPositionStatus = XPositionStatus.right;
+        }
+        else if (horizontalKey < 0f)
+        {
+            xPositionStatus = XPositionStatus.left;
+        }
+        else
+        {
+            xPositionStatus = XPositionStatus.none;
+        }
+    }
+
+    /// <summary>
+    /// キーボードによるジャンプ操作
+    /// </summary>
+    private void JumpOperationUseKeyborad()
+    {
+        switch (eJumpInputType)
+        {
+            case e_JumpInputType.upKeyDown:
+                OnUpArrowDown();
+                break;
+            case e_JumpInputType.upKeyKeep:
+                OnUpArrowKeep();
+                break;
+        }
+    }
+
+    /// <summary>
+    /// キーボードによるハシゴ操作
+    /// </summary>
+    private void ClimbOperationUseKeyborad()
+    {
         if (canClimbUp)
         {
             if (Input.GetKeyDown(KeyCode.UpArrow))
@@ -690,7 +763,8 @@ public class Player : MonoBehaviour
             if (Input.GetAxis("Vertical") > 0f)
             {
                 climbType = e_ClimbType.climbUp;
-            }else if (Input.GetAxis("Vertical") < 0f)
+            }
+            else if (Input.GetAxis("Vertical") < 0f)
             {
                 climbType = e_ClimbType.climbDown;
             }
@@ -698,42 +772,6 @@ public class Player : MonoBehaviour
             {
                 climbType = e_ClimbType.none;
             }
-        }
-    }
-
-    /// <summary>
-    /// キーボードによる移動操作
-    /// </summary>
-    private void DoRunByKeyborad()
-    {
-        float horizontalKey = Input.GetAxis("Horizontal");
-        if (horizontalKey > 0f)
-        {
-            xPositionStatus = XPositionStatus.right;
-        }
-        else if (horizontalKey < 0f)
-        {
-            xPositionStatus = XPositionStatus.left;
-        }
-        else
-        {
-            xPositionStatus = XPositionStatus.none;
-        }
-    }
-
-    /// <summary>
-    /// キーボードによるジャンプ操作
-    /// </summary>
-    private void DoJumpByKeyborad()
-    {
-        switch (eJumpInputType)
-        {
-            case e_JumpInputType.upKeyDown:
-                OnUpArrowDown();
-                break;
-            case e_JumpInputType.upKeyKeep:
-                OnUpArrowKeep();
-                break;
         }
     }
 

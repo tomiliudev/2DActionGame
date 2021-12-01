@@ -232,6 +232,7 @@ MonoBehaviour:
   playerJumpSpeed: 12
   playerJumpLimitHight: 2.5
   playerJumpLimitTime: 5
+  playerClimbSpeed: 3
   headCheck: {fileID: 6968699689225800538}
   playerJumpCurve:
     serializedVersion: 2
