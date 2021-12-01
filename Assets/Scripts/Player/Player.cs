@@ -145,7 +145,7 @@ public class Player : MonoBehaviour
     void UpdateMovement()
     {
         float velocity_x = Run();
-        float velocity_y = Jump();
+        float velocity_y = isCliming ? Climb() : Jump();
 
         // 壁にへばり付いてる時
         if (isGripWall)
@@ -173,6 +173,50 @@ public class Player : MonoBehaviour
         }
 
         playerRg2d.velocity = new Vector2(velocity_x, velocity_y) + platformVelocity;
+    }
+
+    float Climb()
+    {
+        float climbSpeed = 0f;
+        if (isCliming)
+        {
+            switch (climbType)
+            {
+                case e_ClimbType.climbUp:
+                    if (canClimbUp)
+                    {
+                        climbSpeed = 3f;
+                        playerAnimator.SetFloat("climbSpeed", 1f);
+                        playerAnimator.SetBool("climb", true);
+                    }
+                    else
+                    {
+                        climbSpeed = 0f;
+                        isCliming = false;
+                        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Ground"), LayerMask.NameToLayer("Player"), false);
+                    }
+                    break;
+                case e_ClimbType.climbDown:
+                    if (canClimbDown)
+                    {
+                        climbSpeed = -3f;
+                        playerAnimator.SetFloat("climbSpeed", 1f);
+                        playerAnimator.SetBool("climb", true);
+                    }
+                    else
+                    {
+                        climbSpeed = 0f;
+                        isCliming = false;
+                        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Ground"), LayerMask.NameToLayer("Player"), false);
+                    }
+                    break;
+                case e_ClimbType.none:
+                    playerAnimator.SetFloat("climbSpeed", 0f);
+                    break;
+            }
+        }
+
+        return climbSpeed;
     }
 
 
@@ -337,9 +381,39 @@ public class Player : MonoBehaviour
         GripWall(collision);
     }
 
+    bool isCliming;
+    bool canClimbUp;
+    bool canClimbDown;
+    float ladderTopPos;
+    float ladderBottomPos;
+    Vector2 ladderCenter = Vector2.zero;
+    Vector2 ladderExtents = Vector2.zero;
+    float playerBottomPos;
+    Vector2 playerCenter = Vector2.zero;
+    Vector2 playerExtents = Vector2.zero;
+    enum e_ClimbType
+    {
+        none,
+        climbUp,
+        climbDown
+    }
+    e_ClimbType climbType = e_ClimbType.none;
+
     private void OnTriggerStay2D(Collider2D collision)
     {
         GripWall(collision);
+
+
+        if (collision.tag == "Ladder")
+        {
+            ladderCenter = collision.GetComponent<BoxCollider2D>().bounds.center;
+            ladderExtents = collision.GetComponent<BoxCollider2D>().bounds.extents;
+            ladderTopPos = ladderCenter.y + ladderExtents.y;
+            ladderBottomPos = ladderCenter.y - ladderExtents.y;
+            playerBottomPos = playerCollider.bounds.center.y - playerCollider.bounds.extents.y;
+            canClimbUp = ladderTopPos > playerBottomPos;
+            canClimbDown = ladderBottomPos < playerBottomPos;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -349,6 +423,16 @@ public class Player : MonoBehaviour
             isGripWall = false;
             playerAnimator.SetBool("wallj", false);
             wallDirection = e_WallDirection.none;
+        }
+
+        if (collision.tag == "Ladder")
+        {
+            canClimbUp = false;
+            canClimbDown = false;
+            isCliming = false;
+            Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Ground"), LayerMask.NameToLayer("Player"), false);
+            playerAnimator.SetFloat("climbSpeed", 1f);
+            playerAnimator.SetBool("climb", false);
         }
     }
 
@@ -580,6 +664,41 @@ public class Player : MonoBehaviour
         if (!Application.isEditor) return;
         DoRunByKeyborad();
         DoJumpByKeyborad();
+
+        if (canClimbUp)
+        {
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                isCliming = true;
+                isJump = false;
+                Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Ground"), LayerMask.NameToLayer("Player"), true);
+            }
+        }
+
+        if (canClimbDown)
+        {
+            if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                isCliming = true;
+                isJump = false;
+                Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Ground"), LayerMask.NameToLayer("Player"), true);
+            }
+        }
+
+        if (isCliming)
+        {
+            if (Input.GetAxis("Vertical") > 0f)
+            {
+                climbType = e_ClimbType.climbUp;
+            }else if (Input.GetAxis("Vertical") < 0f)
+            {
+                climbType = e_ClimbType.climbDown;
+            }
+            else
+            {
+                climbType = e_ClimbType.none;
+            }
+        }
     }
 
     /// <summary>
@@ -652,6 +771,8 @@ public class Player : MonoBehaviour
 
     private void DoJump(float jumpLimitHight)
     {
+        if (isCliming) return;
+
         isJump = true;
         playerJumpPos = transform.position.y;
         playerJumpTime = 0f;
