@@ -112,14 +112,14 @@ public class Player : MonoBehaviour
         fingerIdDic.Add(TouchType.runTouch, -1);
         fingerIdDic.Add(TouchType.jumpTouch, -1);
 
-        if (Application.isEditor)
-        {
-            playerRg2d.gravityScale = 0f;
-        }
-        else
-        {
-            playerRg2d.gravityScale = 5f;
-        }
+        //if (Application.isEditor)
+        //{
+        //    playerRg2d.gravityScale = 0f;
+        //}
+        //else
+        //{
+        //    playerRg2d.gravityScale = 5f;
+        //}
     }
 
     private void Update()
@@ -162,7 +162,7 @@ public class Player : MonoBehaviour
     /// </summary>
     void UpdateMovement()
     {
-        float velocity_x = Run();
+        float velocity_x = isCliming ? 0f : Run();
         float velocity_y = isCliming ? Climb() : Jump();
 
         // 壁にへばり付いてる時
@@ -494,8 +494,13 @@ public class Player : MonoBehaviour
             ladderBottomPos = ladderCenter.y - ladderExtents.y;
         }
         playerBottomPos = playerCollider.bounds.center.y - playerCollider.bounds.extents.y;
-        canClimbUp = ladderTopPos > playerBottomPos;
-        canClimbDown = ladderBottomPos < playerBottomPos;
+        canClimbUp = ladderTopPos - 0.1f > playerBottomPos;
+        canClimbDown = ladderBottomPos + 0.1f < playerBottomPos;
+
+        if (isCliming)
+        {
+            transform.position = new Vector2(ladderCenter.x, transform.position.y);
+        }
     }
 
     /// <summary>
@@ -548,6 +553,7 @@ public class Player : MonoBehaviour
         playerAnimator.SetBool("climb", false);
         playerAnimator.SetBool("ground", true);
         playerAnimator.Play("PlayerIddle");
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Ground"), LayerMask.NameToLayer("Player"), false);
     }
 
     /// <summary>
@@ -603,6 +609,7 @@ public class Player : MonoBehaviour
         if (Application.isEditor) return;
         RunOperationUsePhone();
         JumpOperationUsePhone();
+        ClimbOperationUsePhone();
     }
 
     /// <summary>
@@ -682,6 +689,56 @@ public class Player : MonoBehaviour
             foreach (TouchType key in keys)
             {
                 fingerIdDic[key] = -1;
+            }
+        }
+    }
+
+    /// <summary>
+    /// スマホによるハシゴ操作
+    /// </summary>
+    private void ClimbOperationUsePhone()
+    {
+        if (Input.touchCount > 0)
+        {
+            TouchType touchType = TouchType.runTouch;
+            Touch touch = GetTouchInfo(touchType);
+
+            if (touch.position.x < Screen.width / 2)
+            {
+                // fingerIdを記録しておく
+                fingerIdDic[touchType] = touch.fingerId;
+
+                if (canClimbUp)
+                {
+                    if (touch.deltaPosition.y > 10f)
+                    {
+                        isCliming = true;
+                        isJump = false;
+                        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Ground"), LayerMask.NameToLayer("Player"), true);
+                        climbType = e_ClimbType.climbUp;
+                    }
+                }
+
+                if (canClimbDown)
+                {
+                    if (touch.deltaPosition.y < -10f)
+                    {
+                        isCliming = true;
+                        isJump = false;
+                        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Ground"), LayerMask.NameToLayer("Player"), true);
+                        climbType = e_ClimbType.climbDown;
+                    }
+                }
+
+                if (isCliming)
+                {
+                    switch (touch.phase)
+                    {
+                        case TouchPhase.Ended:
+                            climbType = e_ClimbType.none;
+                            break;
+                    }
+                }
             }
         }
     }
