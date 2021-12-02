@@ -11,6 +11,7 @@ TagManager:
   - Wall
   - Spike
   - Ladder
+  - WeakBlock
   layers:
   - Default
   - TransparentFX

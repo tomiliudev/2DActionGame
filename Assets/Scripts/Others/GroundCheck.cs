@@ -7,7 +7,8 @@ public class GroundCheck : MonoBehaviour
 
     enum GroundTagType {
         Ground,
-        Platform
+        Platform,
+        WeakBlock,
     }
 
     private bool isInGround;
@@ -54,6 +55,7 @@ public class GroundCheck : MonoBehaviour
             switch (tagType)
             {
                 case GroundTagType.Ground:
+                case GroundTagType.WeakBlock:
                     IsInGround = true;
                     break;
                 case GroundTagType.Platform:
