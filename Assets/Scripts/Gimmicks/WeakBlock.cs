@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Linq;
 using UnityEngine;
 
 public class WeakBlock : MonoBehaviour
@@ -23,9 +22,9 @@ public class WeakBlock : MonoBehaviour
 
     IEnumerator CrushAnimation()
     {
-        
         float shackTime = 1.5f;
         gameObject.ShakePosition(new Vector2(0.1f, 0f), shackTime, 0f);
+        
         ps.Play();
 
         yield return new WaitForSeconds(shackTime);
