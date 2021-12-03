@@ -12,6 +12,8 @@ TagManager:
   - Spike
   - Ladder
   - WeakBlock
+  - PlayerFoot
+  - PlayerHead
   layers:
   - Default
   - TransparentFX
@@ -25,7 +27,7 @@ TagManager:
   - Ground
   - Spike
   - Ladder
-  - 
+  - WeakBlock
   - 
   - 
   - 

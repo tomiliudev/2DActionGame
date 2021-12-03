@@ -5,9 +5,12 @@ public class PatrolGuyEnemy : Enemy
 {
     private bool isRight;
 
+    private int groundLayerMask;
+
     // Start is called before the first frame update
     void Start()
     {
+        groundLayerMask = 1 << LayerMask.NameToLayer("WeakBlock") | 1 << LayerMask.NameToLayer("Ground");
         StartCoroutine(Move());
     }
 
@@ -26,8 +29,10 @@ public class PatrolGuyEnemy : Enemy
 
             if (base.sr.isVisible)
             {
+                var hit_weakBlock = Physics2D.Raycast(transform.position, Vector2.down, 0.6f, groundLayerMask);
+
                 if (base.wallCollisionCheck != null && base.wallCollisionCheck.IsOn
-                    || base.groundCollisionCheck != null && !base.groundCollisionCheck.IsOn
+                    || hit_weakBlock.collider == null
                 )
                 {
                     isRight = !isRight;

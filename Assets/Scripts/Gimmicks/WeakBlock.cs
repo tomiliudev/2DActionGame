@@ -5,13 +5,21 @@ public class WeakBlock : MonoBehaviour
 {
     [SerializeField] Rigidbody2D rg2d;
     [SerializeField] ParticleSystem ps;
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        switch (collision.tag)
+        {
+            case "PlayerFoot":
+                StartCoroutine(CrushAnimation());
+                break;
+        }
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         switch (collision.collider.tag)
         {
-            case "Player":
-                StartCoroutine(CrushAnimation());
-                break;
             case "Ground":
                 Destroy(gameObject);
                 break;
@@ -27,6 +35,6 @@ public class WeakBlock : MonoBehaviour
 
         yield return new WaitForSeconds(shackTime);
 
-        rg2d.velocity = new Vector2(0f, -3f);
+        rg2d.velocity = new Vector2(0f, -6f);
     }
 }

@@ -9,7 +9,6 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected float moveSpeed;
     [SerializeField] protected float gravity;
     [SerializeField] protected EnemyCollisionCheck wallCollisionCheck;
-    [SerializeField] protected EnemyCollisionCheck groundCollisionCheck;
     [SerializeField] protected ObjectCollision objectCollision;
     [SerializeField] protected Animator animator;
     [SerializeField] protected PickHeart pickHeart;
