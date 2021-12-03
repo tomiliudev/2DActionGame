@@ -6,6 +6,7 @@ public class WeakBlock : MonoBehaviour
 {
     [SerializeField] Rigidbody2D rg2d;
     [SerializeField] Animator animator;
+    [SerializeField] ParticleSystem ps;
     private void OnCollisionEnter2D(Collision2D collision)
     {
         switch (collision.collider.tag)
@@ -25,6 +26,7 @@ public class WeakBlock : MonoBehaviour
         
         float shackTime = 1.5f;
         gameObject.ShakePosition(new Vector2(0.1f, 0f), shackTime, 0f);
+        ps.Play();
 
         yield return new WaitForSeconds(shackTime);
 
