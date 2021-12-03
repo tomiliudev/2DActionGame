@@ -4,7 +4,6 @@ using UnityEngine;
 public class WeakBlock : MonoBehaviour
 {
     [SerializeField] Rigidbody2D rg2d;
-    [SerializeField] Animator animator;
     [SerializeField] ParticleSystem ps;
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -14,7 +13,6 @@ public class WeakBlock : MonoBehaviour
                 StartCoroutine(CrushAnimation());
                 break;
             case "Ground":
-                animator.SetTrigger("crush");
                 Destroy(gameObject);
                 break;
         }
