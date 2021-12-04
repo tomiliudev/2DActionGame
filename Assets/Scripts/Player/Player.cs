@@ -341,7 +341,7 @@ public class Player : MonoBehaviour
             }
             else
             {
-                OnDamage(collision);
+                OnDamage();
             }
         }
     }
@@ -359,7 +359,7 @@ public class Player : MonoBehaviour
                 CheckContactJudgment(collision);
                 break;
             case "Spike":
-                OnDamage(collision);
+                OnDamage();
                 break;
             case "Platform":
                 platformVelocity = collision.transform.GetComponent<Platform>().SelfVelocity;
@@ -379,7 +379,7 @@ public class Player : MonoBehaviour
                 CheckContactJudgment(collision);
                 break;
             case "Spike":
-                OnDamage(collision);
+                OnDamage();
                 break;
             case "Platform":
                 platformVelocity = collision.transform.GetComponent<Platform>().SelfVelocity;
@@ -506,8 +506,7 @@ public class Player : MonoBehaviour
     /// <summary>
     /// ダメージ受けた時
     /// </summary>
-    /// <param name="collision"></param>
-    private void OnDamage(Collision2D collision)
+    public void OnDamage()
     {
         // 無敵期間中
         if (IsInvincible) return;

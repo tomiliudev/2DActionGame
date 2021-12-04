@@ -17,7 +17,8 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         Stage1,
         Stage2,
         Stage3,
-        Stage4
+        Stage4,
+        Stage5
     }
     private e_StageName currentStage;
 
@@ -51,7 +52,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
     private void Start()
     {
-        currentStage = e_StageName.Stage4;
+        currentStage = e_StageName.Stage5;
         LoadSceneTo(currentStage.ToString());
     }
 
