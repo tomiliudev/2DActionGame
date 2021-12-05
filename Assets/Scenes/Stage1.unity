@@ -3767,10 +3767,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PatrolGuy
       objectReference: {fileID: 0}
-    - target: {fileID: 109629449863652747, guid: beb5e78287df94cdbb2c733970a7a7da, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 109629449863652751, guid: beb5e78287df94cdbb2c733970a7a7da, type: 3}
       propertyPath: m_RootOrder
       value: 0

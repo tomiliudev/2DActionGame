@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.Tilemaps;
 
 public class Player : MonoBehaviour
 {
@@ -21,6 +23,9 @@ public class Player : MonoBehaviour
     [SerializeField] AnimationCurve playerJumpCurve;
     [SerializeField] float stepOnRate;
     [SerializeField] float grippingPower;// 壁に掴む力
+
+    [SerializeField] SpriteRenderer bowLine;
+    [SerializeField] SpriteRenderer bow;
 
 
     [Header("Jump入力タイプ")][SerializeField] e_JumpInputType eJumpInputType = e_JumpInputType.upKeyDown;
@@ -111,15 +116,6 @@ public class Player : MonoBehaviour
         // fingerIdの初期化
         fingerIdDic.Add(TouchType.runTouch, -1);
         fingerIdDic.Add(TouchType.jumpTouch, -1);
-
-        //if (Application.isEditor)
-        //{
-        //    playerRg2d.gravityScale = 0f;
-        //}
-        //else
-        //{
-        //    playerRg2d.gravityScale = 5f;
-        //}
     }
 
     private void Update()
@@ -156,6 +152,52 @@ public class Player : MonoBehaviour
             UpdateInvincibleInfo();
         }
     }
+
+    float rayMaxDistance = 100f;
+    Vector2 diffPos;
+    Vector2 direction;
+    float bowLineFadeTime = 0.1f;
+    public void BowAttack()
+    {
+        SpriteRenderer _bowLine = Instantiate(bowLine);
+
+        var trans = playerAnimator.GetComponent<Transform>();
+        direction = trans.localScale.x > 0f ? Vector2.right : Vector2.left;
+
+        var hit = Physics2D.Raycast(transform.position, direction, rayMaxDistance,
+            1 << LayerMask.NameToLayer("Enemy") | 1 << LayerMask.NameToLayer("Ground")
+        );
+        
+        if (hit.collider != null)
+        {
+            diffPos = hit.point - (Vector2)transform.position;
+
+            _bowLine.size = new Vector2(Mathf.Abs(diffPos.x), _bowLine.size.y);
+            _bowLine.transform.position = (hit.point + (Vector2)transform.position) / 2;
+            _bowLine.gameObject.FadeTo(0f, bowLineFadeTime, 0f);
+            Destroy(_bowLine.gameObject, bowLineFadeTime);
+
+            if (hit.transform.tag == "Ground")
+            {
+                SpriteRenderer _bow = Instantiate(bow);
+                float _bowWidth = _bow.size.x;
+                Vector2 _bowPosition = new Vector2(
+                    direction == Vector2.right ? hit.point.x - _bowWidth / 2 : hit.point.x + _bowWidth / 2
+                    , hit.point.y
+                );
+
+                _bow.transform.position = _bowPosition;
+                _bow.transform.localScale = new Vector3(trans.localScale.x, _bow.transform.localScale.y);
+            }
+            else if(hit.transform.tag == "Enemy")
+            {
+                hit.transform.GetComponent<Enemy>().OnDamage();
+            }
+
+            //Debug.DrawRay(transform.position, direction * Mathf.Abs(diffPos.x), Color.red);
+        }
+    }
+
 
     /// <summary>
     /// プレイヤー動き処理の更新
@@ -663,12 +705,16 @@ public class Player : MonoBehaviour
     private void JumpOperationUsePhone()
     {
         if (Application.isEditor) return;
+        
         if (Input.touchCount > 0)
         {
             if (groundCheck.IsInGround || isGripWall)
             {
                 TouchType touchType = TouchType.jumpTouch;
                 Touch touch = GetTouchInfo(touchType);
+
+                // UIボタン類をタップした時に何もしない
+                if (EventSystem.current.IsPointerOverGameObject(touch.fingerId)) return;
 
                 if (touch.position.x > Screen.width / 2)
                 {

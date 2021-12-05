@@ -65,18 +65,23 @@ public class Enemy : MonoBehaviour
         if (isDead) return;
         if (objectCollision.isPlayerStepOn)
         {
-            isDead = true;
-
-            var pickHeartObj = Instantiate(pickHeart, transform.parent);
-            pickHeartObj.transform.position = transform.position;
-
-            Destroy(gameObject);
+            OnDamage();
 
             //rb2D.velocity = new Vector2(0f, 0f);
             //if (cc2D != null) cc2D.enabled = false;
             //if (capsuleCollider2D != null) capsuleCollider2D.enabled = false;
             //if (animator != null) animator.enabled = false;
         }
+    }
+
+    public void OnDamage()
+    {
+        isDead = true;
+
+        var pickHeartObj = Instantiate(pickHeart, transform.parent);
+        pickHeartObj.transform.position = transform.position;
+
+        Destroy(gameObject);
     }
 
     /// <summary>
