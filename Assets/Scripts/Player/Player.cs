@@ -164,16 +164,17 @@ public class Player : MonoBehaviour
         var trans = playerAnimator.GetComponent<Transform>();
         direction = trans.localScale.x > 0f ? Vector2.right : Vector2.left;
 
-        var hit = Physics2D.Raycast(transform.position, direction, rayMaxDistance,
+        Vector2 bowStartPosition = transform.position - new Vector3(0f, 0.2f, 0f);
+
+        var hit = Physics2D.Raycast(bowStartPosition, direction, rayMaxDistance,
             1 << LayerMask.NameToLayer("Enemy") | 1 << LayerMask.NameToLayer("Ground")
         );
         
         if (hit.collider != null)
         {
             diffPos = hit.point - (Vector2)transform.position;
-
             _bowLine.size = new Vector2(Mathf.Abs(diffPos.x), _bowLine.size.y);
-            _bowLine.transform.position = (hit.point + (Vector2)transform.position) / 2;
+            _bowLine.transform.position = ((hit.point + bowStartPosition) / 2);
             _bowLine.gameObject.FadeTo(0f, bowLineFadeTime, 0f);
             Destroy(_bowLine.gameObject, bowLineFadeTime);
 
@@ -183,7 +184,7 @@ public class Player : MonoBehaviour
                 float _bowWidth = _bow.size.x;
                 Vector2 _bowPosition = new Vector2(
                     direction == Vector2.right ? hit.point.x - _bowWidth / 2 : hit.point.x + _bowWidth / 2
-                    , hit.point.y
+                    , bowStartPosition.y
                 );
 
                 _bow.transform.position = _bowPosition;
@@ -194,8 +195,10 @@ public class Player : MonoBehaviour
                 hit.transform.GetComponent<Enemy>().OnDamage();
             }
 
-            //Debug.DrawRay(transform.position, direction * Mathf.Abs(diffPos.x), Color.red);
+            //Debug.DrawRay(bowStartPosition, direction * Mathf.Abs(diffPos.x), Color.red);
         }
+
+        playerAnimator.SetTrigger("bow");
     }
 
 
