@@ -145,6 +145,9 @@ public class Player : MonoBehaviour
 
         if (!gm.IsGameClear)
         {
+            // プレイヤー向きの更新
+            UpdatePlayerDirection();
+
             // プレイヤーの動きの処理
             UpdateMovement();
 
@@ -159,6 +162,9 @@ public class Player : MonoBehaviour
     float bowLineFadeTime = 0.1f;
     public void BowAttack()
     {
+        // 壁にへばり付いている時は矢を放てない
+        if (isGripWall) return;
+
         SpriteRenderer _bowLine = Instantiate(bowLine);
 
         var trans = playerAnimator.GetComponent<Transform>();
@@ -201,6 +207,21 @@ public class Player : MonoBehaviour
         playerAnimator.SetTrigger("bow");
     }
 
+    /// <summary>
+    /// プレイヤーの向きの更新
+    /// </summary>
+    void UpdatePlayerDirection()
+    {
+        switch (xPositionStatus)
+        {
+            case XPositionStatus.left:
+                playerAnimator.GetComponent<Transform>().localScale = new Vector3(-1f, 1f, 1f);
+                break;
+            case XPositionStatus.right:
+                playerAnimator.GetComponent<Transform>().localScale = new Vector3(1f, 1f, 1f);
+                break;
+        }
+    }
 
     /// <summary>
     /// プレイヤー動き処理の更新
@@ -247,22 +268,23 @@ public class Player : MonoBehaviour
         switch (xPositionStatus)
         {
             case XPositionStatus.right:
-                playerAnimator.GetComponent<Transform>().localScale = new Vector3(1f, 1f, 1f);
-                playerAnimator.SetBool("run", true);
                 _playerRunSpeed = playerRunSpeed;
-                dushTime += Time.deltaTime;
                 break;
             case XPositionStatus.left:
-                playerAnimator.GetComponent<Transform>().localScale = new Vector3(-1f, 1f, 1f);
-                playerAnimator.SetBool("run", true);
                 _playerRunSpeed = -playerRunSpeed;
-                dushTime += Time.deltaTime;
                 break;
-            default:
-                playerAnimator.SetBool("run", false);
-                _playerRunSpeed = 0f;
-                dushTime = 0f;
-                break;
+        }
+
+        if (xPositionStatus == XPositionStatus.right || xPositionStatus == XPositionStatus.left)
+        {
+            playerAnimator.SetBool("run", true);
+            dushTime += Time.deltaTime;
+        }
+        else
+        {
+            _playerRunSpeed = 0f;
+            playerAnimator.SetBool("run", false);
+            dushTime = 0f;
         }
 
         if (beforeXPositionStatus != XPositionStatus.none && xPositionStatus != XPositionStatus.none && beforeXPositionStatus != xPositionStatus)
@@ -367,7 +389,6 @@ public class Player : MonoBehaviour
     void CheckContactJudgment(Collision2D collision)
     {
         float playerHeight = playerCollider.size.y;
-        playerHeight = playerHeight * transform.localScale.y;// プレイヤーのスケールをかけてあげることで高さを求め
 
         // 踏みつける判定の高さ
         float stepOnHeight = playerHeight * (stepOnRate / 100f);
