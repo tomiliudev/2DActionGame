@@ -4,11 +4,13 @@ using UnityEngine;
 public class GroundCheck : MonoBehaviour
 {
     [SerializeField] bool isCheckPlatform;
+    [SerializeField] bool isCheckBox;
 
     enum GroundTagType {
         Ground,
         Platform,
         WeakBlock,
+        Box,
     }
 
     private bool isInGround;
@@ -60,6 +62,9 @@ public class GroundCheck : MonoBehaviour
                     break;
                 case GroundTagType.Platform:
                     IsInGround = isCheckPlatform ? true : false;
+                    break;
+                case GroundTagType.Box:
+                    IsInGround = isCheckBox ? true : false;
                     break;
             }
         }
