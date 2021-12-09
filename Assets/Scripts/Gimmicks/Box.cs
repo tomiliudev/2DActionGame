@@ -16,6 +16,7 @@ public class Box : MonoBehaviour
 
         if(hp <= 0)
         {
+            explosionAnimator.gameObject.SetActive(true);
             explosionAnimator.SetTrigger("explosion");
             explosionAnimator.Update(0);
             Destroy(gameObject, explosionAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.length);
