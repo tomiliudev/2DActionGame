@@ -4,6 +4,7 @@ public class Box : MonoBehaviour
 {
     [SerializeField] Animator animator;
     [SerializeField] Animator explosionAnimator;
+    [SerializeField] GameObject fire;
     private int hp = 3;
 
     public void OnDamage()
@@ -17,9 +18,11 @@ public class Box : MonoBehaviour
         if(hp <= 0)
         {
             explosionAnimator.gameObject.SetActive(true);
+            explosionAnimator.transform.parent = null;
             explosionAnimator.SetTrigger("explosion");
-            explosionAnimator.Update(0);
-            Destroy(gameObject, explosionAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.length);
+            fire.SetActive(true);
+            fire.transform.parent = null;
+            Destroy(gameObject);
         }
     }
 }
