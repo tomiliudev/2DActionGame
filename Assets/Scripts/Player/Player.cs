@@ -173,7 +173,9 @@ public class Player : MonoBehaviour
         Vector2 bowStartPosition = transform.position - new Vector3(0f, 0.2f, 0f);
 
         var hit = Physics2D.Raycast(bowStartPosition, direction, rayMaxDistance,
-            1 << LayerMask.NameToLayer("Enemy") | 1 << LayerMask.NameToLayer("Ground")
+            1 << LayerMask.NameToLayer("Enemy")
+            | 1 << LayerMask.NameToLayer("Ground")
+            | 1 << LayerMask.NameToLayer("Box")
         );
         
         if (hit.collider != null)
@@ -199,6 +201,10 @@ public class Player : MonoBehaviour
             else if(hit.transform.tag == "Enemy")
             {
                 hit.transform.GetComponent<Enemy>().OnDamage();
+            }
+            else if (hit.transform.tag == "Box")
+            {
+                hit.transform.GetComponent<Box>().OnDamage();
             }
 
             //Debug.DrawRay(bowStartPosition, direction * Mathf.Abs(diffPos.x), Color.red);
