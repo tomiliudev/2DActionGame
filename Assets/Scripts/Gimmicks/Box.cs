@@ -2,11 +2,12 @@ using UnityEngine;
 
 public class Box : MonoBehaviour
 {
+    [SerializeField] e_DropType dropType;
     [SerializeField] Animator animator;
     [SerializeField] Explosion explosionAnimator;
     [SerializeField] GameObject fire;
     [SerializeField] GameObject heart;
-    [SerializeField] e_DropType dropType;
+    [SerializeField] GameObject coin;
 
     enum e_DropType
     {
@@ -57,13 +58,18 @@ public class Box : MonoBehaviour
     // ハート
     private void DropHeart()
     {
-        heart.transform.parent = null;
-        heart.SetActive(true);
+        Drop(heart);
     }
 
     // コイン
     private void DropCoin()
     {
+        Drop(coin);
+    }
 
+    private void Drop(GameObject obj)
+    {
+        obj.transform.parent = null;
+        obj.SetActive(true);
     }
 }
