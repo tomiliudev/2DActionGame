@@ -8,9 +8,17 @@ public class Fire : MonoBehaviour
         gm = GameManager.Instance;
     }
 
-    private void OnParticleCollision(GameObject other)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (other.tag == "Player")
+        if (collision.tag == "Player")
+        {
+            gm.player.OnDamage();
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.tag == "Player")
         {
             gm.player.OnDamage();
         }

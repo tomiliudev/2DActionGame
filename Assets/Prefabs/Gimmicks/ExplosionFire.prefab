@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1206324335563724269}
   - component: {fileID: 1206324335563724267}
   - component: {fileID: 1206324335563724268}
-  - component: {fileID: 7080632029466419827}
   m_Layer: 0
   m_Name: fire_yellow
   m_TagString: Untagged
@@ -3611,15 +3610,16 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 1
+    enabled: 0
     serializedVersion: 4
-    type: 0
+    type: 1
     collisionMode: 1
     colliderForce: 0
     multiplyColliderForceByParticleSize: 0
     multiplyColliderForceByParticleSpeed: 0
     multiplyColliderForceByCollisionAngle: 1
-    m_Planes: []
+    m_Planes:
+    - {fileID: 6968699690490263138, guid: 0cdb95a2609724b10850a5d43ee892ac, type: 3}
     m_Dampen:
       serializedVersion: 2
       minMaxState: 0
@@ -3794,13 +3794,14 @@ ParticleSystem:
   TriggerModule:
     enabled: 0
     serializedVersion: 2
-    inside: 1
+    inside: 0
     outside: 0
     enter: 0
     exit: 0
     colliderQueryMode: 0
     radiusScale: 1
-    primitives: []
+    primitives:
+    - {fileID: 6968699690490263138, guid: 0cdb95a2609724b10850a5d43ee892ac, type: 3}
   SubModule:
     serializedVersion: 2
     enabled: 0
@@ -4805,18 +4806,6 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
---- !u!114 &7080632029466419827
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1206324335563724270}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2aee72f419284d44bd36f48c74fa508, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1206324336931087721
 GameObject:
   m_ObjectHideFlags: 0
@@ -9632,6 +9621,8 @@ GameObject:
   - component: {fileID: 4105375227854580597}
   - component: {fileID: 557051901425107045}
   - component: {fileID: 3505612800034245478}
+  - component: {fileID: 740986894035867765}
+  - component: {fileID: 6437722924576428026}
   m_Layer: 0
   m_Name: ExplosionFire
   m_TagString: Untagged
@@ -14428,6 +14419,44 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!61 &740986894035867765
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6407570072430166146}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.2}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.42, y: 0.5}
+  m_EdgeRadius: 0
+--- !u!114 &6437722924576428026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6407570072430166146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2aee72f419284d44bd36f48c74fa508, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9016331723397854023
 GameObject:
   m_ObjectHideFlags: 0

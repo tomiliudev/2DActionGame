@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Explosion : MonoBehaviour
 {
+    [SerializeField] Animator explosionAnimator;
     GameManager gm;
 
     private void Start()
@@ -15,5 +16,12 @@ public class Explosion : MonoBehaviour
         {
             gm.player.OnDamage();
         }
+    }
+
+    public void OnExplosion()
+    {
+        explosionAnimator.gameObject.SetActive(true);
+        explosionAnimator.SetTrigger("explosion");
+        Destroy(gameObject, 0.15f);
     }
 }
