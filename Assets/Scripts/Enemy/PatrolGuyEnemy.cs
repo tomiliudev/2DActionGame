@@ -29,10 +29,10 @@ public class PatrolGuyEnemy : Enemy
 
             if (base.sr.isVisible)
             {
-                var hit_weakBlock = Physics2D.Raycast(transform.position, Vector2.down, 0.6f, groundLayerMask);
+                var hit_ground = Physics2D.Raycast(transform.position, Vector2.down, 0.6f, groundLayerMask);
 
                 if (base.wallCollisionCheck != null && base.wallCollisionCheck.IsOn
-                    || hit_weakBlock.collider == null
+                    || hit_ground.collider == null
                 )
                 {
                     isRight = !isRight;
