@@ -234,6 +234,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   playerGravity: 13
   playerJumpSpeed: 12
+  playerMushroomJumpSpeed: 15
   playerJumpLimitHight: 2.5
   playerJumpLimitTime: 5
   playerClimbSpeed: 3
@@ -244,30 +245,21 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 1
-      inSlope: -0.34588704
-      outSlope: -0.34588704
+      inSlope: -1.5271816
+      outSlope: -1.5271816
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.66068786
-      value: 0.7714766
-      inSlope: -0.86769706
-      outSlope: -0.86769706
+      time: 0.48908752
+      value: 0.25307453
+      inSlope: -1.5271816
+      outSlope: -1.5271816
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0.3
-      inSlope: -1.389507
-      outSlope: -1.389507
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4

@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] float playerGravity;
     [SerializeField] float playerJumpSpeed;
+    [SerializeField] float playerMushroomJumpSpeed;
     [SerializeField] float playerJumpLimitHight;
     [SerializeField] float playerJumpLimitTime;
     [SerializeField] float playerClimbSpeed;
@@ -409,7 +410,7 @@ public class Player : MonoBehaviour
 
             if (canJumpHeight && canTime && !headCheck.IsInGround)
             {
-                _playerJumpSpeed = playerJumpSpeed;
+                _playerJumpSpeed = playerMushroomJumpSpeed;
                 playerJumpTime += Time.deltaTime;
             }
             else
