@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Tilemaps;
 
 public class Player : MonoBehaviour
 {
@@ -234,8 +233,10 @@ public class Player : MonoBehaviour
     /// </summary>
     void UpdateMovement()
     {
+        CheckOnMushroom();
+
         float velocity_x = isCliming ? 0f : Run();
-        float velocity_y = isCliming ? Climb() : Jump();
+        float velocity_y = isCliming ? Climb() : isMushroomBounce ? MushroomBounce() : Jump();
 
         // 壁にへばり付いてる時
         if (isGripWall)
@@ -383,6 +384,42 @@ public class Player : MonoBehaviour
         }
 
         return climbSpeed;
+    }
+
+    void CheckOnMushroom()
+    {
+        if (groundCheck.IsInMushroom)
+        {
+            isJump = false;
+            isMushroomBounce = true;
+            playerJumpPos = transform.position.y;
+            playerJumpTime = 0f;
+        }
+    }
+
+    bool isMushroomBounce = false;
+    float MushroomBounce()
+    {
+        float _playerJumpSpeed = -playerGravity;
+
+        if (isMushroomBounce)
+        {
+            canJumpHeight = playerJumpPos + 3.5f > transform.position.y;
+            bool canTime = playerJumpLimitTime > playerJumpTime;
+
+            if (canJumpHeight && canTime && !headCheck.IsInGround)
+            {
+                _playerJumpSpeed = playerJumpSpeed;
+                playerJumpTime += Time.deltaTime;
+            }
+            else
+            {
+                isMushroomBounce = false;
+            }
+
+            _playerJumpSpeed *= playerJumpCurve.Evaluate(playerJumpTime);
+        }
+        return _playerJumpSpeed;
     }
 
 

@@ -15,6 +15,7 @@ TagManager:
   - PlayerFoot
   - PlayerHead
   - Box
+  - Mushroom
   layers:
   - Default
   - TransparentFX

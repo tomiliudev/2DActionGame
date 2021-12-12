@@ -30,7 +30,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6968699690490263138}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &6968699689225800539
 BoxCollider2D:
@@ -72,6 +72,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isCheckPlatform: 0
   isCheckBox: 0
+  isCheckMushroom: 0
 --- !u!1 &6968699689873146730
 GameObject:
   m_ObjectHideFlags: 0
@@ -102,7 +103,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6968699690490263138}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &6968699689873146708
 BoxCollider2D:
@@ -144,6 +145,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isCheckPlatform: 1
   isCheckBox: 1
+  isCheckMushroom: 1
 --- !u!1 &6968699690490263137
 GameObject:
   m_ObjectHideFlags: 0
@@ -175,8 +177,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6968699690720501175}
-  - {fileID: 6968699689873146709}
   - {fileID: 6968699689225800516}
+  - {fileID: 6968699689873146709}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

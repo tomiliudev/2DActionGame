@@ -5,12 +5,14 @@ public class GroundCheck : MonoBehaviour
 {
     [SerializeField] bool isCheckPlatform;
     [SerializeField] bool isCheckBox;
+    [SerializeField] bool isCheckMushroom;
 
     enum GroundTagType {
         Ground,
         Platform,
         WeakBlock,
         Box,
+        Mushroom,
     }
 
     private bool isInGround;
@@ -26,9 +28,17 @@ public class GroundCheck : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
+    private bool isInMushroom;
+    public bool IsInMushroom
     {
-
+        get
+        {
+            return isInMushroom;
+        }
+        private set
+        {
+            isInMushroom = value;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -46,6 +56,7 @@ public class GroundCheck : MonoBehaviour
         if (Enum.IsDefined(typeof(GroundTagType), collision.tag))
         {
             IsInGround = false;
+            IsInMushroom = false;
         } 
     }
 
@@ -65,6 +76,9 @@ public class GroundCheck : MonoBehaviour
                     break;
                 case GroundTagType.Box:
                     IsInGround = isCheckBox ? true : false;
+                    break;
+                case GroundTagType.Mushroom:
+                    IsInMushroom = isCheckMushroom ? true : false;
                     break;
             }
         }
