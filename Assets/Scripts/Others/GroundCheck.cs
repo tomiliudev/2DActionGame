@@ -7,6 +7,13 @@ public class GroundCheck : MonoBehaviour
     [SerializeField] bool isCheckBox;
     [SerializeField] bool isCheckMushroom;
 
+    enum e_CheckType
+    {
+        head,
+        foot
+    }
+    [SerializeField] e_CheckType checkType = e_CheckType.foot;
+
     enum GroundTagType {
         Ground,
         Platform,
@@ -15,40 +22,37 @@ public class GroundCheck : MonoBehaviour
         Mushroom,
     }
 
-    private bool isInGround;
-    public bool IsInGround
+    GameManager gm;
+
+    private void Start()
     {
-        get
-        {
-            return isInGround;
-        }
-        private set
-        {
-            isInGround = value;
-        }
+        gm = GameManager.Instance;
     }
 
+    private bool isInGround;
+    public bool IsInGround { get { return isInGround; } private set { isInGround = value; } }
+
     private bool isInMushroom;
-    public bool IsInMushroom
-    {
-        get
-        {
-            return isInMushroom;
-        }
-        private set
-        {
-            isInMushroom = value;
-        }
-    }
+    public bool IsInMushroom { get { return isInMushroom; } private set { isInMushroom = value; } }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        CheckOnGround(collision);
+        GroundTagType tagType;
+        if (Enum.TryParse(collision.tag, out tagType))
+        {
+            CheckInGround(tagType);
+
+            ShowDust(tagType);
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        CheckOnGround(collision);
+        GroundTagType tagType;
+        if (Enum.TryParse(collision.tag, out tagType))
+        {
+            CheckInGround(tagType);
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -60,27 +64,39 @@ public class GroundCheck : MonoBehaviour
         } 
     }
 
-    private void CheckOnGround(Collider2D collision)
+    private void CheckInGround(GroundTagType tagType)
     {
-        GroundTagType tagType;
-        if(Enum.TryParse(collision.tag, out tagType))
+        switch (tagType)
         {
-            switch (tagType)
-            {
-                case GroundTagType.Ground:
-                case GroundTagType.WeakBlock:
-                    IsInGround = true;
-                    break;
-                case GroundTagType.Platform:
-                    IsInGround = isCheckPlatform ? true : false;
-                    break;
-                case GroundTagType.Box:
-                    IsInGround = isCheckBox ? true : false;
-                    break;
-                case GroundTagType.Mushroom:
-                    IsInMushroom = isCheckMushroom ? true : false;
-                    break;
-            }
+            case GroundTagType.Ground:
+            case GroundTagType.WeakBlock:
+                IsInGround = true;
+                break;
+            case GroundTagType.Platform:
+                IsInGround = isCheckPlatform ? true : false;
+                break;
+            case GroundTagType.Box:
+                IsInGround = isCheckBox ? true : false;
+                break;
+            case GroundTagType.Mushroom:
+                IsInMushroom = isCheckMushroom ? true : false;
+                break;
+        }
+    }
+
+    private void ShowDust(GroundTagType tagType)
+    {
+        if (checkType != e_CheckType.foot) return;
+
+        switch (tagType)
+        {
+            case GroundTagType.Ground:
+            case GroundTagType.WeakBlock:
+            case GroundTagType.Platform:
+            case GroundTagType.Box:
+            case GroundTagType.Mushroom:
+                if (gm != null && gm.player != null) gm.player.ShowDust();
+                break;
         }
     }
 }

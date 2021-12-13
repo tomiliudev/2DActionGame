@@ -27,6 +27,7 @@ public class Player : MonoBehaviour
     [SerializeField] SpriteRenderer bowLine;
     [SerializeField] SpriteRenderer bow;
 
+    [SerializeField] ParticleSystem dust;
 
     [Header("Jump入力タイプ")][SerializeField] e_JumpInputType eJumpInputType = e_JumpInputType.upKeyDown;
     private enum e_JumpInputType
@@ -474,6 +475,16 @@ public class Player : MonoBehaviour
             case "Platform":
                 platformVelocity = collision.transform.GetComponent<Platform>().SelfVelocity;
                 break;
+        }
+    }
+
+    public void ShowDust()
+    {
+        if (!isJump && !isCliming && !isGripWall)
+        {
+            var _dust = Instantiate(dust);
+            _dust.transform.position = dust.transform.position;
+            _dust.gameObject.SetActive(true);
         }
     }
 
