@@ -37,8 +37,7 @@ public class GroundCheck : MonoBehaviour
         if (Enum.TryParse(collision.tag, out tagType))
         {
             CheckInGround(tagType);
-
-            ShowDust(tagType);
+            ShowDust(tagType, collision);
         }
     }
 
@@ -78,18 +77,25 @@ public class GroundCheck : MonoBehaviour
         }
     }
 
-    private void ShowDust(GroundTagType tagType)
+    private void ShowDust(GroundTagType tagType, Collider2D collision)
     {
         if (checkType != e_CheckType.foot) return;
 
         switch (tagType)
         {
             case GroundTagType.Ground:
+                if (gm != null && gm.player != null) gm.player.ShowDust();
+                break;
             case GroundTagType.WeakBlock:
             case GroundTagType.Platform:
             case GroundTagType.Box:
             case GroundTagType.Mushroom:
-                if (gm != null && gm.player != null) gm.player.ShowDust();
+                Bounds bounds = collision.bounds;
+                float appearYpos = bounds.center.y + bounds.extents.y;
+                if (transform.position.y >= appearYpos)
+                {
+                    if (gm != null && gm.player != null) gm.player.ShowDust();
+                }
                 break;
         }
     }
