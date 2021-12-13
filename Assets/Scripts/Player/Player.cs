@@ -88,7 +88,6 @@ public class Player : MonoBehaviour
     }
     e_ClimbType climbType = e_ClimbType.none;
 
-
     private float playerJumpPos;
     private float playerJumpTime;
     private float jumpLimitHight;
@@ -314,7 +313,7 @@ public class Player : MonoBehaviour
     /// <returns></returns>
     float Jump()
     {
-        float _playerJumpSpeed = -playerGravity;
+        float _playerJumpSpeed = groundCheck.IsInGround ? 0f : -playerGravity; ;
 
         if (isJump)
         {
@@ -441,7 +440,7 @@ public class Player : MonoBehaviour
 
         foreach (var contact in collision.contacts)
         {
-            if (contact.point.y < stepOnPos)
+            if (contact.point.y < stepOnPos && !groundCheck.IsInGround && !isCliming)
             {
                 ObjectCollision oc = collision.gameObject.GetComponent<ObjectCollision>();
                 if (oc != null)
@@ -456,7 +455,6 @@ public class Player : MonoBehaviour
             }
         }
     }
-
 
     /// <summary>
     /// 当たり判定処理
