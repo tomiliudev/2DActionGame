@@ -478,16 +478,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void ShowDust()
-    {
-        if (!isJump && !isCliming && !isGripWall)
-        {
-            var _dust = Instantiate(dust);
-            _dust.transform.position = dust.transform.position;
-            _dust.gameObject.SetActive(true);
-        }
-    }
-
     /// <summary>
     /// 当たり判定処理
     /// </summary>
@@ -1009,6 +999,16 @@ public class Player : MonoBehaviour
             {
                 transform.position = new Vector2(kickJumpPos.x - 0.5f, kickJumpPos.y);
             }
+        }
+    }
+
+    public void ShowDust()
+    {
+        if (!isJump && !isCliming && !isGripWall)
+        {
+            var _dust = Instantiate(dust);
+            _dust.transform.position = dust.transform.position;
+            _dust.gameObject.SetActive(true);
         }
     }
 }
