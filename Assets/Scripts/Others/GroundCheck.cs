@@ -3,10 +3,6 @@ using UnityEngine;
 
 public class GroundCheck : MonoBehaviour
 {
-    [SerializeField] bool isCheckPlatform;
-    [SerializeField] bool isCheckBox;
-    [SerializeField] bool isCheckMushroom;
-
     enum e_CheckType
     {
         head,
@@ -73,13 +69,11 @@ public class GroundCheck : MonoBehaviour
                 IsInGround = true;
                 break;
             case GroundTagType.Platform:
-                IsInGround = isCheckPlatform ? true : false;
-                break;
             case GroundTagType.Box:
-                IsInGround = isCheckBox ? true : false;
+                IsInGround = checkType == e_CheckType.foot ? true : false;
                 break;
             case GroundTagType.Mushroom:
-                IsInMushroom = isCheckMushroom ? true : false;
+                IsInMushroom = checkType == e_CheckType.foot ? true : false;
                 break;
         }
     }
