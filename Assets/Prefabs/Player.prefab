@@ -70,9 +70,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61b9187629175498985b2f6d31d9f4c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isCheckPlatform: 0
-  isCheckBox: 0
-  isCheckMushroom: 0
   checkType: 0
 --- !u!1 &6968699689873146730
 GameObject:
@@ -144,9 +141,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61b9187629175498985b2f6d31d9f4c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isCheckPlatform: 1
-  isCheckBox: 1
-  isCheckMushroom: 1
   checkType: 1
 --- !u!1 &6968699690490263137
 GameObject:
@@ -181,7 +175,7 @@ Transform:
   - {fileID: 6968699690720501175}
   - {fileID: 6968699689225800516}
   - {fileID: 6968699689873146709}
-  - {fileID: 2293626406875689495}
+  - {fileID: 7349295193351924874}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -270,7 +264,7 @@ MonoBehaviour:
   grippingPower: 10
   bowLine: {fileID: 1704043116779442424, guid: 26eb15764958b4f259b15420b4a4f6dc, type: 3}
   bow: {fileID: 7290078826120544080, guid: adebd84ae498e444db5acb6f933cc1e9, type: 3}
-  dust: {fileID: 7382421028524452327}
+  dust: {fileID: 2043166198453974906}
   eJumpInputType: 0
 --- !u!70 &6968699690490263148
 CapsuleCollider2D:
@@ -411,7 +405,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!1001 &5870302530856755566
+--- !u!1001 &3125191473947410419
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -468,13 +462,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5342e848f0c743be8f182bbfb528393, type: 3}
---- !u!4 &2293626406875689495 stripped
+--- !u!4 &7349295193351924874 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5666399265481347961, guid: f5342e848f0c743be8f182bbfb528393, type: 3}
-  m_PrefabInstance: {fileID: 5870302530856755566}
+  m_PrefabInstance: {fileID: 3125191473947410419}
   m_PrefabAsset: {fileID: 0}
---- !u!198 &7382421028524452327 stripped
+--- !u!198 &2043166198453974906 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 3964330695414368393, guid: f5342e848f0c743be8f182bbfb528393, type: 3}
-  m_PrefabInstance: {fileID: 5870302530856755566}
+  m_PrefabInstance: {fileID: 3125191473947410419}
   m_PrefabAsset: {fileID: 0}
