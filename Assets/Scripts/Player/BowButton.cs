@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Bow : MonoBehaviour
+public class BowButton : MonoBehaviour
 {
     GameManager gm;
 
@@ -20,6 +18,9 @@ public class Bow : MonoBehaviour
 
     public void OnBowButtonClick()
     {
-        gm.player.BowAttack();
+        if (gm.equippedWeapon == e_EquipWeaponType.bow)
+        {
+            gm.player.BowAttack();
+        }
     }
 }

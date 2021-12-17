@@ -42,6 +42,12 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     public Player player;
     public PolygonCollider2D cameraCollider;
 
+    // 現在装備中のアイテム
+    public e_EquipWeaponType equippedWeapon = e_EquipWeaponType.none;
+
+    // 現在装備中のアイテム
+    public e_EquipItemType equippedItem = e_EquipItemType.none;
+
 
     private void Awake()
     {
