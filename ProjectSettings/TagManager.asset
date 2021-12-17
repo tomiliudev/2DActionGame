@@ -16,6 +16,8 @@ TagManager:
   - PlayerHead
   - Box
   - Mushroom
+  - Key
+  - Magnet
   layers:
   - Default
   - TransparentFX
@@ -31,8 +33,8 @@ TagManager:
   - Ladder
   - WeakBlock
   - Box
-  - 
-  - 
+  - Key
+  - Magnet
   - 
   - 
   - 
