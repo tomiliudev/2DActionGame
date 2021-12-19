@@ -673,6 +673,9 @@ public class Player : MonoBehaviour
         IsInvincible = true;
         yield return new WaitForSeconds(invincibleTime);
         IsInvincible = false;
+
+        // 無敵時間が過ぎたらPlayer.Rigidbody2DのSleepを解除する
+        playerRg2d.WakeUp();
     }
 
     private void UpdateInvincibleInfo()
