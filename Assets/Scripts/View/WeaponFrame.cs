@@ -29,4 +29,10 @@ public class WeaponFrame : MonoBehaviour
             }
         }
     }
+
+    public void OnFrameClicked()
+    {
+        if (gm == null) return;
+        gm.popupView.ShowPopup(e_PopupName.equipPopup);
+    }
 }

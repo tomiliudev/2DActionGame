@@ -38,6 +38,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     private int beforePlayerHp;
 
     public StageUiView stageUiView;
+    public PopupView popupView;
     public Treasure[] treasures;
     public Player player;
     public PolygonCollider2D cameraCollider;
@@ -86,6 +87,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         isInitialized = true;
 
         stageUiView = FindObjectOfType<StageUiView>();
+        popupView = FindObjectOfType<PopupView>();
         treasures = FindObjectsOfType<Treasure>();
         player = FindObjectOfType<Player>();
         cameraCollider = GameObject.FindGameObjectWithTag("CameraCollider").GetComponent<PolygonCollider2D>();
