@@ -1,11 +1,5 @@
 using UnityEngine;
 
-public enum e_EquipWeaponType
-{
-    none,
-    bow
-}
-
 public class WeaponFrame : MonoBehaviour
 {
     [SerializeField] EquipWeaponType[] weaponIcons;

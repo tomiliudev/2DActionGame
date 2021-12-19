@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class EquipItemType : MonoBehaviour
 {
-    [SerializeField] e_EquipItemType type;
-    public e_EquipItemType ItemType{
+    [SerializeField] e_ItemType type;
+    public e_ItemType ItemType{
         get { return type; }
     }
 }

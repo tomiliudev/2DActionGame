@@ -1,11 +1,5 @@
 using UnityEngine;
 
-public enum e_EquipItemType
-{
-    none,
-    magnet
-}
-
 public class ItemFrame : MonoBehaviour
 {
     [SerializeField] EquipItemType[] itemIcons;

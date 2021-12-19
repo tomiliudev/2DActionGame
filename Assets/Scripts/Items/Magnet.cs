@@ -1,19 +1,4 @@
-using UnityEngine;
-
-public class Magnet : MonoBehaviour
+public class Magnet : ItemBase
 {
-    GameManager gm;
-    private void Start()
-    {
-        gm = GameManager.Instance;
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == "Player")
-        {
-            gm.equippedItem = e_EquipItemType.magnet;
-            Destroy(gameObject);
-        }
-    }
+    protected override e_ItemType _ItemType => e_ItemType.magnet;
 }
