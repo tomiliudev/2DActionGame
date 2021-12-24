@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -11,7 +12,7 @@ public abstract class ItemBase : MonoBehaviour
 {
     GameManager gm;
 
-    protected abstract e_ItemType _ItemType { get; }
+    [SerializeField] ItemInfo itemInfo;
 
     // Start is called before the first frame update
     void Start()
@@ -23,7 +24,9 @@ public abstract class ItemBase : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            gm.equippedItem = _ItemType;
+            // 獲得データを保存する
+            PlayerPrefsUtility.SaveJsonList("itemList", itemInfo);
+            gm.equippedItem = itemInfo.itemType;
 
             float yPos = transform.position.y;
             Hashtable hash = new Hashtable();
@@ -38,4 +41,11 @@ public abstract class ItemBase : MonoBehaviour
     {
         Destroy(gameObject);
     }
+}
+
+[Serializable]
+public class ItemInfo
+{
+    public e_ItemType itemType;
+    public Sprite itemSprite;
 }

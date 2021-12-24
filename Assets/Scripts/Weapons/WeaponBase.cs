@@ -1,5 +1,8 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum e_WeaponType
 {
@@ -11,7 +14,7 @@ public abstract class WeaponBase : MonoBehaviour
 {
     GameManager gm;
 
-    protected abstract e_WeaponType _WeaponType { get; }
+    [SerializeField] WeaponInfo weaponInfo;
 
     // Start is called before the first frame update
     void Start()
@@ -23,7 +26,9 @@ public abstract class WeaponBase : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            gm.equippedWeapon = _WeaponType;
+            // 獲得データを保存する
+            PlayerPrefsUtility.SaveJsonList("weaponList", weaponInfo);
+            gm.equippedWeapon = weaponInfo.weaponType;
 
             float yPos = transform.position.y;
             Hashtable hash = new Hashtable();
@@ -38,4 +43,11 @@ public abstract class WeaponBase : MonoBehaviour
     {
         Destroy(gameObject);
     }
+}
+
+[Serializable]
+public class WeaponInfo
+{
+    public e_WeaponType weaponType;
+    public Sprite weaponSprite;
 }
