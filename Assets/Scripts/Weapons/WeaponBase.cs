@@ -1,8 +1,6 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public enum e_WeaponType
 {
@@ -28,7 +26,6 @@ public abstract class WeaponBase : MonoBehaviour
         {
             // 獲得データを保存する
             PlayerPrefsUtility.SaveJsonList("weaponList", weaponInfo);
-            gm.equippedWeapon = weaponInfo.weaponType;
 
             float yPos = transform.position.y;
             Hashtable hash = new Hashtable();

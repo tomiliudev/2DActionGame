@@ -59,7 +59,6 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
     private void Start()
     {
-        PlayerPrefs.DeleteAll();
         currentStage = e_StageName.Stage1;
         LoadSceneTo(currentStage.ToString());
     }

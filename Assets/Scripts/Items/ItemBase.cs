@@ -26,7 +26,6 @@ public abstract class ItemBase : MonoBehaviour
         {
             // 獲得データを保存する
             PlayerPrefsUtility.SaveJsonList("itemList", itemInfo);
-            gm.equippedItem = itemInfo.itemType;
 
             float yPos = transform.position.y;
             Hashtable hash = new Hashtable();

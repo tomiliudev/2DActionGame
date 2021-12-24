@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EquipPopup : PopupBase
+public class EquipPopup : PopupBase, IEquipButton
 {
     [SerializeField] Toggle weaponToggle;
     [SerializeField] Toggle itemToggle;
@@ -14,8 +14,11 @@ public class EquipPopup : PopupBase
     [SerializeField] WeaponSlot weaponSlotPrefab;
     [SerializeField] ItemSlot itemSlotPrefab;
 
+    GameManager gm;
+
     private void Start()
     {
+        gm = GameManager.Instance;
         SwitchToggle();
         GenerateSlot<WeaponInfo>("weaponList", weaponSlotList, weaponSlotPrefab);
         GenerateSlot<ItemInfo>("itemList", itemSlotList, itemSlotPrefab);
@@ -44,10 +47,22 @@ public class EquipPopup : PopupBase
             if (slotIdx >= slotDataList.Count()) break;
             T equipObjectInfo = JsonUtility.FromJson<T>(slotDataList[slotIdx]);
             var slotObj = Instantiate(slotPrefab);
-            slotObj.SetSlotInfo(equipObjectInfo);
+            slotObj.SetSlotInfo(gameObject, equipObjectInfo);
             slotObj.transform.SetParent(slot, false);
             slotObj.gameObject.SetActive(true);
             slotIdx++;
+        }
+    }
+
+    public void OnSlotClicked(IEquipObjectInfo info)
+    {
+        if (typeof(WeaponInfo) == info.GetType())
+        {
+            gm.equippedWeapon = ((WeaponInfo)info).weaponType;
+        }
+        else if(typeof(ItemInfo) == info.GetType())
+        {
+            gm.equippedItem = ((ItemInfo)info).itemType;
         }
     }
 }
