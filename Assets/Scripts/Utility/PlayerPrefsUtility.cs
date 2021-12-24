@@ -75,6 +75,12 @@ public static class PlayerPrefsUtility
         }
     }
 
+    public static void Save<T>(string key, T data)
+    {
+        string jsonData = JsonUtility.ToJson(data);
+        Save(key, jsonData);
+    }
+
     /// <summary>
     /// リストを保存
     /// </summary>
@@ -142,6 +148,16 @@ public static class PlayerPrefsUtility
         }
 
         return valueStr;
+    }
+
+    public static T Load<T>(string key, T defaultValue)
+    {
+        string jsonData = Load(key, "");
+        if (!string.IsNullOrEmpty(jsonData))
+        {
+            return JsonUtility.FromJson<T>(jsonData);
+        }
+        return defaultValue;
     }
 
     /// <summary>

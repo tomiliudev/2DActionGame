@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SlotBase<T> : ButtonBase<IEquipButton>
+public class SlotBase<T> : ButtonBase<ISlotButton>
     where T : IEquipObjectInfo
 {
     [SerializeField] Image slotImage;
@@ -13,7 +13,7 @@ public class SlotBase<T> : ButtonBase<IEquipButton>
         slotImage.sprite = slotInfo.GetSprite();
     }
 
-    public override void Execute(IEquipButton controller)
+    public override void Execute(ISlotButton controller)
     {
         controller.OnSlotClicked(slotInfo);
     }

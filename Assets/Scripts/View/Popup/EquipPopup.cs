@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EquipPopup : PopupBase, IEquipButton
+public class EquipPopup : PopupBase, ISlotButton
 {
     [SerializeField] Toggle weaponToggle;
     [SerializeField] Toggle itemToggle;
@@ -13,6 +13,8 @@ public class EquipPopup : PopupBase, IEquipButton
     [SerializeField] Transform itemSlotList;
     [SerializeField] WeaponSlot weaponSlotPrefab;
     [SerializeField] ItemSlot itemSlotPrefab;
+    [SerializeField] Image equippedWeaponImage;
+    [SerializeField] Image equippedItemImage;
 
     GameManager gm;
 
@@ -20,6 +22,8 @@ public class EquipPopup : PopupBase, IEquipButton
     {
         gm = GameManager.Instance;
         SwitchToggle();
+        SetEquippedWeaponImage();
+        SetEquippedItemImage();
         GenerateSlot<WeaponInfo>("weaponList", weaponSlotList, weaponSlotPrefab);
         GenerateSlot<ItemInfo>("itemList", itemSlotList, itemSlotPrefab);
     }
@@ -59,10 +63,28 @@ public class EquipPopup : PopupBase, IEquipButton
         if (typeof(WeaponInfo) == info.GetType())
         {
             gm.equippedWeapon = ((WeaponInfo)info).weaponType;
+            PlayerPrefsUtility.Save("equippedWeapon", (WeaponInfo)info);
+            SetEquippedWeaponImage();
         }
         else if(typeof(ItemInfo) == info.GetType())
         {
             gm.equippedItem = ((ItemInfo)info).itemType;
+            PlayerPrefsUtility.Save("equippedItem", (ItemInfo)info);
+            SetEquippedItemImage();
         }
+    }
+
+    private void SetEquippedWeaponImage()
+    {
+        var info = PlayerPrefsUtility.Load("equippedWeapon", new WeaponInfo());
+        equippedWeaponImage.sprite = info.weaponSprite;
+        equippedWeaponImage.gameObject.SetActive(info.weaponType != e_WeaponType.none);
+    }
+
+    private void SetEquippedItemImage()
+    {
+        var info = PlayerPrefsUtility.Load("equippedItem", new ItemInfo());
+        equippedItemImage.sprite = info.itemSprite;
+        equippedItemImage.gameObject.SetActive(info.itemType != e_ItemType.none);
     }
 }

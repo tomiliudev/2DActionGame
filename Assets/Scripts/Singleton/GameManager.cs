@@ -84,6 +84,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
     private void Initialize()
     {
+        PlayerPrefs.DeleteAll();// TODO
         isInitialized = true;
 
         stageUiView = FindObjectOfType<StageUiView>();
@@ -96,6 +97,11 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         beforePlayerHp = PlayerMaxHp;
         IsGameClear = false;
         IsGameOver = false;
+
+        var equippedWeaponInfo = PlayerPrefsUtility.Load("equippedWeapon", new WeaponInfo());
+        equippedWeapon = equippedWeaponInfo.weaponType;
+        var equippedItemInfo = PlayerPrefsUtility.Load("equippedItem", new ItemInfo());
+        equippedItem = equippedItemInfo.itemType;
     }
 
     public void LoadSceneTo(string sceneName)
