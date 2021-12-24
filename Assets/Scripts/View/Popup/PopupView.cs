@@ -15,7 +15,8 @@ public class PopupView : MonoBehaviour
         var popup = popupList.First(x => x.PopupName == popupName);
         if (popup != null)
         {
-            popup.gameObject.SetActive(true);
+            popup = Instantiate(popup);
+            popup.transform.SetParent(transform, false);
         }
     }
 }

@@ -7,6 +7,6 @@ public class PopupBase : MonoBehaviour
 
     public void OnCloseButtonClicked()
     {
-        gameObject.SetActive(false);
+        Destroy(gameObject);
     }
 }

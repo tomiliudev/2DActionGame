@@ -10,11 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 8621875578785138247}
   - component: {fileID: 3394740349835436544}
-  - component: {fileID: 5469082743202035696}
+  - component: {fileID: 6536885096496406497}
   - component: {fileID: 6676803796811193391}
   - component: {fileID: 5104880964381378092}
   m_Layer: 0
-  m_Name: WeaponSlot
+  m_Name: ItemSlot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,7 +47,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 608264172481427553}
   m_CullTransparentMesh: 1
---- !u!114 &5469082743202035696
+--- !u!114 &6536885096496406497
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -56,10 +56,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 608264172481427553}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d278883ae4ed54b9c94d3f84b279e239, type: 3}
+  m_Script: {fileID: 11500000, guid: a674fe0fb1f634be6a7c52410e45f43c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponImage: {fileID: 6676803796811193391}
+  slotImage: {fileID: 6676803796811193391}
 --- !u!114 &6676803796811193391
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,8 +134,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5469082743202035696}
-        m_TargetAssemblyTypeName: WeaponSlot, Assembly-CSharp
+      - m_Target: {fileID: 6536885096496406497}
+        m_TargetAssemblyTypeName: ItemSlot, Assembly-CSharp
         m_MethodName: OnClicked
         m_Mode: 1
         m_Arguments:

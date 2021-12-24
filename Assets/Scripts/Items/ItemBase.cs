@@ -44,8 +44,13 @@ public abstract class ItemBase : MonoBehaviour
 }
 
 [Serializable]
-public class ItemInfo
+public class ItemInfo : IEquipObjectInfo
 {
     public e_ItemType itemType;
     public Sprite itemSprite;
+
+    public Sprite GetSprite()
+    {
+        return itemSprite;
+    }
 }

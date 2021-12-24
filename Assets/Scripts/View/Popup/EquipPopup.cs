@@ -12,25 +12,13 @@ public class EquipPopup : PopupBase
     [SerializeField] Transform weaponSlotList;
     [SerializeField] Transform itemSlotList;
     [SerializeField] WeaponSlot weaponSlotPrefab;
+    [SerializeField] ItemSlot itemSlotPrefab;
 
     private void Start()
     {
         SwitchToggle();
-
-        List<string> weaponList = PlayerPrefsUtility.LoadList<string>("weaponList");
-        int slotIdx = 0;
-        foreach (Transform slot in weaponSlotList.GetComponentsInChildren<Transform>())
-        {
-            // GetComponentsInChildrenは自分自身も含まれるので、それを除外しないといけない
-            if (slot == weaponSlotList) continue;
-            if (slotIdx >= weaponList.Count()) break;
-            WeaponInfo weaponInfo = JsonUtility.FromJson<WeaponInfo>(weaponList[slotIdx]);
-            WeaponSlot weaponSlot = Instantiate(weaponSlotPrefab);
-            weaponSlot.SetWeaponInfo(weaponInfo);
-            weaponSlot.transform.SetParent(slot, false);
-            weaponSlot.gameObject.SetActive(true);
-            slotIdx++;
-        }
+        GenerateSlot<WeaponInfo>("weaponList", weaponSlotList, weaponSlotPrefab);
+        GenerateSlot<ItemInfo>("itemList", itemSlotList, itemSlotPrefab);
     }
 
     public void OnToggleChanged()
@@ -45,14 +33,20 @@ public class EquipPopup : PopupBase
     }
 
 
-    void aaa<T>(T value, Transform slotList) where T : WeaponBase
+    void GenerateSlot<T>(string slotKey, Transform slotList, SlotBase<T> slotPrefab) where T : IEquipObjectInfo
     {
+        List<string> slotDataList = PlayerPrefsUtility.LoadList<string>(slotKey);
         int slotIdx = 0;
         foreach (Transform slot in slotList.GetComponentsInChildren<Transform>())
         {
             // GetComponentsInChildrenは自分自身も含まれるので、それを除外しないといけない
             if (slot == slotList) continue;
-
+            if (slotIdx >= slotDataList.Count()) break;
+            T equipObjectInfo = JsonUtility.FromJson<T>(slotDataList[slotIdx]);
+            var slotObj = Instantiate(slotPrefab);
+            slotObj.SetSlotInfo(equipObjectInfo);
+            slotObj.transform.SetParent(slot, false);
+            slotObj.gameObject.SetActive(true);
             slotIdx++;
         }
     }
