@@ -123,5 +123,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemInfo:
-    itemType: 1
-    itemSprite: {fileID: 21300000, guid: 41f6eee223a274f19b32264cc0fb8b01, type: 3}
+    _type: 1
+    _sprite: {fileID: 21300000, guid: 41f6eee223a274f19b32264cc0fb8b01, type: 3}

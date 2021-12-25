@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -77,7 +78,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
     private void Initialize()
     {
-        PlayerPrefs.DeleteAll();// TODO
+        //PlayerPrefs.DeleteAll();// TODO
         isInitialized = true;
 
         stageUiView = FindObjectOfType<StageUiView>();

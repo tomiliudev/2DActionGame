@@ -1,9 +1,11 @@
+using UnityEngine;
+
 public class WeaponFrame : UiSlotBase
 {
-    public void SetIconImage()
+    private void Start()
     {
-        var info = PlayerPrefsUtility.Load("equippedWeapon", new WeaponInfo());
-        base.iconImage.sprite = info.weaponSprite;
-        base.iconImage.gameObject.SetActive(info.weaponType != e_WeaponType.none);
+        base._equipInfo = PlayerPrefsUtility.Load("equippedWeapon", new WeaponInfo());
+        Debug.Log("111111111111");
+        base.Start();
     }
 }

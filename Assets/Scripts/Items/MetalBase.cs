@@ -32,7 +32,7 @@ public class MetalBase : MonoBehaviour
         if (gm != null && gm.player != null)
         {
             var info = PlayerPrefsUtility.Load("equippedItem", new ItemInfo());
-            if (info.itemType == e_ItemType.magnet)
+            if (info._type == e_ItemType.magnet)
             {
                 var hit = Physics2D.Raycast(transform.position, gm.player.transform.position - transform.position, 2f, 1 << LayerMask.NameToLayer("Player"));
                 if (hit.collider != null)

@@ -66,7 +66,7 @@ public class EquipPopup : PopupBase, ISlotButton
             SetEquippedWeaponImage();
 
             // UIの装備中武器アイコンの設定
-            FindObjectOfType<WeaponFrame>().SetIconImage();
+            FindObjectOfType<WeaponFrame>().SetIconImage((WeaponInfo)info);
         }
         else if(typeof(ItemInfo) == info.GetType())
         {
@@ -74,21 +74,21 @@ public class EquipPopup : PopupBase, ISlotButton
             SetEquippedItemImage();
 
             // UIの装備中アイテムアイコンの設定
-            FindObjectOfType<ItemFrame>().SetIconImage();
+            FindObjectOfType<ItemFrame>().SetIconImage((ItemInfo)info);
         }
     }
 
     private void SetEquippedWeaponImage()
     {
         var info = PlayerPrefsUtility.Load("equippedWeapon", new WeaponInfo());
-        equippedWeaponImage.sprite = info.weaponSprite;
-        equippedWeaponImage.gameObject.SetActive(info.weaponType != e_WeaponType.none);
+        equippedWeaponImage.sprite = info._sprite;
+        equippedWeaponImage.gameObject.SetActive(info._type != e_WeaponType.none);
     }
 
     private void SetEquippedItemImage()
     {
         var info = PlayerPrefsUtility.Load("equippedItem", new ItemInfo());
-        equippedItemImage.sprite = info.itemSprite;
-        equippedItemImage.gameObject.SetActive(info.itemType != e_ItemType.none);
+        equippedItemImage.sprite = info._sprite;
+        equippedItemImage.gameObject.SetActive(info._type != e_ItemType.none);
     }
 }

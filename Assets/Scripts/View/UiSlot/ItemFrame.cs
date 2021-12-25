@@ -1,9 +1,11 @@
+using UnityEngine;
+
 public class ItemFrame : UiSlotBase
 {
-    public void SetIconImage()
+    private void Start()
     {
-        var info = PlayerPrefsUtility.Load("equippedItem", new ItemInfo());
-        base.iconImage.sprite = info.itemSprite;
-        base.iconImage.gameObject.SetActive(info.itemType != e_ItemType.none);
+        base._equipInfo = PlayerPrefsUtility.Load("equippedItem", new ItemInfo());
+        Debug.Log("2222222222222");
+        base.Start();
     }
 }

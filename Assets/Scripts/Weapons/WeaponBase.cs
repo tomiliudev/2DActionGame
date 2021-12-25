@@ -42,11 +42,11 @@ public abstract class WeaponBase : MonoBehaviour
 [Serializable]
 public class WeaponInfo : IEquipObjectInfo
 {
-    public e_WeaponType weaponType;
-    public Sprite weaponSprite;
+    public e_WeaponType _type;
+    public Sprite _sprite;
 
     public Sprite GetSprite()
     {
-        return weaponSprite;
+        return _sprite;
     }
 }
