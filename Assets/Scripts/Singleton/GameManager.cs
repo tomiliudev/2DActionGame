@@ -43,13 +43,6 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     public Player player;
     public PolygonCollider2D cameraCollider;
 
-    // 現在装備中のアイテム
-    public e_WeaponType equippedWeapon = e_WeaponType.none;
-
-    // 現在装備中のアイテム
-    public e_ItemType equippedItem = e_ItemType.none;
-
-
     private void Awake()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -97,11 +90,6 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         beforePlayerHp = PlayerMaxHp;
         IsGameClear = false;
         IsGameOver = false;
-
-        var equippedWeaponInfo = PlayerPrefsUtility.Load("equippedWeapon", new WeaponInfo());
-        equippedWeapon = equippedWeaponInfo.weaponType;
-        var equippedItemInfo = PlayerPrefsUtility.Load("equippedItem", new ItemInfo());
-        equippedItem = equippedItemInfo.itemType;
     }
 
     public void LoadSceneTo(string sceneName)

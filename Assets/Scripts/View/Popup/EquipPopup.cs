@@ -62,15 +62,19 @@ public class EquipPopup : PopupBase, ISlotButton
     {
         if (typeof(WeaponInfo) == info.GetType())
         {
-            gm.equippedWeapon = ((WeaponInfo)info).weaponType;
             PlayerPrefsUtility.Save("equippedWeapon", (WeaponInfo)info);
             SetEquippedWeaponImage();
+
+            // UIの装備中武器アイコンの設定
+            FindObjectOfType<WeaponFrame>().SetIconImage();
         }
         else if(typeof(ItemInfo) == info.GetType())
         {
-            gm.equippedItem = ((ItemInfo)info).itemType;
             PlayerPrefsUtility.Save("equippedItem", (ItemInfo)info);
             SetEquippedItemImage();
+
+            // UIの装備中アイテムアイコンの設定
+            FindObjectOfType<ItemFrame>().SetIconImage();
         }
     }
 

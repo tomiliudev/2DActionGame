@@ -10,15 +10,10 @@ public class BowButton : MonoBehaviour
         gm = GameManager.Instance;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void OnBowButtonClick()
     {
-        if (gm.equippedWeapon == e_WeaponType.bow)
+        var info = PlayerPrefsUtility.Load("equippedWeapon", new WeaponInfo());
+        if (info.weaponType == e_WeaponType.bow)
         {
             gm.player.BowAttack();
         }
