@@ -43,7 +43,7 @@ public abstract class WeaponBase : MonoBehaviour
 public class WeaponInfo : IEquipObjectInfo
 {
     public e_WeaponType _type;
-    public Sprite _sprite;
+    public Sprite _sprite = null;
 
     public Sprite GetSprite()
     {

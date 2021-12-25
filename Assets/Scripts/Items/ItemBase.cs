@@ -44,7 +44,7 @@ public abstract class ItemBase : MonoBehaviour
 public class ItemInfo : IEquipObjectInfo
 {
     public e_ItemType _type;
-    public Sprite _sprite;
+    public Sprite _sprite = null;
 
     public Sprite GetSprite()
     {

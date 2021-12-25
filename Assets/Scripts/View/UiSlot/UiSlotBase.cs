@@ -13,8 +13,6 @@ public class UiSlotBase : MonoBehaviour
     {
         gm = GameManager.Instance;
         SetIconImage(_equipInfo);
-
-        Debug.Log("bbbbbbbbbbbbbb");
     }
 
     public void OnFrameClicked()
@@ -25,7 +23,8 @@ public class UiSlotBase : MonoBehaviour
 
     public void SetIconImage<T>(T equipInfo) where T : IEquipObjectInfo
     {
-        iconImage.sprite = equipInfo.GetSprite();
-        //iconImage.gameObject.SetActive(equipInfo. != e_ItemType.none);
+        Sprite iconSprite = equipInfo.GetSprite();
+        iconImage.sprite = iconSprite;
+        iconImage.gameObject.SetActive(iconSprite != null);
     }
 }
