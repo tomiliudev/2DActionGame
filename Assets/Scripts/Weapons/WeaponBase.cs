@@ -10,14 +10,11 @@ public enum e_WeaponType
 
 public abstract class WeaponBase : MonoBehaviour
 {
-    GameManager gm;
-
     [SerializeField] WeaponInfo weaponInfo;
 
     // Start is called before the first frame update
     void Start()
     {
-        gm = GameManager.Instance;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

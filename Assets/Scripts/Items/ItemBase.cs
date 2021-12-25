@@ -5,19 +5,17 @@ using UnityEngine;
 public enum e_ItemType
 {
     none,
-    magnet
+    magnet,
+    bomb,
 }
 
 public abstract class ItemBase : MonoBehaviour
 {
-    GameManager gm;
-
     [SerializeField] ItemInfo itemInfo;
 
     // Start is called before the first frame update
     void Start()
     {
-        gm = GameManager.Instance;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
