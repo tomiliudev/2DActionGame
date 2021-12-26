@@ -574,6 +574,8 @@ MonoBehaviour:
   gameOverObj: {fileID: 1955463096824374398}
   gameClearObj: {fileID: 1955463094835487090}
   treasureNum: {fileID: 7204209064307870719}
+  weaponUiSlot: {fileID: 1137978595570706013}
+  itemUiSlot: {fileID: 1355843012662122509}
 --- !u!1 &1955463096824374398
 GameObject:
   m_ObjectHideFlags: 0

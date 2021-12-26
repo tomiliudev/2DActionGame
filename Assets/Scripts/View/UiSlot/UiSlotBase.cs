@@ -25,6 +25,7 @@ public class UiSlotBase : MonoBehaviour
     {
         Sprite iconSprite = equipInfo.GetSprite();
         iconImage.sprite = iconSprite;
+        iconImage.preserveAspect = true;
         iconImage.gameObject.SetActive(iconSprite != null);
     }
 }

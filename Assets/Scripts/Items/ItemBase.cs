@@ -7,6 +7,7 @@ public enum e_ItemType
     none,
     magnet,
     bomb,
+    smallKey,
 }
 
 public abstract class ItemBase : MonoBehaviour

@@ -11,6 +11,8 @@ public class StageUiView : MonoBehaviour
     [SerializeField] GameObject gameOverObj;
     [SerializeField] GameObject gameClearObj;
     [SerializeField] Text treasureNum;
+    [SerializeField] WeaponUiSlot weaponUiSlot;
+    [SerializeField] ItemUiSlot itemUiSlot;
 
     GameManager gm;// GameManagerのインスタンス
 
@@ -82,5 +84,15 @@ public class StageUiView : MonoBehaviour
     public void SetIsGameClear(bool flag)
     {
         gameClearObj.SetActive(flag);
+    }
+
+    public void SetWeaponIconImage(WeaponInfo weaponInfo)
+    {
+        weaponUiSlot.SetIconImage(weaponInfo);
+    }
+
+    public void SetItemIconImage(ItemInfo itemInfo)
+    {
+        itemUiSlot.SetIconImage(itemInfo);
     }
 }

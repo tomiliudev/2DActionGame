@@ -24,8 +24,8 @@ public class EquipPopup : PopupBase, ISlotButton
         SwitchToggle();
         SetEquippedWeaponImage();
         SetEquippedItemImage();
-        GenerateSlot<WeaponInfo>("weaponList", weaponSlotList, weaponSlotPrefab);
-        GenerateSlot<ItemInfo>("itemList", itemSlotList, itemSlotPrefab);
+        GenerateSlot("weaponList", weaponSlotList, weaponSlotPrefab);
+        GenerateSlot("itemList", itemSlotList, itemSlotPrefab);
     }
 
     public void OnToggleChanged()
@@ -53,6 +53,7 @@ public class EquipPopup : PopupBase, ISlotButton
             var slotObj = Instantiate(slotPrefab);
             slotObj.SetSlotInfo(gameObject, equipObjectInfo);
             slotObj.transform.SetParent(slot, false);
+            slotObj.GetComponent<Image>().preserveAspect = true;
             slotObj.gameObject.SetActive(true);
             slotIdx++;
         }
@@ -66,7 +67,7 @@ public class EquipPopup : PopupBase, ISlotButton
             SetEquippedWeaponImage();
 
             // UIの装備中武器アイコンの設定
-            FindObjectOfType<WeaponUiSlot>().SetIconImage((WeaponInfo)info);
+            gm.stageUiView.SetWeaponIconImage((WeaponInfo)info);
         }
         else if(typeof(ItemInfo) == info.GetType())
         {
@@ -74,7 +75,7 @@ public class EquipPopup : PopupBase, ISlotButton
             SetEquippedItemImage();
 
             // UIの装備中アイテムアイコンの設定
-            FindObjectOfType<ItemUiSlot>().SetIconImage((ItemInfo)info);
+            gm.stageUiView.SetItemIconImage((ItemInfo)info);
         }
     }
 
@@ -82,6 +83,7 @@ public class EquipPopup : PopupBase, ISlotButton
     {
         var info = PlayerPrefsUtility.Load("equippedWeapon", new WeaponInfo());
         equippedWeaponImage.sprite = info._sprite;
+        equippedWeaponImage.preserveAspect = true;
         equippedWeaponImage.gameObject.SetActive(info._type != e_WeaponType.none);
     }
 
@@ -89,6 +91,7 @@ public class EquipPopup : PopupBase, ISlotButton
     {
         var info = PlayerPrefsUtility.Load("equippedItem", new ItemInfo());
         equippedItemImage.sprite = info._sprite;
+        equippedItemImage.preserveAspect = true;
         equippedItemImage.gameObject.SetActive(info._type != e_ItemType.none);
     }
 }
