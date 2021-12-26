@@ -78,7 +78,6 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
     private void Initialize()
     {
-        //PlayerPrefs.DeleteAll();// TODO
         isInitialized = true;
 
         stageUiView = FindObjectOfType<StageUiView>();
