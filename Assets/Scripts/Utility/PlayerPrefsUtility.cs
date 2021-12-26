@@ -100,9 +100,9 @@ public static class PlayerPrefsUtility
     }
 
     /// <summary>
-    /// JSONリストを保存
+    /// JSONリストにAddする
     /// </summary>
-    public static void SaveJsonList<T>(string key, T value)
+    public static void AddToJsonList<T>(string key, T value)
     {
         string jsonData = JsonUtility.ToJson(value);
         List<string> jsonlist = LoadList<string>(key);

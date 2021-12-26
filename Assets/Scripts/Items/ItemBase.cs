@@ -23,7 +23,7 @@ public abstract class ItemBase : MonoBehaviour
         if (collision.tag == "Player")
         {
             // 獲得データを保存する
-            PlayerPrefsUtility.SaveJsonList("itemList", itemInfo);
+            PlayerPrefsUtility.AddToJsonList("itemList", itemInfo);
 
             float yPos = transform.position.y;
             Hashtable hash = new Hashtable();

@@ -22,7 +22,7 @@ public abstract class WeaponBase : MonoBehaviour
         if (collision.tag == "Player")
         {
             // 獲得データを保存する
-            PlayerPrefsUtility.SaveJsonList("weaponList", weaponInfo);
+            PlayerPrefsUtility.AddToJsonList("weaponList", weaponInfo);
 
             float yPos = transform.position.y;
             Hashtable hash = new Hashtable();
