@@ -1,4 +1,4 @@
-public class WeaponFrame : UiSlotBase
+public class WeaponUiSlot : UiSlotBase
 {
     private void Start()
     {

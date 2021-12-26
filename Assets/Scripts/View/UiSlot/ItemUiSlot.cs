@@ -1,4 +1,4 @@
-public class ItemFrame : UiSlotBase
+public class ItemUiSlot : UiSlotBase
 {
     private void Start()
     {

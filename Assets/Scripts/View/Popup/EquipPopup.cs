@@ -66,7 +66,7 @@ public class EquipPopup : PopupBase, ISlotButton
             SetEquippedWeaponImage();
 
             // UIの装備中武器アイコンの設定
-            FindObjectOfType<WeaponFrame>().SetIconImage((WeaponInfo)info);
+            FindObjectOfType<WeaponUiSlot>().SetIconImage((WeaponInfo)info);
         }
         else if(typeof(ItemInfo) == info.GetType())
         {
@@ -74,7 +74,7 @@ public class EquipPopup : PopupBase, ISlotButton
             SetEquippedItemImage();
 
             // UIの装備中アイテムアイコンの設定
-            FindObjectOfType<ItemFrame>().SetIconImage((ItemInfo)info);
+            FindObjectOfType<ItemUiSlot>().SetIconImage((ItemInfo)info);
         }
     }
 
