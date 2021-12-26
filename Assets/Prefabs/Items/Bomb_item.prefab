@@ -115,3 +115,4 @@ MonoBehaviour:
   itemInfo:
     _type: 2
     _sprite: {fileID: 21300000, guid: 9b00b11600ca74e4f85cb4052c0509fd, type: 3}
+    _isMultiple: 1

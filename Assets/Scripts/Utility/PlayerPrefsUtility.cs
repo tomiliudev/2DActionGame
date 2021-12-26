@@ -102,11 +102,11 @@ public static class PlayerPrefsUtility
     /// <summary>
     /// JSONリストにAddする
     /// </summary>
-    public static void AddToJsonList<T>(string key, T value)
+    public static void AddToJsonList<T>(string key, T value, bool isMultiple)
     {
         string jsonData = JsonUtility.ToJson(value);
         List<string> jsonlist = LoadList<string>(key);
-        if (!jsonlist.Contains(jsonData))
+        if (isMultiple || !isMultiple && !jsonlist.Contains(jsonData))
         {
             jsonlist.Add(jsonData);
             SaveList(key, jsonlist);

@@ -22,7 +22,7 @@ public abstract class WeaponBase : MonoBehaviour
         if (collision.tag == "Player")
         {
             // 獲得データを保存する
-            PlayerPrefsUtility.AddToJsonList("weaponList", weaponInfo);
+            PlayerPrefsUtility.AddToJsonList("weaponList", weaponInfo, weaponInfo._isMultiple);
 
             float yPos = transform.position.y;
             Hashtable hash = new Hashtable();
@@ -44,6 +44,7 @@ public class WeaponInfo : IEquipObjectInfo
 {
     public e_WeaponType _type;
     public Sprite _sprite = null;
+    public bool _isMultiple;
 
     public Sprite GetSprite()
     {

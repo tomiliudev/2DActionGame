@@ -24,7 +24,7 @@ public abstract class ItemBase : MonoBehaviour
         if (collision.tag == "Player")
         {
             // 獲得データを保存する
-            PlayerPrefsUtility.AddToJsonList("itemList", itemInfo);
+            PlayerPrefsUtility.AddToJsonList("itemList", itemInfo, itemInfo._isMultiple);
 
             float yPos = transform.position.y;
             Hashtable hash = new Hashtable();
@@ -46,6 +46,7 @@ public class ItemInfo : IEquipObjectInfo
 {
     public e_ItemType _type;
     public Sprite _sprite = null;
+    public bool _isMultiple;
 
     public Sprite GetSprite()
     {
