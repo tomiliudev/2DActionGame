@@ -39,20 +39,25 @@ public class EquipPopup : PopupBase, ISlotButton
         itemScroll.gameObject.SetActive(itemToggle.isOn);
     }
 
-
     void GenerateSlot<T>(string slotKey, Transform slotList, SlotBase<T> slotPrefab) where T : IEquipObjectInfo
     {
         List<string> slotDataList = PlayerPrefsUtility.LoadList<string>(slotKey);
+        var groupedSlotList = slotDataList.Select(slotJsonData => JsonUtility.FromJson<T>(slotJsonData)).GroupBy(x => x.GetSprite().name);
+
         int slotIdx = 0;
-        foreach (Transform slot in slotList.GetComponentsInChildren<Transform>())
+        foreach (SlotFrame slot in slotList.GetComponentsInChildren<SlotFrame>())
         {
-            // GetComponentsInChildrenは自分自身も含まれるので、それを除外しないといけない
-            if (slot == slotList) continue;
-            if (slotIdx >= slotDataList.Count()) break;
-            T equipObjectInfo = JsonUtility.FromJson<T>(slotDataList[slotIdx]);
+            if (slotIdx >= groupedSlotList.Count()) break;
+            var group = groupedSlotList.ElementAt(slotIdx);
+
+            // 所持数
+            slot.SetNumText(group.Count());
+
+            // Slotの設定
             var slotObj = Instantiate(slotPrefab);
-            slotObj.SetSlotInfo(gameObject, equipObjectInfo);
-            slotObj.transform.SetParent(slot, false);
+            slotObj.SetSlotInfo(gameObject, group.First());
+            slotObj.transform.SetParent(slot.transform, false);
+            slotObj.transform.SetAsFirstSibling();
             slotObj.GetComponent<Image>().preserveAspect = true;
             slotObj.gameObject.SetActive(true);
             slotIdx++;
