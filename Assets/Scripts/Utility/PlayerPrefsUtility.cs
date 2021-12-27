@@ -114,6 +114,21 @@ public static class PlayerPrefsUtility
         }
     }
 
+    /// <summary>
+    /// JSONリストを保存する
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public static void SaveJsonList<T>(string key, List<T> valueList)
+    {
+        PlayerPrefs.DeleteKey(key);
+        List<string> jsonDataList = new List<string>();
+        foreach (var value in valueList)
+        {
+            jsonDataList.Add(JsonUtility.ToJson(value));
+        }
+        SaveList(key, jsonDataList);
+    }
+
     //=================================================================================
     //読み込み
     //=================================================================================
