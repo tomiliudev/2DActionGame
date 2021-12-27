@@ -1,16 +1,7 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
-public enum e_ItemType
-{
-    none,
-    magnet,
-    bomb,
-    smallKey,
-}
-
-public abstract class ItemBase : MonoBehaviour
+public abstract class UseItemBase : MonoBehaviour
 {
     [SerializeField] protected ItemInfo itemInfo;
 
@@ -18,9 +9,6 @@ public abstract class ItemBase : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            // 獲得データを保存する
-            PlayerPrefsUtility.AddToJsonList("itemList", itemInfo, itemInfo._isMultiple);
-
             float yPos = transform.position.y;
             Hashtable hash = new Hashtable();
             hash.Add("y", yPos + 1.5f);
@@ -34,17 +22,7 @@ public abstract class ItemBase : MonoBehaviour
     {
         Destroy(gameObject);
     }
-}
 
-[Serializable]
-public class ItemInfo : IEquipObjectInfo
-{
-    public e_ItemType _type;
-    public Sprite _sprite = null;
-    public bool _isMultiple;
-
-    public Sprite GetSprite()
-    {
-        return _sprite;
-    }
+    // アイテムを使用する
+    public abstract void Use();
 }

@@ -48,6 +48,8 @@ MonoBehaviour:
   weaponInfo:
     _type: 1
     _sprite: {fileID: 21300000, guid: 53d3f0bc05eaa41fb877e2f208e15f44, type: 3}
+    _isMultiple: 0
+    co2d: {fileID: 527451797118109545}
 --- !u!212 &6903410162779727870
 SpriteRenderer:
   m_ObjectHideFlags: 0

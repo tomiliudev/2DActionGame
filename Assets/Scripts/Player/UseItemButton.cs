@@ -1,9 +1,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public sealed class UseItemButton : MonoBehaviour
 {
+    [SerializeField] Transform magnetPrefab;
+    [SerializeField] Transform bombPrefab;
+    [SerializeField] Transform smallKeyPrefab;
+
+    GameManager gm;
+    private void Start()
+    {
+        gm = GameManager.Instance;
+    }
+
     public void OnUseItemButtonClicked()
     {
         ItemInfo equippedItem = PlayerPrefsUtility.Load("equippedItem", new ItemInfo());
@@ -47,21 +58,20 @@ public sealed class UseItemButton : MonoBehaviour
 
     private void UseItem(ItemInfo equippedItem)
     {
-        ItemBase item = null;
-        var itemObj = new GameObject("use_" + equippedItem._type.ToString());
+        Transform itemObj = null;
         switch (equippedItem._type)
         {
             case e_ItemType.magnet:
-                item = itemObj.AddComponent<Magnet>();
+                itemObj = Instantiate(magnetPrefab);
                 break;
             case e_ItemType.bomb:
-                item = itemObj.AddComponent<BombItem>();
+                itemObj = Instantiate(bombPrefab);
                 break;
             case e_ItemType.smallKey:
-                item = itemObj.AddComponent<SmallKey>();
+                itemObj = Instantiate(smallKeyPrefab);
                 break;
         }
-        item.SetItemInfo(equippedItem);
-        item.Use();
+        itemObj.position = gm.player.transform.position;
+        itemObj.GetComponent<UseItemBase>().Use();
     }
 }

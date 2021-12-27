@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 608143515316562748}
   - component: {fileID: 608143515316562749}
   - component: {fileID: 2350417942258408389}
-  - component: {fileID: 9163255528494420673}
+  - component: {fileID: 5962260748009489999}
   m_Layer: 15
-  m_Name: Magnet
+  m_Name: use_Magnet
   m_TagString: Magnet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -110,7 +110,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 0.5}
   m_EdgeRadius: 0
---- !u!114 &9163255528494420673
+--- !u!114 &5962260748009489999
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -119,12 +119,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 608143515316562750}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6fcce54b00b84da9811f9a22cfb339f, type: 3}
+  m_Script: {fileID: 11500000, guid: 975dafbd07fea4ac5b671a440504d403, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   itemInfo:
     _type: 1
     _sprite: {fileID: 21300000, guid: 41f6eee223a274f19b32264cc0fb8b01, type: 3}
     _isMultiple: 0
-    co2d: {fileID: 2350417942258408389}
-  co2d: {fileID: 2350417942258408389}
