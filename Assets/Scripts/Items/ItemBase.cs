@@ -12,7 +12,7 @@ public enum e_ItemType
 
 public abstract class ItemBase : MonoBehaviour
 {
-    [SerializeField] ItemInfo itemInfo;
+    [SerializeField] protected ItemInfo itemInfo;
 
     // Start is called before the first frame update
     void Start()
@@ -39,6 +39,14 @@ public abstract class ItemBase : MonoBehaviour
     {
         Destroy(gameObject);
     }
+
+    public void SetItemInfo(ItemInfo info)
+    {
+        itemInfo = info;
+    }
+
+    // アイテムを使用する
+    public abstract void Use();
 }
 
 [Serializable]

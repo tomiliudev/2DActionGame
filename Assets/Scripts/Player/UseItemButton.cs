@@ -16,6 +16,8 @@ public sealed class UseItemButton : MonoBehaviour
                 // 複数所持可能なアイテムなら一つ消費する
                 ReduceOneItem(equippedItem);
             }
+
+            UseItem(equippedItem);
         }
     }
 
@@ -41,5 +43,25 @@ public sealed class UseItemButton : MonoBehaviour
             // 装備中のアイテムをリセット
             PlayerPrefs.DeleteKey("equippedItem");
         }
+    }
+
+    private void UseItem(ItemInfo equippedItem)
+    {
+        ItemBase item = null;
+        var itemObj = new GameObject("use_" + equippedItem._type.ToString());
+        switch (equippedItem._type)
+        {
+            case e_ItemType.magnet:
+                item = itemObj.AddComponent<Magnet>();
+                break;
+            case e_ItemType.bomb:
+                item = itemObj.AddComponent<BombItem>();
+                break;
+            case e_ItemType.smallKey:
+                item = itemObj.AddComponent<SmallKey>();
+                break;
+        }
+        item.SetItemInfo(equippedItem);
+        item.Use();
     }
 }
