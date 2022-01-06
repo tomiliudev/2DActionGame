@@ -76,7 +76,7 @@ public static class PlayerPrefsUtility
         }
     }
 
-    public static void Save<T>(string key, T data)
+    public static void SaveToJson<T>(string key, T data)
     {
         string jsonData = JsonUtility.ToJson(data);
         Save(key, jsonData);
@@ -87,7 +87,7 @@ public static class PlayerPrefsUtility
     /// </summary>
     public static void SaveList<T>(string key, List<T> value)
     {
-        string serizlizedList = Serialize<List<T>>(value);
+        string serizlizedList = Serialize(value);
         PlayerPrefs.SetString(EncryptKey(key), EncryptValue(serizlizedList));
     }
 
@@ -96,7 +96,7 @@ public static class PlayerPrefsUtility
     /// </summary>
     public static void SaveDict<Key, Value>(string key, Dictionary<Key, Value> value)
     {
-        string serizlizedDict = Serialize<Dictionary<Key, Value>>(value);
+        string serizlizedDict = Serialize(value);
         PlayerPrefs.SetString(EncryptKey(key), EncryptValue(serizlizedDict));
     }
 
@@ -210,18 +210,34 @@ public static class PlayerPrefsUtility
     //シリアライズ、デシリアライズ
     //=================================================================================
 
-    private static string Serialize<T>(T obj)
+    private static string Serialize(object obj)
     {
         BinaryFormatter binaryFormatter = new BinaryFormatter();
         MemoryStream memoryStream = new MemoryStream();
         binaryFormatter.Serialize(memoryStream, obj);
-        return Convert.ToBase64String(memoryStream.GetBuffer());
+        
+        try
+        {
+            return Convert.ToBase64String(memoryStream.GetBuffer());
+        }
+        finally
+        {
+            memoryStream.Close();
+        }
     }
 
     private static T Deserialize<T>(string str)
     {
         BinaryFormatter binaryFormatter = new BinaryFormatter();
         MemoryStream memoryStream = new MemoryStream(Convert.FromBase64String(str));
-        return (T)binaryFormatter.Deserialize(memoryStream);
+        
+        try
+        {
+            return (T)binaryFormatter.Deserialize(memoryStream);
+        }
+        finally
+        {
+            memoryStream.Close();
+        }
     }
 }

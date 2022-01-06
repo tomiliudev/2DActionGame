@@ -68,7 +68,7 @@ public class EquipPopup : PopupBase, ISlotButton
     {
         if (typeof(WeaponInfo) == info.GetType())
         {
-            PlayerPrefsUtility.Save("equippedWeapon", (WeaponInfo)info);
+            PlayerPrefsUtility.SaveToJson("equippedWeapon", (WeaponInfo)info);
             SetEquippedWeaponImage();
 
             // UIの装備中武器アイコンの設定
@@ -76,7 +76,7 @@ public class EquipPopup : PopupBase, ISlotButton
         }
         else if(typeof(ItemInfo) == info.GetType())
         {
-            PlayerPrefsUtility.Save("equippedItem", (ItemInfo)info);
+            PlayerPrefsUtility.SaveToJson("equippedItem", (ItemInfo)info);
             SetEquippedItemImage();
 
             // UIの装備中アイテムアイコンの設定
