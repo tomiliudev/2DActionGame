@@ -70,7 +70,16 @@ public sealed class UseItemButton : MonoBehaviour
                 itemObj = Instantiate(smallKeyPrefab);
                 break;
         }
-        itemObj.position = gm.player.transform.position;
+
+        if (gm.player.IsOnRight)
+        {
+            itemObj.position = gm.player.transform.position + new Vector3(0.5f, 0f, 0f);
+        }
+        else
+        {
+            itemObj.position = gm.player.transform.position + new Vector3(-0.5f, 0f, 0f);
+        }
+        
         itemObj.GetComponent<UseItemBase>().Use();
     }
 }

@@ -49,6 +49,16 @@ public class Player : MonoBehaviour
     XPositionStatus xPositionStatus = XPositionStatus.none;
     XPositionStatus beforeXPositionStatus = XPositionStatus.none;
 
+    // 右に向いてるか
+    public bool IsOnRight
+    {
+        get
+        {
+            var trans = playerAnimator.GetComponent<Transform>();
+            return trans.localScale.x > 0f;
+        }
+    }
+
     enum TouchType
     {
         runTouch,
