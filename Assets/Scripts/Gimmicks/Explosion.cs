@@ -16,6 +16,11 @@ public class Explosion : MonoBehaviour
         {
             gm.player.OnDamage();
         }
+
+        if (collision.tag == "Enemy")
+        {
+            collision.GetComponent<Enemy>().OnDamage();
+        }
     }
 
     public void OnExplosion()
