@@ -5,20 +5,25 @@ public abstract class UseItemBase : MonoBehaviour
 {
     [SerializeField] protected ItemInfo itemInfo;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected GameManager gm;
+    private void Awake()
     {
-        if (collision.tag == "Player")
-        {
-            float yPos = transform.position.y;
-            Hashtable hash = new Hashtable();
-            hash.Add("y", yPos + 1.5f);
-            hash.Add("time", 0.5f);
-            hash.Add("oncomplete", "OnComplete");
-            iTween.MoveTo(gameObject, hash);
-        }
+        gm = GameManager.Instance;
     }
 
-    private void OnComplete()
+    // 上昇するアニメーション
+    protected void RiseAnimation()
+    {
+        transform.position = gm.player.transform.position;
+        float yPos = transform.position.y;
+        Hashtable hash = new Hashtable();
+        hash.Add("y", yPos + 1.5f);
+        hash.Add("time", 0.5f);
+        hash.Add("oncomplete", "OnRiseAnimationComplete");
+        iTween.MoveTo(gameObject, hash);
+    }
+
+    private void OnRiseAnimationComplete()
     {
         Destroy(gameObject);
     }

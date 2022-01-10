@@ -17,17 +17,20 @@ public sealed class UseItemButton : MonoBehaviour
     public void OnUseItemButtonClicked()
     {
         ItemInfo equippedItem = PlayerPrefsUtility.Load("equippedItem", new ItemInfo());
-
-        // 何かしらの装備中のアイテムがある
-        if (equippedItem._type != e_ItemType.none)
+        switch (equippedItem._type)
         {
-            if (equippedItem._isMultiple)
-            {
-                // 複数所持可能なアイテムなら一つ消費する
-                ReduceOneItem(equippedItem);
-            }
-
-            UseItem(equippedItem);
+            case e_ItemType.magnet:
+                UseItem(Instantiate(magnetPrefab), equippedItem);
+                break;
+            case e_ItemType.bomb:
+                UseItem(Instantiate(bombPrefab), equippedItem);
+                break;
+            case e_ItemType.smallKey:
+                if (gm.player.TouchingTreasure != null && !gm.player.TouchingTreasure.IsOpened)
+                {
+                    UseItem(Instantiate(smallKeyPrefab), equippedItem);
+                }
+                break;
         }
     }
 
@@ -55,31 +58,14 @@ public sealed class UseItemButton : MonoBehaviour
         }
     }
 
-    private void UseItem(ItemInfo equippedItem)
+    private void UseItem(Transform itemObj, ItemInfo equippedItem)
     {
-        Transform itemObj = null;
-        switch (equippedItem._type)
-        {
-            case e_ItemType.magnet:
-                itemObj = Instantiate(magnetPrefab);
-                break;
-            case e_ItemType.bomb:
-                itemObj = Instantiate(bombPrefab);
-                break;
-            case e_ItemType.smallKey:
-                itemObj = Instantiate(smallKeyPrefab);
-                break;
-        }
-
-        if (gm.player.IsOnRight)
-        {
-            itemObj.position = gm.player.transform.position + new Vector3(0.5f, 0f, 0f);
-        }
-        else
-        {
-            itemObj.position = gm.player.transform.position + new Vector3(-0.5f, 0f, 0f);
-        }
-        
         itemObj.GetComponent<UseItemBase>().Use();
+
+        if (equippedItem._isMultiple)
+        {
+            // 複数所持可能なアイテムなら一つ消費する
+            ReduceOneItem(equippedItem);
+        }
     }
 }

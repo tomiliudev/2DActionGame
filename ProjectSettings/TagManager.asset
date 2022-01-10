@@ -18,6 +18,7 @@ TagManager:
   - Mushroom
   - Key
   - Magnet
+  - Treasure
   layers:
   - Default
   - TransparentFX

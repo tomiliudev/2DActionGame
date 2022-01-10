@@ -114,6 +114,8 @@ public class Player : MonoBehaviour
     // 画面タッチのfingerIdを管理する
     Dictionary<TouchType, int> fingerIdDic = new Dictionary<TouchType, int>();
 
+    // 触れている宝箱
+    public Treasure TouchingTreasure { get; private set; }
 
     // Start is called before the first frame update
     void Start()
@@ -518,18 +520,15 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        switch (collision.tag)
-        {
-            case "Wall":
-                CheckCanKickWall(collision);
-                break;
-            case "Ladder":
-                CheckCanClimbLadder(collision);
-                break;
-        }
+        OnTriggerTouched(collision);
     }
 
     private void OnTriggerStay2D(Collider2D collision)
+    {
+        OnTriggerTouched(collision);
+    }
+
+    void OnTriggerTouched(Collider2D collision)
     {
         switch (collision.tag)
         {
@@ -538,29 +537,35 @@ public class Player : MonoBehaviour
                 break;
             case "Ladder":
                 CheckCanClimbLadder(collision);
+                break;
+            case "Treasure":
+                TouchingTreasure = collision.GetComponent<Treasure>();
                 break;
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.tag == "Wall")
+        switch (collision.tag)
         {
-            isGripWall = false;
-            playerAnimator.SetBool("wallj", false);
-            wallDirection = e_WallDirection.none;
-        }
-
-        if (collision.tag == "Ladder")
-        {
-            canClimbUp = false;
-            canClimbDown = false;
-            isCliming = false;
-            ladderTopPos = 0f;
-            ladderBottomPos = 0f;
-            Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Ground"), LayerMask.NameToLayer("Player"), false);
-            playerAnimator.SetFloat("climbSpeed", 1f);
-            playerAnimator.SetBool("climb", false);
+            case "Wall":
+                isGripWall = false;
+                playerAnimator.SetBool("wallj", false);
+                wallDirection = e_WallDirection.none;
+                break;
+            case "Ladder":
+                canClimbUp = false;
+                canClimbDown = false;
+                isCliming = false;
+                ladderTopPos = 0f;
+                ladderBottomPos = 0f;
+                Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Ground"), LayerMask.NameToLayer("Player"), false);
+                playerAnimator.SetFloat("climbSpeed", 1f);
+                playerAnimator.SetBool("climb", false);
+                break;
+            case "Treasure":
+                TouchingTreasure = null;
+                break;
         }
     }
 

@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2823119254243265640}
   - component: {fileID: 4963325440526297176}
-  - component: {fileID: 5832483985010984861}
+  - component: {fileID: 198276073055328793}
   m_Layer: 0
   m_Name: OpenTreasureCheck
-  m_TagString: Untagged
+  m_TagString: Treasure
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -58,7 +58,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.2}
   m_EdgeRadius: 0
---- !u!114 &5832483985010984861
+--- !u!114 &198276073055328793
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -67,11 +67,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 890422092958741110}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06c695e4e9e3a43449bfbf26545ae2b8, type: 3}
+  m_Script: {fileID: 11500000, guid: cdca574f813cc46b0a6b3c6e3aa8b259, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   treasureAnimator: {fileID: 351497577066281136}
   speechBubbleAnimator: {fileID: 8470949921480334775}
+  objectPrefab: {fileID: 0}
 --- !u!1 &5249617155130228986
 GameObject:
   m_ObjectHideFlags: 0
@@ -82,13 +83,12 @@ GameObject:
   m_Component:
   - component: {fileID: 5249617155130228871}
   - component: {fileID: 5249617155130228868}
-  - component: {fileID: 5249617155130228870}
   - component: {fileID: 351497577066281136}
   - component: {fileID: 5249617155130228869}
   - component: {fileID: 1475477743204876798}
   m_Layer: 0
   m_Name: Treasure
-  m_TagString: Untagged
+  m_TagString: Treasure
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -160,18 +160,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5249617155130228870
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5249617155130228986}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cdca574f813cc46b0a6b3c6e3aa8b259, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!95 &351497577066281136
 Animator:
   serializedVersion: 3
@@ -411,7 +399,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 3f20f2098aaf3474eaa9a654ec1a7563, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

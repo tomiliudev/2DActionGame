@@ -16,6 +16,7 @@ public class GroundCheck : MonoBehaviour
         WeakBlock,
         Box,
         Mushroom,
+        Treasure
     }
 
     GameManager gm;
@@ -69,6 +70,7 @@ public class GroundCheck : MonoBehaviour
                 break;
             case GroundTagType.Platform:
             case GroundTagType.Box:
+            case GroundTagType.Treasure:
                 IsInGround = checkType == e_CheckType.foot ? true : false;
                 break;
             case GroundTagType.Mushroom:
@@ -90,6 +92,7 @@ public class GroundCheck : MonoBehaviour
             case GroundTagType.Platform:
             case GroundTagType.Box:
             case GroundTagType.Mushroom:
+            case GroundTagType.Treasure:
                 Bounds bounds = collision.bounds;
                 float appearYpos = bounds.center.y + bounds.extents.y;
                 if (transform.position.y >= appearYpos)
