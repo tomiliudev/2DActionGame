@@ -8,7 +8,14 @@ public sealed class UseBombItem : UseItemBase
     [SerializeField] Explosion explosionAnimator;
     public override void Use()
     {
-        Debug.Log(string.Format("{0}を使用する", base.itemInfo._type));
+        if (base.gm.player.IsOnRight)
+        {
+            transform.position = base.gm.player.transform.position + new Vector3(0.5f, 0f, 0f);
+        }
+        else
+        {
+            transform.position = base.gm.player.transform.position + new Vector3(-0.5f, 0f, 0f);
+        }
     }
 
     private void Start()
