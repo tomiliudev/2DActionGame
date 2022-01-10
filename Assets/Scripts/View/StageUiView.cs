@@ -40,7 +40,7 @@ public class StageUiView : MonoBehaviour
         SetIsGameOver(gm.IsGameOver);
         SetIsGameClear(gm.IsGameClear);
 
-        treasureNum.text = string.Format("{0}/{1}", gm.treasures.Count(x => x.IsGetTreasure), gm.treasures.Length);
+        //treasureNum.text = string.Format("{0}/{1}", gm.treasures.Count(x => x.IsGetTreasure), gm.treasures.Length);
     }
 
     private void OnCountDown()
