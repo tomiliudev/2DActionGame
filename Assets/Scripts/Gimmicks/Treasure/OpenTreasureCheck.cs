@@ -2,7 +2,8 @@ using UnityEngine;
 
 public sealed class OpenTreasureCheck : MonoBehaviour
 {
-    [SerializeField] Animator animator;
+    [SerializeField] Animator treasureAnimator;
+    [SerializeField] Animator speechBubbleAnimator;
     // 宝箱に触れているか
     public bool IsOnTreasure { get; private set; }
 
@@ -11,7 +12,7 @@ public sealed class OpenTreasureCheck : MonoBehaviour
         if (collision.tag == "Player")
         {
             IsOnTreasure = true;
-            animator.SetTrigger("open");
+            speechBubbleAnimator.gameObject.SetActive(true);
         }
     }
 
@@ -20,6 +21,7 @@ public sealed class OpenTreasureCheck : MonoBehaviour
         if (collision.tag == "Player")
         {
             IsOnTreasure = false;
+            speechBubbleAnimator.gameObject.SetActive(false);
         }
     }
 }
