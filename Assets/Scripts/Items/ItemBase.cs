@@ -40,11 +40,10 @@ public abstract class ItemBase : MonoBehaviour
 public class ItemInfo : IEquipObjectInfo
 {
     public e_ItemType _type;
-    public Sprite _sprite = null;
     public bool _isMultiple;
 
-    public Sprite GetSprite()
+    public string TypeName()
     {
-        return _sprite;
+        return _type.ToString();
     }
 }

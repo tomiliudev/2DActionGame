@@ -15,6 +15,8 @@ public class EquipPopup : PopupBase, ISlotButton
     [SerializeField] ItemSlot itemSlotPrefab;
     [SerializeField] Image equippedWeaponImage;
     [SerializeField] Image equippedItemImage;
+    [SerializeField] Sprite[] weaponSprites;
+    [SerializeField] Sprite[] itemSprites;
 
     GameManager gm;
 
@@ -24,8 +26,8 @@ public class EquipPopup : PopupBase, ISlotButton
         SwitchToggle();
         SetEquippedWeaponImage();
         SetEquippedItemImage();
-        GenerateSlot("weaponList", weaponSlotList, weaponSlotPrefab);
-        GenerateSlot("itemList", itemSlotList, itemSlotPrefab);
+        GenerateWeaponSlot();
+        GenerateItemSlot();
     }
 
     public void OnToggleChanged()
@@ -39,13 +41,13 @@ public class EquipPopup : PopupBase, ISlotButton
         itemScroll.gameObject.SetActive(itemToggle.isOn);
     }
 
-    void GenerateSlot<T>(string slotKey, Transform slotList, SlotBase<T> slotPrefab) where T : IEquipObjectInfo
+    void GenerateWeaponSlot()
     {
-        List<string> slotDataList = PlayerPrefsUtility.LoadList<string>(slotKey);
-        var groupedSlotList = slotDataList.Select(slotJsonData => JsonUtility.FromJson<T>(slotJsonData)).GroupBy(x => x.GetSprite().name);
+        List<string> slotDataList = PlayerPrefsUtility.LoadList<string>("weaponList");
+        var groupedSlotList = slotDataList.Select(slotJsonData => JsonUtility.FromJson<WeaponInfo>(slotJsonData)).GroupBy(x => x.TypeName());
 
         int slotIdx = 0;
-        foreach (SlotFrame slot in slotList.GetComponentsInChildren<SlotFrame>())
+        foreach (SlotFrame slot in weaponSlotList.GetComponentsInChildren<SlotFrame>())
         {
             if (slotIdx >= groupedSlotList.Count()) break;
             var group = groupedSlotList.ElementAt(slotIdx);
@@ -54,8 +56,33 @@ public class EquipPopup : PopupBase, ISlotButton
             slot.SetNumText(group.Count());
 
             // Slotの設定
-            var slotObj = Instantiate(slotPrefab);
-            slotObj.SetSlotInfo(gameObject, group.First());
+            var slotObj = Instantiate(weaponSlotPrefab);
+            slotObj.SetSlotInfo(gameObject, group.First(), GetWeaponSprite(group.First()._type));
+            slotObj.transform.SetParent(slot.transform, false);
+            slotObj.transform.SetAsFirstSibling();
+            slotObj.GetComponent<Image>().preserveAspect = true;
+            slotObj.gameObject.SetActive(true);
+            slotIdx++;
+        }
+    }
+
+    void GenerateItemSlot()
+    {
+        List<string> slotDataList = PlayerPrefsUtility.LoadList<string>("itemList");
+        var groupedSlotList = slotDataList.Select(slotJsonData => JsonUtility.FromJson<ItemInfo>(slotJsonData)).GroupBy(x => x.TypeName());
+
+        int slotIdx = 0;
+        foreach (SlotFrame slot in itemSlotList.GetComponentsInChildren<SlotFrame>())
+        {
+            if (slotIdx >= groupedSlotList.Count()) break;
+            var group = groupedSlotList.ElementAt(slotIdx);
+
+            // 所持数
+            slot.SetNumText(group.Count());
+
+            // Slotの設定
+            var slotObj = Instantiate(itemSlotPrefab);
+            slotObj.SetSlotInfo(gameObject, group.First(), GetItemSprite(group.First()._type));
             slotObj.transform.SetParent(slot.transform, false);
             slotObj.transform.SetAsFirstSibling();
             slotObj.GetComponent<Image>().preserveAspect = true;
@@ -87,7 +114,7 @@ public class EquipPopup : PopupBase, ISlotButton
     private void SetEquippedWeaponImage()
     {
         var info = PlayerPrefsUtility.Load("equippedWeapon", new WeaponInfo());
-        equippedWeaponImage.sprite = info._sprite;
+        equippedWeaponImage.sprite = GetWeaponSprite(info._type);
         equippedWeaponImage.preserveAspect = true;
         equippedWeaponImage.gameObject.SetActive(info._type != e_WeaponType.none);
     }
@@ -95,8 +122,20 @@ public class EquipPopup : PopupBase, ISlotButton
     private void SetEquippedItemImage()
     {
         var info = PlayerPrefsUtility.Load("equippedItem", new ItemInfo());
-        equippedItemImage.sprite = info._sprite;
+        equippedItemImage.sprite = GetItemSprite(info._type);
         equippedItemImage.preserveAspect = true;
         equippedItemImage.gameObject.SetActive(info._type != e_ItemType.none);
+    }
+
+    Sprite GetWeaponSprite(e_WeaponType type)
+    {
+        if (type == e_WeaponType.none) return null;
+        return weaponSprites[(int)type - 1];
+    }
+
+    Sprite GetItemSprite(e_ItemType type)
+    {
+        if (type == e_ItemType.none) return null;
+        return itemSprites[(int)type - 1];
     }
 }

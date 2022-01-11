@@ -88,11 +88,11 @@ public class StageUiView : MonoBehaviour
 
     public void SetWeaponIconImage(WeaponInfo weaponInfo)
     {
-        weaponUiSlot.SetIconImage(weaponInfo);
+        weaponUiSlot.SetWeaponSprite(weaponInfo._type);
     }
 
     public void SetItemIconImage(ItemInfo itemInfo)
     {
-        itemUiSlot.SetIconImage(itemInfo);
+        itemUiSlot.SetItemSprite(itemInfo._type);
     }
 }

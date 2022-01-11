@@ -1374,6 +1374,12 @@ MonoBehaviour:
   itemSlotPrefab: {fileID: 6536885096496406497, guid: 23390501d6cf14099a1adf784892bafe, type: 3}
   equippedWeaponImage: {fileID: 8380588178576119000}
   equippedItemImage: {fileID: 2679460093337088060}
+  weaponSprites:
+  - {fileID: 21300000, guid: 53d3f0bc05eaa41fb877e2f208e15f44, type: 3}
+  itemSprites:
+  - {fileID: 21300000, guid: 41f6eee223a274f19b32264cc0fb8b01, type: 3}
+  - {fileID: 21300000, guid: 9b00b11600ca74e4f85cb4052c0509fd, type: 3}
+  - {fileID: 21300000, guid: 3f20f2098aaf3474eaa9a654ec1a7563, type: 3}
 --- !u!1 &8864347014108324612
 GameObject:
   m_ObjectHideFlags: 0

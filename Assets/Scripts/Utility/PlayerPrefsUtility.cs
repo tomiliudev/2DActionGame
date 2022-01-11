@@ -187,7 +187,6 @@ public static class PlayerPrefsUtility
             string serizlizedList = LoadAndDecryptValue(key);
             return Deserialize<List<T>>(serizlizedList);
         }
-
         return new List<T>();
     }
 

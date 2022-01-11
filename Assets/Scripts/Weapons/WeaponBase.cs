@@ -12,11 +12,6 @@ public abstract class WeaponBase : MonoBehaviour
 {
     [SerializeField] WeaponInfo weaponInfo;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player")
@@ -43,11 +38,10 @@ public abstract class WeaponBase : MonoBehaviour
 public class WeaponInfo : IEquipObjectInfo
 {
     public e_WeaponType _type;
-    public Sprite _sprite = null;
     public bool _isMultiple;
 
-    public Sprite GetSprite()
+    public string TypeName()
     {
-        return _sprite;
+        return _type.ToString();
     }
 }
