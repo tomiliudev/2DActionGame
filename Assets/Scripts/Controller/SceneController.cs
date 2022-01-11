@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
@@ -6,6 +7,9 @@ using UnityEngine.SceneManagement;
 public class SceneController : MonoBehaviour
 {
     GameManager gm;
+
+    [SerializeField] GameObject[] doors;
+    bool isDoorApear;
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +23,8 @@ public class SceneController : MonoBehaviour
     void Update()
     {
         if (!gm.IsInitialized) return;
+
+        DoorApearEvent();
 
         OnGameClear();
 
@@ -38,6 +44,22 @@ public class SceneController : MonoBehaviour
         {
             // 画面の下側より落ちた場合ゲームオーバー
             StartCoroutine(OnGameOver());
+        }
+    }
+
+    /// <summary>
+    /// 扉が表示するイベント
+    /// </summary>
+    private void DoorApearEvent()
+    {
+        if (isDoorApear) return;
+        if (gm.treasures.All(x => x.IsOpened))
+        {
+            isDoorApear = true;
+
+            // 扉が出現する(ランダム)
+            GameObject door = doors.OrderBy(_ => Guid.NewGuid()).FirstOrDefault();
+            door.SetActive(true);
         }
     }
 
