@@ -16,6 +16,8 @@ public sealed class UseItemButton : MonoBehaviour
 
     public void OnUseItemButtonClicked()
     {
+        if (gm.IsGameClear || gm.IsGameOver) return;
+
         ItemInfo equippedItem = PlayerPrefsUtility.Load("equippedItem", new ItemInfo());
         switch (equippedItem._type)
         {

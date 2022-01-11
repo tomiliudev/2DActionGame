@@ -12,6 +12,7 @@ public class BowButton : MonoBehaviour
 
     public void OnBowButtonClick()
     {
+        if (gm.IsGameClear || gm.IsGameOver) return;
         var info = PlayerPrefsUtility.Load("equippedWeapon", new WeaponInfo());
         if (info._type == e_WeaponType.bow)
         {

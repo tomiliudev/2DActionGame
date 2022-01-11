@@ -20,11 +20,7 @@ public class SceneController : MonoBehaviour
     {
         if (!gm.IsInitialized) return;
 
-        //if (gm.treasures.All(x => x.IsGetTreasure))
-        //{
-        //    // 宝箱ゲットしたらゲームクリア
-        //    OnGameClear();
-        //}
+        OnGameClear();
 
         if (gm.stageUiView.CountDownSec <= 0)
         {
@@ -91,7 +87,5 @@ public class SceneController : MonoBehaviour
 
             return;
         }
-
-        gm.IsGameClear = true;
     }
 }
