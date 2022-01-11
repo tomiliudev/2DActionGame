@@ -19,11 +19,11 @@ public abstract class UseItemBase : MonoBehaviour
         Hashtable hash = new Hashtable();
         hash.Add("y", yPos + 1.5f);
         hash.Add("time", 0.5f);
-        hash.Add("oncomplete", "OnRiseAnimationComplete");
+        hash.Add("oncomplete", "DestroySelf");
         iTween.MoveTo(gameObject, hash);
     }
 
-    private void OnRiseAnimationComplete()
+    protected void DestroySelf()
     {
         Destroy(gameObject);
     }

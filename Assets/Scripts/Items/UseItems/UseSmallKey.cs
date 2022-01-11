@@ -5,6 +5,7 @@ public sealed class UseSmallKey : UseItemBase
         if (base.gm.player.TouchingTreasure != null)
         {
             base.gm.player.TouchingTreasure.Open();
+            base.DestroySelf();
         }
     }
 }
