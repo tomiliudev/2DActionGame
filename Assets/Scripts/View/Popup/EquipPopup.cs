@@ -42,14 +42,6 @@ public class EquipPopup : PopupBase, ISlotButton
     void GenerateSlot<T>(string slotKey, Transform slotList, SlotBase<T> slotPrefab) where T : IEquipObjectInfo
     {
         List<string> slotDataList = PlayerPrefsUtility.LoadList<string>(slotKey);
-
-        Debug.Log(slotKey);
-        foreach (var item in slotDataList)
-        {
-            Debug.Log(item);
-        }
-        
-
         var groupedSlotList = slotDataList.Select(slotJsonData => JsonUtility.FromJson<T>(slotJsonData)).GroupBy(x => x.GetSprite().name);
 
         int slotIdx = 0;
