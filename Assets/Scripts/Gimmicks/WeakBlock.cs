@@ -29,7 +29,7 @@ public class WeakBlock : MonoBehaviour
     IEnumerator CrushAnimation()
     {
         float shackTime = 1.5f;
-        gameObject.ShakePosition(new Vector2(0.1f, 0f), shackTime, 0f);
+        iTween.ShakePosition(gameObject, new Vector2(0.1f, 0f), shackTime);
         
         ps.Play();
 

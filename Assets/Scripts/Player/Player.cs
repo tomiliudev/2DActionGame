@@ -195,7 +195,7 @@ public class Player : MonoBehaviour
             diffPos = hit.point - (Vector2)transform.position;
             _bowLine.size = new Vector2(Mathf.Abs(diffPos.x), _bowLine.size.y);
             _bowLine.transform.position = ((hit.point + bowStartPosition) / 2);
-            _bowLine.gameObject.FadeTo(0f, bowLineFadeTime, 0f);
+            iTween.FadeTo(_bowLine.gameObject, 0f, bowLineFadeTime);
             Destroy(_bowLine.gameObject, bowLineFadeTime);
 
             if (hit.transform.tag == "Ground")
