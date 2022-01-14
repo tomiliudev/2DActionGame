@@ -7,6 +7,8 @@ public class EquipPopup : PopupBase, ISlotButton
 {
     [SerializeField] Toggle weaponToggle;
     [SerializeField] Toggle itemToggle;
+    [SerializeField] GameObject weaponToggleOnText;
+    [SerializeField] GameObject itemToggleOnText;
     [SerializeField] ScrollRect weaponScroll;
     [SerializeField] ScrollRect itemScroll;
     [SerializeField] Transform weaponSlotList;
@@ -37,7 +39,9 @@ public class EquipPopup : PopupBase, ISlotButton
 
     void SwitchToggle()
     {
+        weaponToggleOnText.SetActive(weaponToggle.isOn);
         weaponScroll.gameObject.SetActive(weaponToggle.isOn);
+        itemToggleOnText.SetActive(itemToggle.isOn);
         itemScroll.gameObject.SetActive(itemToggle.isOn);
     }
 
