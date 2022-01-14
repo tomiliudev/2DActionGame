@@ -20,11 +20,8 @@ public class EquipPopup : PopupBase, ISlotButton
     [SerializeField] Sprite[] weaponSprites;
     [SerializeField] Sprite[] itemSprites;
 
-    GameManager gm;
-
     private void Start()
     {
-        gm = GameManager.Instance;
         SwitchToggle();
         SetEquippedWeaponImage();
         SetEquippedItemImage();
@@ -103,7 +100,7 @@ public class EquipPopup : PopupBase, ISlotButton
             SetEquippedWeaponImage();
 
             // UIの装備中武器アイコンの設定
-            gm.stageUiView.SetWeaponIconImage((WeaponInfo)info);
+            base.gm.stageUiView.SetWeaponIconImage((WeaponInfo)info);
         }
         else if(typeof(ItemInfo) == info.GetType())
         {
@@ -111,7 +108,7 @@ public class EquipPopup : PopupBase, ISlotButton
             SetEquippedItemImage();
 
             // UIの装備中アイテムアイコンの設定
-            gm.stageUiView.SetItemIconImage((ItemInfo)info);
+            base.gm.stageUiView.SetItemIconImage((ItemInfo)info);
         }
     }
 

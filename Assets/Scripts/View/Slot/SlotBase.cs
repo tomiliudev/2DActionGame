@@ -11,6 +11,7 @@ public class SlotBase<T> : ButtonBase<ISlotButton>
         base.targetObj = targetObj;
         this.slotInfo = slotInfo;
         slotImage.sprite = objSprite;
+        slotImage.SetNativeSize();
     }
 
     public override void Execute(ISlotButton controller)
