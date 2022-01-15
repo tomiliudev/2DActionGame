@@ -177,8 +177,6 @@ public class Player : MonoBehaviour
         // 壁にへばり付いている時は矢を放てない
         if (isGripWall) return;
 
-        SpriteRenderer _bowLine = Instantiate(bowLine);
-
         var trans = playerAnimator.GetComponent<Transform>();
         direction = trans.localScale.x > 0f ? Vector2.right : Vector2.left;
 
@@ -193,10 +191,7 @@ public class Player : MonoBehaviour
         if (hit.collider != null)
         {
             diffPos = hit.point - (Vector2)transform.position;
-            _bowLine.size = new Vector2(Mathf.Abs(diffPos.x), _bowLine.size.y);
-            _bowLine.transform.position = ((hit.point + bowStartPosition) / 2);
-            iTween.FadeTo(_bowLine.gameObject, 0f, bowLineFadeTime);
-            Destroy(_bowLine.gameObject, bowLineFadeTime);
+            ShowBowLine(Mathf.Abs(diffPos.x), bowStartPosition, hit.point);
 
             if (hit.transform.tag == "Ground")
             {
@@ -221,8 +216,30 @@ public class Player : MonoBehaviour
 
             //Debug.DrawRay(bowStartPosition, direction * Mathf.Abs(diffPos.x), Color.red);
         }
+        else
+        {
+            Vector2 hitPos;
+            if(direction == Vector2.right)
+            {
+                hitPos = (Vector2)transform.position + new Vector2(rayMaxDistance, 0);
+            }
+            else
+            {
+                hitPos = (Vector2)transform.position - new Vector2(rayMaxDistance, 0);
+            }
+            ShowBowLine(rayMaxDistance, bowStartPosition, hitPos);
+        }
 
         playerAnimator.SetTrigger("bow");
+    }
+
+    private void ShowBowLine(float sizeX, Vector2 bowStartPosition, Vector2 hitPos)
+    {
+        SpriteRenderer _bowLine = Instantiate(bowLine);
+        _bowLine.size = new Vector2(sizeX, _bowLine.size.y);
+        _bowLine.transform.position = (hitPos + bowStartPosition) / 2;
+        iTween.FadeTo(_bowLine.gameObject, 0f, bowLineFadeTime);
+        Destroy(_bowLine.gameObject, bowLineFadeTime);
     }
 
     /// <summary>
