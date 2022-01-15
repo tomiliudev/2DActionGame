@@ -38,12 +38,15 @@ public sealed class Treasure : MonoBehaviour
         treasureAnimator.SetTrigger("open");
         speechBubbleAnimator.gameObject.SetActive(false);
 
-        var obj = Instantiate(objectPrefab, transform.parent, false);
-        obj.transform.position = transform.position;
-        float yPos = obj.transform.position.y;
-        Hashtable hash = new Hashtable();
-        hash.Add("y", yPos + 1.5f);
-        hash.Add("time", 0.5f);
-        iTween.MoveTo(obj, hash);
+        if (objectPrefab != null)
+        {
+            var obj = Instantiate(objectPrefab, transform.parent, false);
+            obj.transform.position = transform.position;
+            float yPos = obj.transform.position.y;
+            Hashtable hash = new Hashtable();
+            hash.Add("y", yPos + 1.5f);
+            hash.Add("time", 0.5f);
+            iTween.MoveTo(obj, hash);
+        }
     }
 }
