@@ -6,7 +6,6 @@ using UnityEngine.EventSystems;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip jumpSe;
     [SerializeField] AudioClip bowSe;
 
@@ -181,7 +180,7 @@ public class Player : MonoBehaviour
         // 壁にへばり付いている時は矢を放てない
         if (isGripWall) return;
 
-        audioSource.PlayOneShot(bowSe);
+        SoundManager.Instance.Play(bowSe);
 
         var trans = playerAnimator.GetComponent<Transform>();
         direction = trans.localScale.x > 0f ? Vector2.right : Vector2.left;
@@ -1022,7 +1021,7 @@ public class Player : MonoBehaviour
         if (isCliming) return;
 
         // jumpのSE
-        audioSource.PlayOneShot(jumpSe);
+        SoundManager.Instance.Play(jumpSe);
 
         isJump = true;
         playerJumpPos = transform.position.y;

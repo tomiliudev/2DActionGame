@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : SingletonMonoBehaviour<GameManager>
+public sealed class GameManager : SingletonMonoBehaviour<GameManager>
 {
     private const string playerMaxHpStr = "playerMaxHp";
     

@@ -13,11 +13,14 @@ public enum e_ItemType
 public abstract class ItemBase : MonoBehaviour
 {
     [SerializeField] protected ItemInfo itemInfo;
+    [SerializeField] protected AudioClip itemPickupSe;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player")
         {
+            SoundManager.Instance.Play(itemPickupSe);
+
             // 獲得データを保存する
             PlayerPrefsUtility.AddToJsonList("itemList", itemInfo, itemInfo._isMultiple);
 

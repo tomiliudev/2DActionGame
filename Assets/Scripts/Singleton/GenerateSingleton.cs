@@ -11,5 +11,7 @@ public class GenerateSingleton : MonoBehaviour
             singletonRootObj = new GameObject("SingletonRoot");
         }
         DontDestroyOnLoad(singletonRootObj);
+
+        singletonRootObj.AddComponent<SoundManager>();
     }
 }

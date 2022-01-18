@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneController : MonoBehaviour
+public sealed class SceneController : MonoBehaviour
 {
     GameManager gm;
 

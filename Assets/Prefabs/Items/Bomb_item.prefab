@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4449478671871960226}
+  - component: {fileID: 7740527728968209608}
   - component: {fileID: 4316507572728555130}
   - component: {fileID: 6573115870326264814}
-  - component: {fileID: 7740527728968209608}
   m_Layer: 0
   m_Name: Bomb_item
   m_TagString: Untagged
@@ -33,6 +33,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7740527728968209608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1699696663110250373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d244ce7eb67914f79aa99e3f838ee8f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemInfo:
+    _type: 2
+    _isMultiple: 1
+  itemPickupSe: {fileID: 8300000, guid: 6d36b4e52f256412b8a4064c234d6e35, type: 3}
 --- !u!212 &4316507572728555130
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -100,20 +116,3 @@ CircleCollider2D:
   m_Offset: {x: 0, y: -0.08}
   serializedVersion: 2
   m_Radius: 0.25
---- !u!114 &7740527728968209608
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1699696663110250373}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d244ce7eb67914f79aa99e3f838ee8f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemInfo:
-    _type: 2
-    _sprite: {fileID: 21300000, guid: 9b00b11600ca74e4f85cb4052c0509fd, type: 3}
-    _isMultiple: 1
-    co2d: {fileID: 6573115870326264814}

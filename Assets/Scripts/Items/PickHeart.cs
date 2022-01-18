@@ -1,14 +1,15 @@
 using UnityEngine;
 
-public class PickHeart : MonoBehaviour
+public sealed class PickHeart : MonoBehaviour
 {
-    public bool IsGetHeart { get; private set; }
+    [SerializeField] AudioClip pickupSe;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.tag == "Player")
         {
-            IsGetHeart = true;
+            SoundManager.Instance.Play(pickupSe);
+
             GameManager.Instance.PlayerCurrentHp++;
             Destroy(gameObject);
         }
