@@ -6,6 +6,9 @@ using UnityEngine.EventSystems;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip jumpSe;
+
     [SerializeField] Animator playerAnimator;
     [SerializeField] Rigidbody2D playerRg2d;
     [SerializeField] CapsuleCollider2D playerCollider;
@@ -986,7 +989,7 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            if (groundCheck.IsInGround || isGripWall)
+            if (!canClimbUp && (groundCheck.IsInGround || isGripWall))
             {
                 DoJump(playerJumpLimitHight);
             }
@@ -1000,7 +1003,7 @@ public class Player : MonoBehaviour
     {
         if (Input.GetAxis("Vertical") > 0f)
         {
-            if (groundCheck.IsInGround || isGripWall)
+            if (!canClimbUp && (groundCheck.IsInGround || isGripWall))
             {
                 DoJump(playerJumpLimitHight);
             }
@@ -1014,6 +1017,9 @@ public class Player : MonoBehaviour
     private void DoJump(float jumpLimitHight)
     {
         if (isCliming) return;
+
+        // jumpのSE
+        audioSource.PlayOneShot(jumpSe);
 
         isJump = true;
         playerJumpPos = transform.position.y;
