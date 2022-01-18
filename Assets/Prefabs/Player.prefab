@@ -194,6 +194,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioSource: {fileID: 4413451401234786408}
   jumpSe: {fileID: 8300000, guid: 03a2660f4bea1404d971e30007c66143, type: 3}
+  bowSe: {fileID: 8300000, guid: 2662c473556274c4fa3cf9db79281c61, type: 3}
   playerAnimator: {fileID: 6968699690720501173}
   playerRg2d: {fileID: 6968699690490263149}
   playerCollider: {fileID: 6968699690490263148}

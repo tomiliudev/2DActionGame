@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
 {
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip jumpSe;
+    [SerializeField] AudioClip bowSe;
 
     [SerializeField] Animator playerAnimator;
     [SerializeField] Rigidbody2D playerRg2d;
@@ -179,6 +180,8 @@ public class Player : MonoBehaviour
     {
         // 壁にへばり付いている時は矢を放てない
         if (isGripWall) return;
+
+        audioSource.PlayOneShot(bowSe);
 
         var trans = playerAnimator.GetComponent<Transform>();
         direction = trans.localScale.x > 0f ? Vector2.right : Vector2.left;
