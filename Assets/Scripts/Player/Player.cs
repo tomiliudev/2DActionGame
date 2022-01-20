@@ -476,11 +476,11 @@ public class Player : MonoBehaviour
         {
             if (contact.point.y < stepOnPos && !groundCheck.IsInGround && !isCliming)
             {
-                ObjectCollision oc = collision.gameObject.GetComponent<ObjectCollision>();
-                if (oc != null)
+                Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+                if (enemy != null)
                 {
-                    oc.isPlayerStepOn = true;
-                    DoJump(oc.boundHight);
+                    enemy.OnDamage();
+                    DoJump(enemy.BoundHight);
                 }
             }
             else

@@ -86,7 +86,6 @@ GameObject:
   - component: {fileID: 109629449863652745}
   - component: {fileID: 109629449863652744}
   - component: {fileID: 109629449863652748}
-  - component: {fileID: 109629449863652749}
   - component: {fileID: 1524803782435951698}
   m_Layer: 7
   m_Name: PatrolGuy
@@ -217,20 +216,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &109629449863652749
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 109629449863652747}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f4fd927155504f2a807231a5639241b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  boundHight: 1.5
-  isPlayerStepOn: 0
 --- !u!114 &1524803782435951698
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -250,9 +235,9 @@ MonoBehaviour:
   moveSpeed: 3
   gravity: 3
   wallCollisionCheck: {fileID: 109629448808575614}
-  objectCollision: {fileID: 109629449863652749}
   animator: {fileID: 109629449863652745}
   pickHeart: {fileID: 4477351285677921095, guid: ca4221de429fa4b8e9c36954e10b0dfc, type: 3}
+  boundHight: 1.5
   filter2d:
     useTriggers: 0
     useLayerMask: 0

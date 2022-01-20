@@ -9,23 +9,19 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected float moveSpeed;
     [SerializeField] protected float gravity;
     [SerializeField] protected EnemyCollisionCheck wallCollisionCheck;
-    [SerializeField] protected ObjectCollision objectCollision;
     [SerializeField] protected Animator animator;
     [SerializeField] protected PickHeart pickHeart;
-
-
+    [SerializeField] protected float boundHight;// プレイヤーが踏みつけた時にバウンドする力
     [SerializeField] private ContactFilter2D filter2d = default;
+
+    GameManager gm;
 
     protected const string playerTag = "Player";
     protected const string playerLayer = "Player";
 
-    GameManager gm;
-
     bool isDead = false;
-    protected bool IsDead
-    {
-        get { return this.isDead; }
-    }
+    protected bool IsDead { get { return this.isDead; } }
+    public float BoundHight { get { return boundHight; } }
 
     protected Transform playerTransform;
     protected Vector3 playerVector;
@@ -47,9 +43,6 @@ public class Enemy : MonoBehaviour
     {
         if (!gm.IsInitialized) return;
 
-        // 敵が死んだら何もしない
-        EnemyDead();
-
         // ゲームクリアしたら何もしない
         if (gm.IsGameClear)
         {
@@ -58,20 +51,6 @@ public class Enemy : MonoBehaviour
 
         // プレイヤーのベクトル
         playerVector = playerTransform.position - transform.position;
-    }
-
-    protected void EnemyDead()
-    {
-        if (isDead) return;
-        if (objectCollision.isPlayerStepOn)
-        {
-            OnDamage();
-
-            //rb2D.velocity = new Vector2(0f, 0f);
-            //if (cc2D != null) cc2D.enabled = false;
-            //if (capsuleCollider2D != null) capsuleCollider2D.enabled = false;
-            //if (animator != null) animator.enabled = false;
-        }
     }
 
     public void OnDamage()

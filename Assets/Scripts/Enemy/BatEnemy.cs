@@ -11,10 +11,6 @@ public class BatEnemy : Enemy
         StartCoroutine(FollowPlayer());
     }
 
-    private void Update()
-    {
-    }
-
     /// <summary>
     /// プレイヤーを追従する
     /// </summary>

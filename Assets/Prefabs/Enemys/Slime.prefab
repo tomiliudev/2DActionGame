@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 3906090396950797092}
   - component: {fileID: 3906090396950797095}
   - component: {fileID: 651186408321727854}
-  - component: {fileID: 8154438474186868970}
   - component: {fileID: 1516010496049764790}
   m_Layer: 7
   m_Name: Slime
@@ -146,20 +145,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &8154438474186868970
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3906090396950797089}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f4fd927155504f2a807231a5639241b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  boundHight: 1.5
-  isPlayerStepOn: 0
 --- !u!114 &1516010496049764790
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,10 +164,9 @@ MonoBehaviour:
   moveSpeed: 3
   gravity: 10
   wallCollisionCheck: {fileID: 7093392002339172005}
-  groundCollisionCheck: {fileID: 0}
-  objectCollision: {fileID: 8154438474186868970}
   animator: {fileID: 3906090396950797092}
   pickHeart: {fileID: 4477351285677921095, guid: ca4221de429fa4b8e9c36954e10b0dfc, type: 3}
+  boundHight: 1.5
   filter2d:
     useTriggers: 0
     useLayerMask: 1
@@ -342,7 +326,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61b9187629175498985b2f6d31d9f4c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isCheckPlatform: 1
+  checkType: 1
 --- !u!1 &4107453802292380623
 GameObject:
   m_ObjectHideFlags: 0
@@ -413,4 +397,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61b9187629175498985b2f6d31d9f4c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isCheckPlatform: 0
+  checkType: 1

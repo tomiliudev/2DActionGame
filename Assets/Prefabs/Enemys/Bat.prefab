@@ -9,10 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4747338750769323014}
+  - component: {fileID: 1908471125}
   - component: {fileID: 4747338750769323008}
   - component: {fileID: 4747338750769323015}
-  - component: {fileID: 1908471125}
-  - component: {fileID: 6552551598109162907}
   - component: {fileID: 5850952091819558636}
   - component: {fileID: 1908471123}
   m_Layer: 7
@@ -36,6 +35,42 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1908471125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4747338750769323013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c422c86706ccd4417ab1b1a6020d2449, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sr: {fileID: 4747338750769323008}
+  rb2D: {fileID: 1908471123}
+  cc2D: {fileID: 5850952091819558636}
+  capsuleCollider2D: {fileID: 0}
+  moveSpeed: 300
+  gravity: 0
+  wallCollisionCheck: {fileID: 0}
+  animator: {fileID: 4747338750769323015}
+  pickHeart: {fileID: 4477351285677921095, guid: ca4221de429fa4b8e9c36954e10b0dfc, type: 3}
+  boundHight: 1.5
+  filter2d:
+    useTriggers: 0
+    useLayerMask: 1
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 576
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
 --- !u!212 &4747338750769323008
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -74,7 +109,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 796347903
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 122ab799312426541b48973c38b3e860, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -106,57 +141,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &1908471125
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4747338750769323013}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c422c86706ccd4417ab1b1a6020d2449, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sr: {fileID: 4747338750769323008}
-  rb2D: {fileID: 1908471123}
-  cc2D: {fileID: 5850952091819558636}
-  capsuleCollider2D: {fileID: 0}
-  moveSpeed: 300
-  gravity: 0
-  wallCollisionCheck: {fileID: 0}
-  groundCollisionCheck: {fileID: 0}
-  objectCollision: {fileID: 6552551598109162907}
-  animator: {fileID: 4747338750769323015}
-  pickHeart: {fileID: 4477351285677921095, guid: ca4221de429fa4b8e9c36954e10b0dfc, type: 3}
-  filter2d:
-    useTriggers: 0
-    useLayerMask: 1
-    useDepth: 0
-    useOutsideDepth: 0
-    useNormalAngle: 0
-    useOutsideNormalAngle: 0
-    layerMask:
-      serializedVersion: 2
-      m_Bits: 576
-    minDepth: 0
-    maxDepth: 0
-    minNormalAngle: 0
-    maxNormalAngle: 0
---- !u!114 &6552551598109162907
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4747338750769323013}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f4fd927155504f2a807231a5639241b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  boundHight: 1.5
-  isPlayerStepOn: 0
 --- !u!58 &5850952091819558636
 CircleCollider2D:
   m_ObjectHideFlags: 0
