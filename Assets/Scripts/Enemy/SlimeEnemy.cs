@@ -85,7 +85,7 @@ public class SlimeEnemy : Enemy
             }
             else
             {
-                if(groundCheck.IsInGround) rb2D.Sleep();
+                rb2D.Sleep();
             }
         }
     }
