@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected float gravity;
     [SerializeField] protected EnemyCollisionCheck wallCollisionCheck;
     [SerializeField] protected Animator animator;
-    [SerializeField] protected PickHeart pickHeart;
+    [SerializeField] protected GameObject dropItem;
     [SerializeField] protected float boundHight;// プレイヤーが踏みつけた時にバウンドする力
     [SerializeField] private ContactFilter2D filter2d = default;
 
@@ -56,8 +56,11 @@ public class Enemy : MonoBehaviour
     {
         isDead = true;
 
-        var pickHeartObj = Instantiate(pickHeart, transform.parent);
-        pickHeartObj.transform.position = transform.position;
+        if (dropItem != null)
+        {
+            var dropItemObj = Instantiate(dropItem, transform.parent);
+            dropItemObj.transform.position = transform.position;
+        }
 
         Destroy(gameObject);
     }

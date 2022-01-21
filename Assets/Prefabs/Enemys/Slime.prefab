@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3906090396950797094}
+  - component: {fileID: 1516010496049764790}
   - component: {fileID: 3906090396950797093}
   - component: {fileID: 3906090396950797092}
   - component: {fileID: 3906090396950797095}
   - component: {fileID: 651186408321727854}
-  - component: {fileID: 1516010496049764790}
   m_Layer: 7
   m_Name: Slime
   m_TagString: Enemy
@@ -38,6 +38,44 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1516010496049764790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3906090396950797089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25ebe024f5b8a4a479bcf8bb0050df90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sr: {fileID: 3906090396950797093}
+  rb2D: {fileID: 651186408321727854}
+  cc2D: {fileID: 0}
+  capsuleCollider2D: {fileID: 3906090396950797095}
+  moveSpeed: 3
+  gravity: 10
+  wallCollisionCheck: {fileID: 7093392002339172005}
+  animator: {fileID: 3906090396950797092}
+  dropItem: {fileID: 2920539737978896308, guid: c91c64b4c8ead4fe99658ccd96e8805f, type: 3}
+  boundHight: 1.5
+  filter2d:
+    useTriggers: 0
+    useLayerMask: 1
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 576
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
+  groundCheck: {fileID: 1366413832728222555}
+  headCheck: {fileID: 829265706161965925}
 --- !u!212 &3906090396950797093
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -145,44 +183,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &1516010496049764790
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3906090396950797089}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25ebe024f5b8a4a479bcf8bb0050df90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sr: {fileID: 3906090396950797093}
-  rb2D: {fileID: 651186408321727854}
-  cc2D: {fileID: 0}
-  capsuleCollider2D: {fileID: 3906090396950797095}
-  moveSpeed: 3
-  gravity: 10
-  wallCollisionCheck: {fileID: 7093392002339172005}
-  animator: {fileID: 3906090396950797092}
-  pickHeart: {fileID: 4477351285677921095, guid: ca4221de429fa4b8e9c36954e10b0dfc, type: 3}
-  boundHight: 1.5
-  filter2d:
-    useTriggers: 0
-    useLayerMask: 1
-    useDepth: 0
-    useOutsideDepth: 0
-    useNormalAngle: 0
-    useOutsideNormalAngle: 0
-    layerMask:
-      serializedVersion: 2
-      m_Bits: 576
-    minDepth: 0
-    maxDepth: 0
-    minNormalAngle: 0
-    maxNormalAngle: 0
-  groundCheck: {fileID: 1366413832728222555}
-  headCheck: {fileID: 829265706161965925}
 --- !u!1 &3950685377694646723
 GameObject:
   m_ObjectHideFlags: 0
