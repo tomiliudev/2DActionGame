@@ -46,6 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c1be9310b4334e1885e51b3e842cd55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bgmAudio: {fileID: 3952258846511465084}
+  gameOverSe: {fileID: 8300000, guid: f1059b6b58f0d432098ed1b9764600fe, type: 3}
   doors:
   - {fileID: 0}
   - {fileID: 0}

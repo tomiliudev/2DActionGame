@@ -1,4 +1,5 @@
 using System;
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -22,7 +23,7 @@ public sealed class GameManager : SingletonMonoBehaviour<GameManager>
     }
     private e_StageName currentStage;
 
-    public int PlayerMaxHp { get { return PlayerPrefs.GetInt(playerMaxHpStr, 3); } }
+    public int PlayerMaxHp { get { return PlayerPrefs.GetInt(playerMaxHpStr, 1); } }
     private int playerCurrentHp;
     public int PlayerCurrentHp {
         get { return playerCurrentHp; }
@@ -42,6 +43,7 @@ public sealed class GameManager : SingletonMonoBehaviour<GameManager>
     public Treasure[] treasures;
     public Player player;
     public PolygonCollider2D cameraCollider;
+    public CinemachineVirtualCamera cinemachineCamera;
 
     private void Awake()
     {
@@ -52,7 +54,7 @@ public sealed class GameManager : SingletonMonoBehaviour<GameManager>
 
     private void Start()
     {
-        currentStage = e_StageName.Stage1;
+        currentStage = e_StageName.Stage2;
         LoadSceneTo(currentStage.ToString());
     }
 
@@ -79,6 +81,7 @@ public sealed class GameManager : SingletonMonoBehaviour<GameManager>
     {
         isInitialized = true;
 
+        cinemachineCamera = FindObjectOfType<CinemachineVirtualCamera>();
         stageUiView = FindObjectOfType<StageUiView>();
         popupView = FindObjectOfType<PopupView>();
         treasures = FindObjectsOfType<Treasure>();

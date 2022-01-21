@@ -8,6 +8,8 @@ public sealed class SceneController : MonoBehaviour
 {
     GameManager gm;
 
+    [SerializeField] AudioSource bgmAudio;
+    [SerializeField] AudioClip gameOverSe;
     [SerializeField] GameObject[] doors;
     bool isDoorApear;
 
@@ -76,9 +78,10 @@ public sealed class SceneController : MonoBehaviour
             gm.PlayerCurrentHp--;
         }
 
-        yield return new WaitForSeconds(1f);
-
-        GameManager.Instance.LoadSceneTo(SceneManager.GetActiveScene().name);
+        bgmAudio.Stop();
+        SoundManager.Instance.Play(gameOverSe);
+        //yield return new WaitForSeconds(1f);
+        //GameManager.Instance.LoadSceneTo(SceneManager.GetActiveScene().name);
     }
 
     private void OnGameClear()

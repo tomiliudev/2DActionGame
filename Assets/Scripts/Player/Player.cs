@@ -658,15 +658,18 @@ public class Player : MonoBehaviour
 
             // PlayerHit
             playerAnimator.Play("PlayerHit");
-
-            // 無敵
-            StartCoroutine(DoInvincibleTime());
         }
 
         if (gm.PlayerCurrentHp <= 0)
         {
             // 死んだ時
             isDie = true;
+            GameOverTask();
+        }
+        else
+        {
+            // 無敵
+            StartCoroutine(DoInvincibleTime());
         }
     }
 
@@ -1045,5 +1048,15 @@ public class Player : MonoBehaviour
             _dust.transform.position = dust.transform.position;
             _dust.gameObject.SetActive(true);
         }
+    }
+
+    public void GameOverTask()
+    {
+        gm.cinemachineCamera.Follow = null;
+        playerCollider.enabled = false;
+        playerRg2d.bodyType = RigidbodyType2D.Static;
+        iTween.MoveAdd(gameObject, iTween.Hash("y", 0.3f, "time", 0.5f, "easeType", iTween.EaseType.easeOutBounce));
+        iTween.MoveAdd(gameObject, iTween.Hash("y", -10f, "time", 5f, "delay", 0.5f));
+
     }
 }
