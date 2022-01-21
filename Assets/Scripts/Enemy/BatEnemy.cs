@@ -5,6 +5,9 @@ public class BatEnemy : Enemy
 {
     private bool isFollowPlayer;
 
+    // 一時停止
+    bool isFreeze;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +26,11 @@ public class BatEnemy : Enemy
             yield return new WaitForFixedUpdate();
 
             if (base.IsDead) yield break;
+
+            if (isFreeze)
+            {
+                continue;
+            }
 
             if (base.sr.isVisible)
             {
@@ -51,5 +59,37 @@ public class BatEnemy : Enemy
                 base.rb2D.Sleep();
             }
         }
+    }
+
+    protected override void OnCollisionEnter2D(Collision2D collision)
+    {
+        base.OnCollisionEnter2D(collision);
+        if (collision.collider.tag == playerTag)
+        {
+            if (base.gm.player.CheckCollisionDetectionWithEnemy(transform))
+            {
+                // プレイヤーを攻撃した場合、一時フリーズに入る
+                StartCoroutine(DoFreeze());
+            }
+        }
+    }
+
+    // 一時フリーズ
+    IEnumerator DoFreeze()
+    {
+        isFreeze = true;
+        base.rb2D.Sleep();
+
+        var x = transform.position.x;
+        var y = transform.position.y;
+
+        Hashtable hash = new Hashtable();
+        hash.Add("x", x + (-playerVector.normalized.x));
+        hash.Add("y", y + (-playerVector.normalized.y));
+        hash.Add("time", 0.5f);
+        iTween.MoveTo(gameObject, hash);
+
+        yield return new WaitForSeconds(2f);
+        isFreeze = false;
     }
 }

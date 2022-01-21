@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -14,7 +15,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected float boundHight;// プレイヤーが踏みつけた時にバウンドする力
     [SerializeField] private ContactFilter2D filter2d = default;
 
-    GameManager gm;
+    protected GameManager gm;
 
     protected const string playerTag = "Player";
     protected const string playerLayer = "Player";
@@ -23,12 +24,10 @@ public class Enemy : MonoBehaviour
     protected bool IsDead { get { return this.isDead; } }
     public float BoundHight { get { return boundHight; } }
 
-    protected Transform playerTransform;
     protected Vector3 playerVector;
-
+    
     private void Awake()
     {
-        playerTransform = GameObject.FindWithTag(playerTag).transform;
         gm = GameManager.Instance;
     }
 
@@ -50,7 +49,7 @@ public class Enemy : MonoBehaviour
         }
 
         // プレイヤーのベクトル
-        playerVector = playerTransform.position - transform.position;
+        playerVector = gm.player.transform.position - transform.position;
     }
 
     public void OnDamage()
@@ -79,5 +78,22 @@ public class Enemy : MonoBehaviour
         }
 
         return false;
+    }
+
+    protected virtual void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.tag == playerTag)
+        {
+            if (gm.player.CheckCollisionDetectionWithEnemy(transform))
+            {
+                gm.player.OnDamage();
+            }
+            else
+            {
+                // プレイヤーに踏みつけられた
+                OnDamage();
+                gm.player.OnBound(boundHight);
+            }
+        }
     }
 }

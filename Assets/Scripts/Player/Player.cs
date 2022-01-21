@@ -457,38 +457,32 @@ public class Player : MonoBehaviour
         return _playerJumpSpeed;
     }
 
-
     /// <summary>
     /// 敵との接触判定
     /// プレイヤーの足元で踏みつけた場合は跳ねる
     /// それ以外の場合は敵に攻撃される
     /// </summary>
     /// <param name="collision"></param>
-    void CheckContactJudgment(Collision2D collision)
+    public bool CheckCollisionDetectionWithEnemy(Transform enemyTrans)
     {
+        bool isAttectedByEnemy = false;
         float playerHeight = playerCollider.size.y;
 
         // 踏みつける判定の高さ
         float stepOnHeight = playerHeight * (stepOnRate / 100f);
         float stepOnPos = transform.position.y - playerHeight / 2 + stepOnHeight;
 
-        foreach (var contact in collision.contacts)
+        if (enemyTrans.position.y < stepOnPos && !groundCheck.IsInGround && !isCliming)
         {
-            if (contact.point.y < stepOnPos && !groundCheck.IsInGround && !isCliming)
-            {
-                Enemy enemy = collision.gameObject.GetComponent<Enemy>();
-                if (enemy != null)
-                {
-                    enemy.OnDamage();
-                    DoJump(enemy.BoundHight);
-                }
-            }
-            else
-            {
-                OnDamage();
-            }
+            isAttectedByEnemy = false;
         }
+        else
+        {
+            isAttectedByEnemy = true;
+        }
+        return isAttectedByEnemy;
     }
+
 
     /// <summary>
     /// 当たり判定処理
@@ -498,9 +492,6 @@ public class Player : MonoBehaviour
     {
         switch (collision.transform.tag)
         {
-            case "Enemy":
-                CheckContactJudgment(collision);
-                break;
             case "Spike":
                 OnDamage();
                 break;
@@ -518,9 +509,6 @@ public class Player : MonoBehaviour
     {
         switch (collision.transform.tag)
         {
-            case "Enemy":
-                CheckContactJudgment(collision);
-                break;
             case "Spike":
                 OnDamage();
                 break;
@@ -1041,6 +1029,12 @@ public class Player : MonoBehaviour
                 transform.position = new Vector2(kickJumpPos.x - 0.5f, kickJumpPos.y);
             }
         }
+    }
+
+    // 敵を踏みつけた時にバウンド
+    public void OnBound(float boundHeight)
+    {
+        DoJump(boundHeight);
     }
 
     public void ShowDust()
