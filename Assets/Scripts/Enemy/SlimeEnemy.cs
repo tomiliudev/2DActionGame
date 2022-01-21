@@ -10,8 +10,8 @@ public class SlimeEnemy : Enemy
     private float jumpSpeed = -3f;
     private float jumpForce = 10f;
     private float jumpLimitHeight = 0f;
-    private const float JumpLimitHeightMax = 2.5f;
-    private float[] jumpLimitHeightValue = new float[] { 1f, 2f, JumpLimitHeightMax };
+    private const float JumpLimitHeightMax = 2f;
+    private float[] jumpLimitHeightValue = new float[] { 1f, 1.5f, JumpLimitHeightMax };
     private float jumpPos;
     private float[] lateralMoveValue = new float[] { -3f, 0f, 3f };
     private float lateralMoveSpeed = 0f;
@@ -85,7 +85,7 @@ public class SlimeEnemy : Enemy
             }
             else
             {
-                rb2D.Sleep();
+                if(groundCheck.IsInGround) rb2D.Sleep();
             }
         }
     }
