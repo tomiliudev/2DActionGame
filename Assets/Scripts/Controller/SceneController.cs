@@ -80,7 +80,10 @@ public sealed class SceneController : MonoBehaviour
 
         bgmAudio.Stop();
         SoundManager.Instance.Play(gameOverSe);
-        //yield return new WaitForSeconds(1f);
+        
+        yield return new WaitForSeconds(2f);
+
+        gm.popupView.ShowPopup(e_PopupName.gameOverPopup);
         //GameManager.Instance.LoadSceneTo(SceneManager.GetActiveScene().name);
     }
 

@@ -3,12 +3,11 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StageUiView : MonoBehaviour
+public sealed class StageUiView : MonoBehaviour
 {
     [Header("カウントダウン秒")] [SerializeField] Text countDownTime;
     [SerializeField] GameObject heartPrefab;
     [SerializeField] Transform heartBar;
-    [SerializeField] GameObject gameOverObj;
     [SerializeField] GameObject gameClearObj;
     [SerializeField] Text treasureNum;
     [SerializeField] WeaponUiSlot weaponUiSlot;
@@ -37,7 +36,6 @@ public class StageUiView : MonoBehaviour
         if (!gm.IsInitialized) return;
         OnCountDown();
 
-        SetIsGameOver(gm.IsGameOver);
         SetIsGameClear(gm.IsGameClear);
 
         treasureNum.text = string.Format("{0}/{1}", gm.treasures.Count(x => x.IsOpened), gm.treasures.Length);
@@ -74,11 +72,6 @@ public class StageUiView : MonoBehaviour
     public void HpPickAnim()
     {
         if (playerHpPrefabs != null) playerHpPrefabs[gm.PlayerCurrentHp - 1].GetComponent<Animator>().Play("PlayerHpPick");
-    }
-
-    public void SetIsGameOver(bool flag)
-    {
-        gameOverObj.SetActive(flag);
     }
 
     public void SetIsGameClear(bool flag)

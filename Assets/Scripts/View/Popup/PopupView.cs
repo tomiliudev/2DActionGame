@@ -5,19 +5,22 @@ public enum e_PopupName
 {
     none,
     equipPopup,
+    gameOverPopup,
 }
 
 public class PopupView : MonoBehaviour
 {
     [SerializeField] GameObject BackMaskImage;
     [SerializeField] PopupBase[] popupList;
+    [SerializeField] Transform popupPosition;
     public void ShowPopup(e_PopupName popupName)
     {
         var popup = popupList.First(x => x.PopupName == popupName);
         if (popup != null)
         {
-            popup = Instantiate(popup);
-            popup.transform.SetParent(transform, false);
+            popup = Instantiate(popup, transform, false);
+            popup.transform.localPosition = new Vector3(0f, 580f, 0f);
+            popup.PopupAnimation();
             BackMaskImage.SetActive(true);
         }
     }
