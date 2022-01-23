@@ -9,13 +9,16 @@ public sealed class StageUiView : MonoBehaviour
     [SerializeField] GameObject heartPrefab;
     [SerializeField] Transform heartBar;
     [SerializeField] GameObject gameClearObj;
-    [SerializeField] Text treasureNum;
+    //[SerializeField] Text treasureNum;
+    [SerializeField] Text totalPoint;
     [SerializeField] WeaponUiSlot weaponUiSlot;
     [SerializeField] ItemUiSlot itemUiSlot;
 
     GameManager gm;// GameManagerのインスタンス
 
     float countDownSec = 600f;
+    int _currentTotalPoint = 0;
+    int _totalPoint = 0;
     public int CountDownSec
     {
         get { return (int)countDownSec; }
@@ -28,6 +31,7 @@ public sealed class StageUiView : MonoBehaviour
     {
         gm = GameManager.Instance;
         InitPlayerHp();
+        totalPoint.text = PlayerPrefsUtility.Load(GameConfig.TotalPoint, 0).ToString();
     }
 
     // Update is called once per frame
@@ -37,8 +41,24 @@ public sealed class StageUiView : MonoBehaviour
         OnCountDown();
 
         SetIsGameClear(gm.IsGameClear);
+    }
 
-        treasureNum.text = string.Format("{0}/{1}", gm.treasures.Count(x => x.IsOpened), gm.treasures.Length);
+    public void UpdateTotalPointView(int from, int to)
+    {
+        iTween.ValueTo(
+            gameObject,
+            iTween.Hash(
+                "from", from,
+                "to", to,
+                "time", 0.5f,
+                "onupdate", "OnUpdateTotalPointView"
+            )
+        );
+    }
+
+    private void OnUpdateTotalPointView(int point)
+    {
+        totalPoint.text = point.ToString();
     }
 
     private void OnCountDown()

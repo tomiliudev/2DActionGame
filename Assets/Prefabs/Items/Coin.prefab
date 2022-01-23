@@ -49,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coinPickupSe: {fileID: 8300000, guid: 787a81bd686af44809aff4a0541ea3ec, type: 3}
   score: {fileID: 5745261739413765387}
+  point: 100
 --- !u!212 &8163666961860687694
 SpriteRenderer:
   m_ObjectHideFlags: 0
