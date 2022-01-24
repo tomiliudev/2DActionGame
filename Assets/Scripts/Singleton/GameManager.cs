@@ -4,9 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public sealed class GameManager : SingletonMonoBehaviour<GameManager>
-{
-    private const string playerMaxHpStr = "playerMaxHp";
-    
+{   
     private bool isInitialized;
     public bool IsInitialized { get { return isInitialized; } }
 
@@ -23,7 +21,7 @@ public sealed class GameManager : SingletonMonoBehaviour<GameManager>
     }
     private e_StageName currentStage;
 
-    public int PlayerMaxHp { get { return PlayerPrefs.GetInt(playerMaxHpStr, 1); } }
+    public int PlayerMaxHp { get { return PlayerPrefs.GetInt(GameConfig.PlayerMaxHp, 1); } }
     private int playerCurrentHp;
     public int PlayerCurrentHp {
         get { return playerCurrentHp; }
@@ -54,7 +52,7 @@ public sealed class GameManager : SingletonMonoBehaviour<GameManager>
 
     private void Start()
     {
-        currentStage = e_StageName.Stage2;
+        currentStage = e_StageName.Stage1;
         LoadSceneTo(currentStage.ToString());
     }
 

@@ -8,6 +8,7 @@ public enum e_ItemType
     magnet,
     bomb,
     smallKey,
+    heart,
 }
 
 public abstract class ItemBase : MonoBehaviour
@@ -23,6 +24,9 @@ public abstract class ItemBase : MonoBehaviour
 
             // 獲得データを保存する
             PlayerPrefsUtility.AddToJsonList("itemList", itemInfo, itemInfo._isMultiple);
+
+            // アイテムを獲得したらショップで購入できるようにリストに追加
+            ShopItemListUtility.SaveShopItemList(itemInfo._type);
 
             float yPos = transform.position.y;
             Hashtable hash = new Hashtable();
@@ -43,6 +47,7 @@ public abstract class ItemBase : MonoBehaviour
 public class ItemInfo : IEquipObjectInfo
 {
     public e_ItemType _type;
+    public int price;
     public bool _isMultiple;
 
     public string TypeName()

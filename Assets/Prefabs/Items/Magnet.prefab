@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 608143515316562750}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.97003603, y: -3.2356799, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemInfo:
     _type: 1
+    price: 20000
     _isMultiple: 0
   itemPickupSe: {fileID: 8300000, guid: 6d36b4e52f256412b8a4064c234d6e35, type: 3}
 --- !u!212 &608143515316562749

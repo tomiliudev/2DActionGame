@@ -103,7 +103,7 @@ public static class PlayerPrefsUtility
     /// <summary>
     /// JSONリストにAddする
     /// </summary>
-    public static void AddToJsonList<T>(string key, T value, bool isMultiple)
+    public static void AddToJsonList<T>(string key, T value, bool isMultiple = false)
     {
         string jsonData = JsonUtility.ToJson(value);
         List<string> jsonlist = LoadList<string>(key);
