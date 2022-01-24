@@ -14,7 +14,7 @@ public class SlotBase<T> : ButtonBase<ISlotButton>
         slotImage.SetNativeSize();
     }
 
-    public override void Execute(ISlotButton controller)
+    public override void Click(ISlotButton controller)
     {
         controller.OnSlotClicked(slotInfo);
     }

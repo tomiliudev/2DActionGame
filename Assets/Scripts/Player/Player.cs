@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, ILeftButton, IRightButton
 {
     [SerializeField] AudioClip jumpSe;
     [SerializeField] AudioClip bowSe;
@@ -47,8 +47,7 @@ public class Player : MonoBehaviour
         right,
         left
     };
-    // xPositionStatusOverriteは進行方向を保持するため
-    XPositionStatus xPositionStatusOverrite = XPositionStatus.none;
+    
     XPositionStatus xPositionStatus = XPositionStatus.none;
     XPositionStatus beforeXPositionStatus = XPositionStatus.none;
 
@@ -746,14 +745,16 @@ public class Player : MonoBehaviour
     private void DoMovementOperationByPhone()
     {
         if (Application.isEditor) return;
-        RunOperationUsePhone();
+        //RunOperationUsePhone();
         JumpOperationUsePhone();
         ClimbOperationUsePhone();
     }
 
     /// <summary>
-    /// スマホによる横移動
+    /// スマホによる横移動(TODO　廃止)
     /// </summary>
+    // xPositionStatusOverriteは進行方向を保持するため
+    XPositionStatus xPositionStatusOverrite = XPositionStatus.none;
     private void RunOperationUsePhone()
     {
         xPositionStatus = XPositionStatus.none;
@@ -1058,5 +1059,25 @@ public class Player : MonoBehaviour
         iTween.MoveAdd(gameObject, iTween.Hash("y", 0.3f, "time", 0.5f, "easeType", iTween.EaseType.easeOutBounce));
         iTween.MoveAdd(gameObject, iTween.Hash("y", -10f, "time", 5f, "delay", 0.5f));
 
+    }
+
+    public void OnLeftButtonDown()
+    {
+        xPositionStatus = XPositionStatus.left;
+    }
+
+    public void OnLeftButtonUp()
+    {
+        xPositionStatus = XPositionStatus.none;
+    }
+
+    public void OnRightButtonDown()
+    {
+        xPositionStatus = XPositionStatus.right;
+    }
+
+    public void OnRightButtonUp()
+    {
+        xPositionStatus = XPositionStatus.none;
     }
 }

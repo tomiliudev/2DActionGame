@@ -1,7 +1,17 @@
 public class LeftButton : ButtonBase<ILeftButton>
 {
-    public override void Execute(ILeftButton controller)
+    private void Start()
     {
-        controller.OnLeftButton();
+        targetObj = GameManager.Instance.player.gameObject;
+    }
+
+    public override void Down(ILeftButton controller)
+    {
+        controller.OnLeftButtonDown();
+    }
+
+    public override void Up(ILeftButton controller)
+    {
+        controller.OnLeftButtonUp();
     }
 }

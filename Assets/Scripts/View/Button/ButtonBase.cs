@@ -3,21 +3,53 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Button))]
-public class ButtonBase<T> : MonoBehaviour, IPointerClickHandler
+public class ButtonBase<T> : MonoBehaviour
+    , IPointerClickHandler
+    , IPointerDownHandler
+    , IPointerUpHandler
     where T : IEventSystemHandler
 {
     protected GameObject targetObj = null;
+    
+    public virtual void Click(T controller)
+    {
+
+    }
+
+    public virtual void Down(T controller)
+    {
+
+    }
+
+    public virtual void Up(T controller)
+    {
+
+    }
+
     public void OnPointerClick(PointerEventData eventData)
     {
         ExecuteEvents.Execute<T>(
             target: targetObj == null ? gameObject : targetObj,
             eventData: null,
-            functor: (controller, data) => Execute(controller)
+            functor: (controller, data) => Click(controller)
         );
     }
 
-    public virtual void Execute(T controller)
+    public void OnPointerDown(PointerEventData eventData)
     {
+        ExecuteEvents.Execute<T>(
+            target: targetObj == null ? gameObject : targetObj,
+            eventData: null,
+            functor: (controller, data) => Down(controller)
+        );
+    }
 
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        ExecuteEvents.Execute<T>(
+            target: targetObj == null ? gameObject : targetObj,
+            eventData: null,
+            functor: (controller, data) => Up(controller)
+        );
     }
 }

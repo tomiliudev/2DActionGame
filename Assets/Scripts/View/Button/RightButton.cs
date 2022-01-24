@@ -1,7 +1,17 @@
 public sealed class RightButton : ButtonBase<IRightButton>
 {
-    public override void Execute(IRightButton controller)
+    private void Start()
     {
-        controller.OnRightButton();
+        targetObj = GameManager.Instance.player.gameObject;
+    }
+
+    public override void Down(IRightButton controller)
+    {
+        controller.OnRightButtonDown();
+    }
+
+    public override void Up(IRightButton controller)
+    {
+        controller.OnRightButtonUp();
     }
 }
