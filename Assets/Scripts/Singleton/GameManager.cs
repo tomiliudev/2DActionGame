@@ -54,7 +54,7 @@ public sealed class GameManager : SingletonMonoBehaviour<GameManager>
 
     private void Start()
     {
-        currentStage = e_StageName.Stage1;
+        currentStage = e_StageName.Stage2;
         LoadSceneTo(currentStage.ToString());
     }
 

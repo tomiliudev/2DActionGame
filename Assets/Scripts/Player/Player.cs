@@ -4,7 +4,11 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Player : MonoBehaviour, ILeftButton, IRightButton
+public class Player : MonoBehaviour
+    , ILeftButton
+    , IRightButton
+    , IUpButton
+    , IDownButton
 {
     [SerializeField] AudioClip jumpSe;
     [SerializeField] AudioClip bowSe;
@@ -746,8 +750,9 @@ public class Player : MonoBehaviour, ILeftButton, IRightButton
     {
         if (Application.isEditor) return;
         //RunOperationUsePhone();
+        //ClimbOperationUsePhone();
         JumpOperationUsePhone();
-        ClimbOperationUsePhone();
+        
     }
 
     /// <summary>
@@ -838,7 +843,7 @@ public class Player : MonoBehaviour, ILeftButton, IRightButton
     }
 
     /// <summary>
-    /// スマホによるハシゴ操作
+    /// スマホによるハシゴ操作（TODO 廃止）
     /// </summary>
     private void ClimbOperationUsePhone()
     {
@@ -1079,5 +1084,37 @@ public class Player : MonoBehaviour, ILeftButton, IRightButton
     public void OnRightButtonUp()
     {
         xPositionStatus = XPositionStatus.none;
+    }
+
+    public void OnUpButtonDown()
+    {
+        if (canClimbUp)
+        {
+            isCliming = true;
+            isJump = false;
+            Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Ground"), LayerMask.NameToLayer("Player"), true);
+            climbType = e_ClimbType.climbUp;
+        }
+    }
+
+    public void OnUpButtonUp()
+    {
+        climbType = e_ClimbType.none;
+    }
+
+    public void OnDownButtonDown()
+    {
+        if (canClimbDown)
+        {
+            isCliming = true;
+            isJump = false;
+            Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Ground"), LayerMask.NameToLayer("Player"), true);
+            climbType = e_ClimbType.climbDown;
+        }
+    }
+
+    public void OnDownButtonUp()
+    {
+        climbType = e_ClimbType.none;
     }
 }
