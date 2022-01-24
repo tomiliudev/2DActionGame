@@ -23,10 +23,10 @@ public abstract class ItemBase : MonoBehaviour
             SoundManager.Instance.Play(itemPickupSe);
 
             // 獲得データを保存する
-            PlayerPrefsUtility.AddToJsonList("itemList", itemInfo, itemInfo._isMultiple);
+            PlayerPrefsUtility.AddToJsonList("itemList", itemInfo, itemInfo.IsMultiple);
 
             // アイテムを獲得したらショップで購入できるようにリストに追加
-            ShopItemListUtility.SaveShopItemList(itemInfo._type);
+            ShopItemListUtility.SaveShopItemList(itemInfo.Type);
 
             float yPos = transform.position.y;
             Hashtable hash = new Hashtable();
@@ -46,12 +46,34 @@ public abstract class ItemBase : MonoBehaviour
 [Serializable]
 public class ItemInfo : IEquipObjectInfo
 {
-    public e_ItemType _type;
-    public int price;
-    public bool _isMultiple;
+    public ItemInfoScriptableObject itemInfoData;
+
+    public e_ItemType Type
+    {
+        get
+        {
+            return itemInfoData != null ? itemInfoData.type : e_ItemType.none;
+        }
+    }
+
+    public int Price
+    {
+        get
+        {
+            return itemInfoData != null ? itemInfoData.price : 0;
+        }
+    }
+
+    public bool IsMultiple
+    {
+        get
+        {
+            return itemInfoData != null ? itemInfoData.isMultiple : false;
+        }
+    }
 
     public string TypeName()
     {
-        return _type.ToString();
+        return Type.ToString();
     }
 }

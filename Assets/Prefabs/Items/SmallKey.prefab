@@ -51,6 +51,7 @@ MonoBehaviour:
     _type: 3
     price: 1500
     _isMultiple: 1
+    itemInfoData: {fileID: 11400000, guid: ca14008407cfc46228f98fd86902bbb3, type: 2}
   itemPickupSe: {fileID: 8300000, guid: 6d36b4e52f256412b8a4064c234d6e35, type: 3}
 --- !u!114 &3667867665840220892
 MonoBehaviour:

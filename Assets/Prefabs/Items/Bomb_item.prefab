@@ -49,6 +49,7 @@ MonoBehaviour:
     _type: 2
     price: 1000
     _isMultiple: 1
+    itemInfoData: {fileID: 11400000, guid: df8f84e06cb0d4cc09bba3536c01d59f, type: 2}
   itemPickupSe: {fileID: 8300000, guid: 6d36b4e52f256412b8a4064c234d6e35, type: 3}
 --- !u!212 &4316507572728555130
 SpriteRenderer:

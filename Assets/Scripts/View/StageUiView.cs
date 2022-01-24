@@ -106,6 +106,6 @@ public sealed class StageUiView : MonoBehaviour
 
     public void SetItemIconImage(ItemInfo itemInfo)
     {
-        itemUiSlot.SetItemSprite(itemInfo._type);
+        itemUiSlot.SetItemSprite(itemInfo.Type);
     }
 }

@@ -46,9 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemInfo:
-    _type: 4
-    price: 50000
-    _isMultiple: 1
+    itemInfoData: {fileID: 11400000, guid: ad3707f72f34940eeae98ef48b249189, type: 2}
   itemPickupSe: {fileID: 8300000, guid: 6d36b4e52f256412b8a4064c234d6e35, type: 3}
 --- !u!212 &5245723349018308171
 SpriteRenderer:

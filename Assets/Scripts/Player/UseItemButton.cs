@@ -19,7 +19,7 @@ public sealed class UseItemButton : MonoBehaviour
         if (gm.IsGameClear || gm.IsGameOver) return;
 
         ItemInfo equippedItem = PlayerPrefsUtility.Load("equippedItem", new ItemInfo());
-        switch (equippedItem._type)
+        switch (equippedItem.Type)
         {
             case e_ItemType.magnet:
                 UseItem(Instantiate(magnetPrefab), equippedItem);
@@ -43,14 +43,14 @@ public sealed class UseItemButton : MonoBehaviour
     {
         var itemJsonList = PlayerPrefsUtility.LoadList<string>("itemList");
         List<ItemInfo> itemInfoList = itemJsonList.Select(x => JsonUtility.FromJson<ItemInfo>(x)).ToList();
-        if (itemInfoList.Any(x => x._type == equippedItem._type))
+        if (itemInfoList.Any(x => x.Type == equippedItem.Type))
         {
-            itemInfoList.Remove(itemInfoList.First(x => x._type == equippedItem._type));
+            itemInfoList.Remove(itemInfoList.First(x => x.Type == equippedItem.Type));
             PlayerPrefsUtility.SaveJsonList("itemList", itemInfoList);
         }
 
         // 消費して一つも残らなくなった場合
-        if (!itemInfoList.Any(x => x._type == equippedItem._type))
+        if (!itemInfoList.Any(x => x.Type == equippedItem.Type))
         {
             // UIの装備中アイテムアイコンの設定
             GameManager.Instance.stageUiView.SetItemIconImage(new ItemInfo());
@@ -64,7 +64,7 @@ public sealed class UseItemButton : MonoBehaviour
     {
         itemObj.GetComponent<UseItemBase>().Use();
 
-        if (equippedItem._isMultiple)
+        if (equippedItem.IsMultiple)
         {
             // 複数所持可能なアイテムなら一つ消費する
             ReduceOneItem(equippedItem);

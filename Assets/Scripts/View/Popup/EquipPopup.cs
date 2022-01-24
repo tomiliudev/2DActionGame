@@ -130,7 +130,7 @@ public class EquipPopup : PopupBase, ISlotButton
         ShopItemListUtility.SaveShopItemList(e_ItemType.heart);
 
         List<string> slotDataList = PlayerPrefsUtility.LoadList<string>(GameConfig.ItemList);
-        var groupedSlotList = slotDataList.Select(slotJsonData => JsonUtility.FromJson<ItemInfo>(slotJsonData)).GroupBy(x => x._type);
+        var groupedSlotList = slotDataList.Select(slotJsonData => JsonUtility.FromJson<ItemInfo>(slotJsonData)).GroupBy(x => x.Type);
 
         var itemShopList = PlayerPrefsUtility.LoadList<int>(GameConfig.ItemShopList);
 
@@ -149,7 +149,8 @@ public class EquipPopup : PopupBase, ISlotButton
             }
             else
             {
-                itemInfo._type = (e_ItemType)itemType;
+                var itemInfoDatas = DataManager.Instance.GetItemInfoDatas();
+                itemInfo.itemInfoData = itemInfoDatas.First(x => x.type == (e_ItemType)itemType);
             }
 
             // Slotの設定
@@ -161,7 +162,7 @@ public class EquipPopup : PopupBase, ISlotButton
     private void SetItemSlot(ItemInfo itemInfo, Transform parent, bool isShopItem = false)
     {
         var slotObj = Instantiate(itemSlotPrefab, parent, false);
-        slotObj.SetSlotInfo(gameObject, itemInfo, GetItemSprite(itemInfo._type), isShopItem);
+        slotObj.SetSlotInfo(gameObject, itemInfo, GetItemSprite(itemInfo.Type), isShopItem);
         slotObj.transform.SetAsFirstSibling();
         slotObj.gameObject.SetActive(true);
     }
@@ -185,8 +186,9 @@ public class EquipPopup : PopupBase, ISlotButton
 
     private void SetShopItem(ItemInfo info)
     {
-        SetSelectItemImage(selectShopItemImage, info._type);
-        selectItemPrice.text = info.price.ToString();
+        SetSelectItemImage(selectShopItemImage, info.Type);
+        var itemInfoDatas = DataManager.Instance.GetItemInfoDatas();
+        selectItemPrice.text = itemInfoDatas.First(x => x.type == info.Type).price.ToString();
     }
 
     private void SetEquipObj(IEquipObjectInfo info)
@@ -220,7 +222,7 @@ public class EquipPopup : PopupBase, ISlotButton
     private void SetEquippedItemImage()
     {
         var info = PlayerPrefsUtility.Load("equippedItem", new ItemInfo());
-        SetSelectItemImage(equippedItemImage, info._type);
+        SetSelectItemImage(equippedItemImage, info.Type);
     }
 
     Sprite GetWeaponSprite(e_WeaponType type)
