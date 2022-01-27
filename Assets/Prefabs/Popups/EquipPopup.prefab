@@ -1545,6 +1545,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetObj: {fileID: 7095433923087542578}
+  buySe: {fileID: 8300000, guid: 1ffd5fb42bc6342bda4efd61a84a6ce6, type: 3}
 --- !u!1 &4326977102044528277
 GameObject:
   m_ObjectHideFlags: 0

@@ -254,6 +254,8 @@ public class EquipPopup : PopupBase, ISlotButton, IBuyButton
         if (info == null) return;
         if (_totalPoint >= info.Price)
         {
+            buyButton.DoBuySe();
+
             // 金額の計算
             int fromPoint = _totalPoint;
             int toPoint = _totalPoint - info.Price;
