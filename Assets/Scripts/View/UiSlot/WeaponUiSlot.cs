@@ -6,7 +6,7 @@ public sealed class WeaponUiSlot : UiSlotBase
 
     private void Start()
     {
-        WeaponInfo info = PlayerPrefsUtility.Load("equippedWeapon", new WeaponInfo());
+        WeaponInfo info = GameConfig.GetEquippedWeapon();
         SetWeaponSprite(info._type);
     }
 

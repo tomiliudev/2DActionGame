@@ -202,7 +202,7 @@ public class EquipPopup : PopupBase, ISlotButton, IBuyButton
     {
         if (typeof(WeaponInfo) == info.GetType())
         {
-            PlayerPrefsUtility.SaveToJson("equippedWeapon", (WeaponInfo)info);
+            PlayerPrefsUtility.SaveToJson(GameConfig.EquippedWeapon, (WeaponInfo)info);
             SetEquippedWeaponImage();
 
             // UIの装備中武器アイコンの設定
@@ -210,7 +210,7 @@ public class EquipPopup : PopupBase, ISlotButton, IBuyButton
         }
         else if (typeof(ItemInfo) == info.GetType())
         {
-            PlayerPrefsUtility.SaveToJson("equippedItem", (ItemInfo)info);
+            PlayerPrefsUtility.SaveToJson(GameConfig.EquippedItem, (ItemInfo)info);
             SetEquippedItemImage();
 
             // UIの装備中アイテムアイコンの設定
@@ -220,7 +220,7 @@ public class EquipPopup : PopupBase, ISlotButton, IBuyButton
 
     private void SetEquippedWeaponImage()
     {
-        var info = PlayerPrefsUtility.Load("equippedWeapon", new WeaponInfo());
+        var info = GameConfig.GetEquippedWeapon();
         equippedWeaponImage.sprite = GetWeaponSprite(info._type);
         equippedWeaponImage.preserveAspect = true;
         equippedWeaponImage.gameObject.SetActive(info._type != e_WeaponType.none);
@@ -228,7 +228,7 @@ public class EquipPopup : PopupBase, ISlotButton, IBuyButton
 
     private void SetEquippedItemImage()
     {
-        var info = PlayerPrefsUtility.Load("equippedItem", new ItemInfo());
+        var info = GameConfig.GetEquippedItem();
         SetSelectItemImage(equippedItemImage, info.Type);
     }
 

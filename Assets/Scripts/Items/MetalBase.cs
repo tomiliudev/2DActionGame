@@ -31,7 +31,7 @@ public class MetalBase : MonoBehaviour
     {
         if (gm != null && gm.player != null)
         {
-            var info = PlayerPrefsUtility.Load("equippedItem", new ItemInfo());
+            var info = GameConfig.GetEquippedItem();
 
             if (info.itemInfoData != null && info.Type == e_ItemType.magnet)
             {

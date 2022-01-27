@@ -18,7 +18,7 @@ public sealed class UseItemButton : MonoBehaviour
     {
         if (gm.IsGameClear || gm.IsGameOver) return;
 
-        ItemInfo equippedItem = PlayerPrefsUtility.Load("equippedItem", new ItemInfo());
+        ItemInfo equippedItem = GameConfig.GetEquippedItem();
         switch (equippedItem.Type)
         {
             case e_ItemType.magnet:
@@ -56,7 +56,7 @@ public sealed class UseItemButton : MonoBehaviour
             GameManager.Instance.stageUiView.SetItemIconImage(new ItemInfo());
 
             // 装備中のアイテムをリセット
-            PlayerPrefs.DeleteKey("equippedItem");
+            PlayerPrefs.DeleteKey(GameConfig.EquippedItem);
         }
     }
 

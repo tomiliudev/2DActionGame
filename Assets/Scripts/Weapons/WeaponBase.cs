@@ -25,6 +25,12 @@ public abstract class WeaponBase : MonoBehaviour
             hash.Add("time", 0.5f);
             hash.Add("oncomplete", "OnComplete");
             iTween.MoveTo(gameObject, hash);
+
+            if (GameConfig.GetEquippedWeapon()._type == e_WeaponType.none)
+            {
+                PlayerPrefsUtility.SaveToJson(GameConfig.EquippedWeapon, weaponInfo);
+                GameManager.Instance.stageUiView.SetWeaponIconImage(weaponInfo);
+            }
         }
     }
 

@@ -6,7 +6,7 @@ public sealed class ItemUiSlot : UiSlotBase
 
     private void Start()
     {
-        ItemInfo info = PlayerPrefsUtility.Load("equippedItem", new ItemInfo());
+        ItemInfo info = GameConfig.GetEquippedItem();
         SetItemSprite(info.Type);
     }
 

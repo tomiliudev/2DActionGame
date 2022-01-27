@@ -34,6 +34,12 @@ public abstract class ItemBase : MonoBehaviour
             hash.Add("time", 0.5f);
             hash.Add("oncomplete", "OnComplete");
             iTween.MoveTo(gameObject, hash);
+
+            if (GameConfig.GetEquippedItem().Type == e_ItemType.none)
+            {
+                PlayerPrefsUtility.SaveToJson(GameConfig.EquippedItem, itemInfo);
+                GameManager.Instance.stageUiView.SetItemIconImage(itemInfo);
+            }
         }
     }
 
