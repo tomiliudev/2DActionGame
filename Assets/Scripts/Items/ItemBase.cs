@@ -23,7 +23,7 @@ public abstract class ItemBase : MonoBehaviour
             SoundManager.Instance.Play(itemPickupSe);
 
             // 獲得データを保存する
-            PlayerPrefsUtility.AddToJsonList("itemList", itemInfo, itemInfo.IsMultiple);
+            PlayerPrefsUtility.AddToJsonList(GameConfig.ItemList, itemInfo, itemInfo.IsMultiple);
 
             // アイテムを獲得したらショップで購入できるようにリストに追加
             ShopItemListUtility.SaveShopItemList(itemInfo.Type);
@@ -70,10 +70,5 @@ public class ItemInfo : IEquipObjectInfo
         {
             return itemInfoData != null ? itemInfoData.isMultiple : false;
         }
-    }
-
-    public string TypeName()
-    {
-        return Type.ToString();
     }
 }

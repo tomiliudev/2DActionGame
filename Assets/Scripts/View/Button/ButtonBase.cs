@@ -9,7 +9,7 @@ public class ButtonBase<T> : MonoBehaviour
     , IPointerUpHandler
     where T : IEventSystemHandler
 {
-    protected GameObject targetObj = null;
+    [SerializeField] protected GameObject targetObj = null;
     
     public virtual void Click(T controller)
     {

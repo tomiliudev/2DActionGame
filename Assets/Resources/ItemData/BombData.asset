@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: BombData
   m_EditorClassIdentifier: 
   type: 2
-  price: 1000
+  price: 10
   isMultiple: 1

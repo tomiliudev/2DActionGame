@@ -1422,8 +1422,9 @@ GameObject:
   - component: {fileID: 237425214272137487}
   - component: {fileID: 8580177989678057776}
   - component: {fileID: 6913532912255034989}
+  - component: {fileID: 8694096142879597051}
   m_Layer: 0
-  m_Name: ByButton
+  m_Name: BuyButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1531,6 +1532,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8694096142879597051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3696161582195785138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a50b6cf0469f446081bd518223b4eb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetObj: {fileID: 7095433923087542578}
 --- !u!1 &4326977102044528277
 GameObject:
   m_ObjectHideFlags: 0
@@ -2406,6 +2420,7 @@ MonoBehaviour:
   itemShopSlotList: {fileID: 2968335823788781821}
   totalPoint: {fileID: 3483429928366201130}
   selectItemPrice: {fileID: 5379065868318217552}
+  buyButton: {fileID: 8694096142879597051}
   weaponSlotPrefab: {fileID: 5469082743202035696, guid: 442dda5323f264eeeb66d6d409d99b98, type: 3}
   itemSlotPrefab: {fileID: 6536885096496406497, guid: 23390501d6cf14099a1adf784892bafe, type: 3}
   equippedWeaponImage: {fileID: 8380588178576119000}

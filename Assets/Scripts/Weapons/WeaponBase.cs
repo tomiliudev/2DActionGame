@@ -40,8 +40,19 @@ public class WeaponInfo : IEquipObjectInfo
     public e_WeaponType _type;
     public bool _isMultiple;
 
-    public string TypeName()
+    public int Price
     {
-        return _type.ToString();
+        get
+        {
+            return 0;
+        }
+    }
+
+    public bool IsMultiple
+    {
+        get
+        {
+            return false;
+        }
     }
 }

@@ -1,4 +1,5 @@
 public interface IEquipObjectInfo
 {
-    string TypeName();
+    int Price { get; }
+    bool IsMultiple { get; }
 }
