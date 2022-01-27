@@ -82,7 +82,7 @@ public class EquipPopup : PopupBase, ISlotButton
     void GenerateWeaponSlot()
     {
         List<string> slotDataList = PlayerPrefsUtility.LoadList<string>(GameConfig.WeaponList);
-        var groupedSlotList = slotDataList.Select(slotJsonData => JsonUtility.FromJson<WeaponInfo>(slotJsonData)).GroupBy(x => x.TypeName());
+        var groupedSlotList = slotDataList.Select(slotJsonData => JsonUtility.FromJson<WeaponInfo>(slotJsonData)).GroupBy(x => x._type);
 
         int slotIdx = 0;
         foreach (SlotFrame slot in weaponSlotList.GetComponentsInChildren<SlotFrame>())
@@ -106,7 +106,7 @@ public class EquipPopup : PopupBase, ISlotButton
     void GenerateItemSlot()
     {
         List<string> slotDataList = PlayerPrefsUtility.LoadList<string>(GameConfig.ItemList);
-        var groupedSlotList = slotDataList.Select(slotJsonData => JsonUtility.FromJson<ItemInfo>(slotJsonData)).GroupBy(x => x.TypeName());
+        var groupedSlotList = slotDataList.Select(slotJsonData => JsonUtility.FromJson<ItemInfo>(slotJsonData)).Where(x => x.Type != e_ItemType.none).GroupBy(x => x.Type);
 
         int slotIdx = 0;
         foreach (SlotFrame slot in itemSlotList.GetComponentsInChildren<SlotFrame>())
@@ -130,7 +130,7 @@ public class EquipPopup : PopupBase, ISlotButton
         ShopItemListUtility.SaveShopItemList(e_ItemType.heart);
 
         List<string> slotDataList = PlayerPrefsUtility.LoadList<string>(GameConfig.ItemList);
-        var groupedSlotList = slotDataList.Select(slotJsonData => JsonUtility.FromJson<ItemInfo>(slotJsonData)).GroupBy(x => x.Type);
+        var groupedSlotList = slotDataList.Select(slotJsonData => JsonUtility.FromJson<ItemInfo>(slotJsonData)).Where(x => x.Type != e_ItemType.none).GroupBy(x => x.Type);
 
         var itemShopList = PlayerPrefsUtility.LoadList<int>(GameConfig.ItemShopList);
 

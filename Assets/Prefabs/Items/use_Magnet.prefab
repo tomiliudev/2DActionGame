@@ -123,6 +123,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemInfo:
-    _type: 1
-    _sprite: {fileID: 21300000, guid: 41f6eee223a274f19b32264cc0fb8b01, type: 3}
-    _isMultiple: 0
+    itemInfoData: {fileID: 11400000, guid: 17683db0af6974ff0a1d4c7a11ceb237, type: 2}

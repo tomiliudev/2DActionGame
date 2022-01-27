@@ -216,9 +216,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemInfo:
-    _type: 2
-    _sprite: {fileID: 21300000, guid: 9b00b11600ca74e4f85cb4052c0509fd, type: 3}
-    _isMultiple: 1
+    itemInfoData: {fileID: 11400000, guid: df8f84e06cb0d4cc09bba3536c01d59f, type: 2}
   countDown: {fileID: 9170267863880298535}
   explosionAnimator: {fileID: 8549090243760436101}
 --- !u!1 &8307714512518579869
