@@ -1,5 +1,7 @@
 public static class GameConfig
 {
+    public const string PlayerTag = "Player";
+
     public const string PlayerMaxHp = "playerMaxHp";
     public const string WeaponList = "weaponList";
     public const string ItemList = "itemList";

@@ -60,8 +60,13 @@ public sealed class SceneController : MonoBehaviour
             isDoorApear = true;
 
             // 扉が出現する(ランダム)
-            GameObject door = doors.OrderBy(_ => Guid.NewGuid()).FirstOrDefault();
-            door.SetActive(true);
+            //GameObject door = doors.OrderBy(_ => Guid.NewGuid()).FirstOrDefault();
+            //door.SetActive(true);
+
+            foreach (var door in doors)
+            {
+                door.SetActive(true);
+            }
         }
     }
 
