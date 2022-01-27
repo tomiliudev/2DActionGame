@@ -128,9 +128,6 @@ public class EquipPopup : PopupBase, ISlotButton, IBuyButton
 
     void GenerateItemShopSlot()
     {
-        // ハートは最初からショップで購入できるよう追加しておく
-        ShopItemListUtility.SaveShopItemList(e_ItemType.heart);
-
         List<string> slotDataList = PlayerPrefsUtility.LoadList<string>(GameConfig.ItemList);
         var groupedSlotList = slotDataList.Select(slotJsonData => JsonUtility.FromJson<ItemInfo>(slotJsonData)).Where(x => x.Type != e_ItemType.none).GroupBy(x => x.Type);
 

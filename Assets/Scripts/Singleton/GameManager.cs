@@ -79,6 +79,8 @@ public sealed class GameManager : SingletonMonoBehaviour<GameManager>
     {
         isInitialized = true;
 
+        // ハートは最初からショップで購入できるよう追加しておく
+        ShopItemListUtility.SaveShopItemList(e_ItemType.heart);
         cinemachineCamera = FindObjectOfType<CinemachineVirtualCamera>();
         stageUiView = FindObjectOfType<StageUiView>();
         popupView = FindObjectOfType<PopupView>();
