@@ -354,6 +354,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gauge: {fileID: 2876779222372664390}
   needle: {fileID: 1211954625562674708}
+  penaltys:
+  - {fileID: 224201406049716787, guid: b401f470250ac487f90a8e97889a77ac, type: 3}
+  - {fileID: -2579886861140506124, guid: 5de002493ee2c43838e444320214bb4d, type: 3}
 --- !u!1 &3428468159391725989
 GameObject:
   m_ObjectHideFlags: 0

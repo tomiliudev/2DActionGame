@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using Cinemachine;
 using UnityEngine;
 
@@ -5,6 +7,7 @@ public class MiniGame1 : MonoBehaviour
 {
     [SerializeField] GameObject gauge;
     [SerializeField] GameObject needle;
+    [SerializeField] BasePenalty[] penaltys;
 
     int successCount = 0;
 
@@ -20,6 +23,11 @@ public class MiniGame1 : MonoBehaviour
     {
         SetGaugeSize();
     }
+
+    // 所持金をへらす
+    // 残り時間をへらす
+    // HPをへらす
+
 
     private void Update()
     {
@@ -47,7 +55,8 @@ public class MiniGame1 : MonoBehaviour
                         "oncomplete", "OnShakeCameraFinish"
                     )
                 );
-                
+
+                penaltys.OrderBy(_ => Guid.NewGuid()).First().ExePenalty();
             }
 
             // ゲージのサイズ変更
@@ -86,7 +95,7 @@ public class MiniGame1 : MonoBehaviour
     private void SetGaugeSize()
     {
         var gaugeSize = gauge.GetComponent<SpriteRenderer>().size;
-        gauge.GetComponent<SpriteRenderer>().size = new Vector2(Random.Range(gaugeSizeMin, gaugeSizeMax), gaugeSize.y);
+        gauge.GetComponent<SpriteRenderer>().size = new Vector2(UnityEngine.Random.Range(gaugeSizeMin, gaugeSizeMax), gaugeSize.y);
     }
 
     bool isHit = false;

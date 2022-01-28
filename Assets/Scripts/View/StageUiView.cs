@@ -22,6 +22,7 @@ public sealed class StageUiView : MonoBehaviour
     public int CountDownSec
     {
         get { return (int)countDownSec; }
+        set { countDownSec = value; }
     }
 
     GameObject[] playerHpPrefabs;
@@ -73,7 +74,7 @@ public sealed class StageUiView : MonoBehaviour
         {
             countDownSec = 0f;
         }
-        countDownTime.text = new TimeSpan(0, 0, (int)countDownSec).ToString(@"mm\:ss");
+        UpdateCountDownSecText();
     }
 
     private void InitPlayerHp()
@@ -108,5 +109,10 @@ public sealed class StageUiView : MonoBehaviour
     public void SetItemIconImage(ItemInfo itemInfo)
     {
         itemUiSlot.SetItemSprite(itemInfo.Type);
+    }
+
+    public void UpdateCountDownSecText()
+    {
+        countDownTime.text = new TimeSpan(0, 0, (int)countDownSec).ToString(@"mm\:ss");
     }
 }
