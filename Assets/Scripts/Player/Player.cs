@@ -138,6 +138,8 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        if (gm.CurrentGameMode != e_GameMode.Normal) return;
+
         // スマホによる動きの操作（Run、Jump）
         DoMovementOperationByPhone();
 
@@ -495,10 +497,10 @@ public class Player : MonoBehaviour
     {
         switch (collision.transform.tag)
         {
-            case "Spike":
+            case GameConfig.SpikeTag:
                 OnDamage();
                 break;
-            case "Platform":
+            case GameConfig.PlatformTag:
                 platformVelocity = collision.transform.GetComponent<Platform>().SelfVelocity;
                 break;
         }
@@ -512,10 +514,10 @@ public class Player : MonoBehaviour
     {
         switch (collision.transform.tag)
         {
-            case "Spike":
+            case GameConfig.SpikeTag:
                 OnDamage();
                 break;
-            case "Platform":
+            case GameConfig.PlatformTag:
                 platformVelocity = collision.transform.GetComponent<Platform>().SelfVelocity;
                 break;
         }
@@ -525,7 +527,7 @@ public class Player : MonoBehaviour
     {
         switch (collision.transform.tag)
         {
-            case "Platform":
+            case GameConfig.PlatformTag:
                 platformVelocity = Vector2.zero;
                 break;
         }
@@ -541,18 +543,22 @@ public class Player : MonoBehaviour
         OnTriggerTouched(collision);
     }
 
+    Door door;
     void OnTriggerTouched(Collider2D collision)
     {
         switch (collision.tag)
         {
-            case "Wall":
+            case GameConfig.WallTag:
                 CheckCanKickWall(collision);
                 break;
-            case "Ladder":
+            case GameConfig.ladderTag:
                 CheckCanClimbLadder(collision);
                 break;
-            case "Treasure":
+            case GameConfig.TreasureTag:
                 TouchingTreasure = collision.GetComponent<Treasure>();
+                break;
+            case GameConfig.DoorTag:
+                door = collision.GetComponent<Door>();
                 break;
         }
     }
@@ -561,12 +567,12 @@ public class Player : MonoBehaviour
     {
         switch (collision.tag)
         {
-            case "Wall":
+            case GameConfig.WallTag:
                 isGripWall = false;
                 playerAnimator.SetBool("wallj", false);
                 wallDirection = e_WallDirection.none;
                 break;
-            case "Ladder":
+            case GameConfig.ladderTag:
                 canClimbUp = false;
                 canClimbDown = false;
                 isCliming = false;
@@ -576,8 +582,11 @@ public class Player : MonoBehaviour
                 playerAnimator.SetFloat("climbSpeed", 1f);
                 playerAnimator.SetBool("climb", false);
                 break;
-            case "Treasure":
+            case GameConfig.TreasureTag:
                 TouchingTreasure = null;
+                break;
+            case GameConfig.DoorTag:
+                door = null;
                 break;
         }
     }
@@ -587,7 +596,7 @@ public class Player : MonoBehaviour
     /// </summary>
     private void CheckCanKickWall(Collider2D collision)
     {
-        if (collision.tag == "Wall")
+        if (collision.tag == GameConfig.WallTag)
         {
             if (collision.transform.position.x > transform.position.x)
             {
@@ -1068,26 +1077,31 @@ public class Player : MonoBehaviour
 
     public void OnLeftButtonDown()
     {
+        if (gm.CurrentGameMode != e_GameMode.Normal) return;
         xPositionStatus = XPositionStatus.left;
     }
 
     public void OnLeftButtonUp()
     {
+        if (gm.CurrentGameMode != e_GameMode.Normal) return;
         xPositionStatus = XPositionStatus.none;
     }
 
     public void OnRightButtonDown()
     {
+        if (gm.CurrentGameMode != e_GameMode.Normal) return;
         xPositionStatus = XPositionStatus.right;
     }
 
     public void OnRightButtonUp()
     {
+        if (gm.CurrentGameMode != e_GameMode.Normal) return;
         xPositionStatus = XPositionStatus.none;
     }
 
     public void OnUpButtonDown()
     {
+        if (gm.CurrentGameMode != e_GameMode.Normal) return;
         if (canClimbUp)
         {
             isCliming = true;
@@ -1095,15 +1109,22 @@ public class Player : MonoBehaviour
             Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Ground"), LayerMask.NameToLayer("Player"), true);
             climbType = e_ClimbType.climbUp;
         }
+
+        if (door != null)
+        {
+            door.OpenDoorAnimation();
+        }
     }
 
     public void OnUpButtonUp()
     {
+        if (gm.CurrentGameMode != e_GameMode.Normal) return;
         climbType = e_ClimbType.none;
     }
 
     public void OnDownButtonDown()
     {
+        if (gm.CurrentGameMode != e_GameMode.Normal) return;
         if (canClimbDown)
         {
             isCliming = true;
@@ -1115,6 +1136,7 @@ public class Player : MonoBehaviour
 
     public void OnDownButtonUp()
     {
+        if (gm.CurrentGameMode != e_GameMode.Normal) return;
         climbType = e_ClimbType.none;
     }
 }

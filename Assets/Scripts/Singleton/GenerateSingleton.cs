@@ -13,5 +13,6 @@ public class GenerateSingleton : MonoBehaviour
         DontDestroyOnLoad(singletonRootObj);
 
         singletonRootObj.AddComponent<SoundManager>();
+        //singletonRootObj.AddComponent<TouchManager>();// TODO 保留
     }
 }

@@ -28,25 +28,8 @@ public sealed class SceneController : MonoBehaviour
 
         DoorApearEvent();
 
-        OnGameClear();
-
-        if (gm.stageUiView.CountDownSec <= 0)
-        {
-            // 時間になったらゲームオーバー
-            StartCoroutine(OnGameOver());
-        }
-
-        if (gm.PlayerCurrentHp <= 0)
-        {
-            // プレイヤーHPが0になったらゲームオーバー
-            StartCoroutine(OnGameOver());
-        }
-
-        if (gm.player.transform.localPosition.y < gm.cameraCollider.points.ElementAt(2).y)
-        {
-            // 画面の下側より落ちた場合ゲームオーバー
-            StartCoroutine(OnGameOver());
-        }
+        GameClear();
+        GameOver();
     }
 
     /// <summary>
@@ -92,7 +75,24 @@ public sealed class SceneController : MonoBehaviour
         //GameManager.Instance.LoadSceneTo(SceneManager.GetActiveScene().name);
     }
 
-    private void OnGameClear()
+    private void GameOver()
+    {
+        /*
+         * 時間になったらゲームオーバー
+         * プレイヤーHPが0になったらゲームオーバー
+         * 画面の下側より落ちた場合ゲームオーバー
+         */
+        if (gm.stageUiView.CountDownSec <= 0
+            || gm.PlayerCurrentHp <= 0
+            || gm.player.transform.localPosition.y < gm.cameraCollider.points.ElementAt(2).y
+        )
+        {
+            // 時間になったらゲームオーバー
+            StartCoroutine(OnGameOver());
+        }
+    }
+
+    private void GameClear()
     {
         if (gm.IsGameOver) return;
 

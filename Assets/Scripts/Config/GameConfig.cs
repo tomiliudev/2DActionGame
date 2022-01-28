@@ -1,6 +1,14 @@
 public static class GameConfig
 {
     public const string PlayerTag = "Player";
+    public const string DoorTag = "Door";
+    public const string WallTag = "Wall";
+    public const string ladderTag = "Ladder";
+    public const string TreasureTag = "Treasure";
+    public const string PlatformTag = "Platform";
+    public const string SpikeTag = "Spike";
+    public const string MiniGameGaugeTag = "MiniGameGauge";
+    public const string MiniGameNeedleTag = "MiniGameNeedle";
 
     public const string PlayerMaxHp = "playerMaxHp";
     public const string WeaponList = "weaponList";

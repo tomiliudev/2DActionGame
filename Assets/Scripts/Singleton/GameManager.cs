@@ -3,6 +3,21 @@ using Cinemachine;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+public enum e_GameMode
+{
+    Normal,
+    MiniGame,
+}
+
+public enum e_StageName
+{
+    Stage1,
+    Stage2,
+    Stage3,
+    Stage4,
+    Stage5
+}
+
 public sealed class GameManager : SingletonMonoBehaviour<GameManager>
 {   
     private bool isInitialized;
@@ -11,14 +26,7 @@ public sealed class GameManager : SingletonMonoBehaviour<GameManager>
     public bool IsGameOver { get; set; }
     public bool IsGameClear { get; set; }
 
-    public enum e_StageName
-    {
-        Stage1,
-        Stage2,
-        Stage3,
-        Stage4,
-        Stage5
-    }
+    public e_GameMode CurrentGameMode = e_GameMode.Normal;
     private e_StageName currentStage;
 
     public int PlayerMaxHp { get { return PlayerPrefs.GetInt(GameConfig.PlayerMaxHp, 1); } }

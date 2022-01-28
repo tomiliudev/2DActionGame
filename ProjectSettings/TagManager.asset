@@ -19,6 +19,9 @@ TagManager:
   - Key
   - Magnet
   - Treasure
+  - Door
+  - MiniGameGauge
+  - MiniGameNeedle
   layers:
   - Default
   - TransparentFX
