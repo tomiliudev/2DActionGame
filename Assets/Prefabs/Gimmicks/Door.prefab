@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2808859318043080687}
   - component: {fileID: 2459390625343092323}
+  - component: {fileID: 8856176266500723015}
   m_Layer: 0
-  m_Name: MiniGameBg
+  m_Name: MiniGame1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -74,8 +75,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -476145465
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 627fba209280649878617bd29b4ba495, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -88,6 +89,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &8856176266500723015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 512871618604658913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1570b11b20bd441a3a48ca2b57598da3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gauge: {fileID: 2876779222372664390}
+  needle: {fileID: 1211954625562674708}
+  penaltys:
+  - {fileID: 224201406049716787, guid: b401f470250ac487f90a8e97889a77ac, type: 3}
+  - {fileID: -2579886861140506124, guid: 5de002493ee2c43838e444320214bb4d, type: 3}
 --- !u!1 &1211954625562674708
 GameObject:
   m_ObjectHideFlags: 0
@@ -100,7 +118,7 @@ GameObject:
   - component: {fileID: 4589051623521491300}
   - component: {fileID: 2499486497605508116}
   - component: {fileID: 2490004358967211154}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: MiniGameNeedle
   m_TagString: MiniGameNeedle
   m_Icon: {fileID: 0}
@@ -163,8 +181,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -476145465
+  m_SortingLayer: 4
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: e262e6b06c8d64a3b94fb1af5f66615a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -235,7 +253,7 @@ GameObject:
   - component: {fileID: 7998497638935848170}
   - component: {fileID: 5098148712863605460}
   - component: {fileID: 1887056645496797005}
-  - component: {fileID: 5435152930001363189}
+  - component: {fileID: 1688008210111757282}
   m_Layer: 0
   m_Name: MiniGameGauge
   m_TagString: MiniGameGauge
@@ -300,8 +318,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -476145465
+  m_SortingLayer: 4
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 7e9d8f5f0591e4600a8017f2a731fed8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -340,7 +358,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.6666667, y: 0.25}
   m_EdgeRadius: 0
---- !u!114 &5435152930001363189
+--- !u!114 &1688008210111757282
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -349,14 +367,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2876779222372664390}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1570b11b20bd441a3a48ca2b57598da3, type: 3}
+  m_Script: {fileID: 11500000, guid: e01ee844c77814373a4e8779b76dc147, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gauge: {fileID: 2876779222372664390}
-  needle: {fileID: 1211954625562674708}
-  penaltys:
-  - {fileID: 224201406049716787, guid: b401f470250ac487f90a8e97889a77ac, type: 3}
-  - {fileID: -2579886861140506124, guid: 5de002493ee2c43838e444320214bb4d, type: 3}
 --- !u!1 &3428468159391725989
 GameObject:
   m_ObjectHideFlags: 0

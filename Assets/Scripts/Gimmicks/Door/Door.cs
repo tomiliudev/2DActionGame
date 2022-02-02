@@ -55,15 +55,16 @@ public sealed class Door : MonoBehaviour
                 "y", 8f
             )
         );
+
+        Camera mainCamera = Camera.main;
         iTween.MoveTo(
             miniGameObj
             , iTween.Hash(
                 "time", 1f,
-                "x", 0f,
-                "y", 0f
+                "x", mainCamera.transform.position.x,
+                "y", mainCamera.transform.position.y
             )
         );
-
 
         GameManager.Instance.CurrentGameMode = e_GameMode.MiniGame;
     }

@@ -3,7 +3,7 @@ using System.Linq;
 using Cinemachine;
 using UnityEngine;
 
-public class MiniGame1 : MonoBehaviour
+public sealed class MiniGame1 : MonoBehaviour
 {
     [SerializeField] GameObject gauge;
     [SerializeField] GameObject needle;
@@ -19,8 +19,10 @@ public class MiniGame1 : MonoBehaviour
     float gaugeSizeMax = 0.5f;
 
     Camera mainCamera;
+    MiniGame1Gauge miniGame1Gauge;
     private void Start()
     {
+        miniGame1Gauge = gauge.GetComponent<MiniGame1Gauge>();
         SetGaugeSize();
     }
 
@@ -28,12 +30,11 @@ public class MiniGame1 : MonoBehaviour
     // 残り時間をへらす
     // HPをへらす
 
-
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (isHit)
+            if (miniGame1Gauge.IsHit)
             {
                 Debug.Log("あたり！！！");
                 successCount++;
@@ -96,22 +97,5 @@ public class MiniGame1 : MonoBehaviour
     {
         var gaugeSize = gauge.GetComponent<SpriteRenderer>().size;
         gauge.GetComponent<SpriteRenderer>().size = new Vector2(UnityEngine.Random.Range(gaugeSizeMin, gaugeSizeMax), gaugeSize.y);
-    }
-
-    bool isHit = false;
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == GameConfig.MiniGameNeedleTag)
-        {
-            isHit = true;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.tag == GameConfig.MiniGameNeedleTag)
-        {
-            isHit = false;
-        }
     }
 }
