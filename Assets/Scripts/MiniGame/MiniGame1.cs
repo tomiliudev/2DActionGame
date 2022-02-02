@@ -39,6 +39,22 @@ public sealed class MiniGame1 : MonoBehaviour
                 Debug.Log("あたり！！！");
                 successCount++;
                 Debug.Log("成功カウント" + successCount);
+
+                if (successCount >= 3)
+                {
+                    // 3回連続で成功したら
+                    Destroy(gameObject);
+
+                    // ドア開く
+                    GetComponentInParent<Door>().DoAnime(true,
+                        () =>
+                        {
+                            // ステージクリア
+                            //GameManager.Instance.IsGameClear = true;
+                            GameManager.Instance.stageUiView.SwitchOnBlackMask();
+                        }
+                    );
+                }
             }
             else
             {

@@ -18,6 +18,7 @@ public sealed class SceneController : MonoBehaviour
     {
         gm = GameManager.Instance;
 
+        gm.stageUiView.SwitchOffBlackMask();
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Player"), false);
     }
 
@@ -98,26 +99,28 @@ public sealed class SceneController : MonoBehaviour
 
         if (gm.IsGameClear)
         {
-            if (Input.touchSupported && Input.touchCount > 0)
-            {
-                if (Input.GetTouch(0).phase == TouchPhase.Began)
-                {
-                    // 画面タッチで次のステージへ
-                    //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-                    GameManager.Instance.LoadToNextStage();
-                }
-            }
+            //if (Input.touchSupported && Input.touchCount > 0)
+            //{
+            //    if (Input.GetTouch(0).phase == TouchPhase.Began)
+            //    {
+            //        // 画面タッチで次のステージへ
+            //        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            //        GameManager.Instance.LoadToNextStage();
+            //    }
+            //}
 
-            if (Application.isEditor)
-            {
-                if (Input.GetMouseButtonDown(0))
-                {
-                    // 画面タッチで次のステージへ
-                    //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-                    GameManager.Instance.LoadToNextStage();
-                }
-            }
+            //if (Application.isEditor)
+            //{
+            //    if (Input.GetMouseButtonDown(0))
+            //    {
+            //        // 画面タッチで次のステージへ
+            //        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            //        GameManager.Instance.LoadToNextStage();
+            //    }
+            //}
 
+
+            GameManager.Instance.LoadToNextStage();
             return;
         }
     }

@@ -13,6 +13,7 @@ public sealed class StageUiView : MonoBehaviour
     [SerializeField] Text totalPoint;
     [SerializeField] WeaponUiSlot weaponUiSlot;
     [SerializeField] ItemUiSlot itemUiSlot;
+    [SerializeField] Image blackMask;
 
     GameManager gm;// GameManagerのインスタンス
 
@@ -114,5 +115,58 @@ public sealed class StageUiView : MonoBehaviour
     public void UpdateCountDownSecText()
     {
         countDownTime.text = new TimeSpan(0, 0, (int)countDownSec).ToString(@"mm\:ss");
+    }
+
+    bool isBlackMaskOn = false;
+    public void SwitchOnBlackMask()
+    {
+        isBlackMaskOn = true;
+        gm.CurrentGameMode = e_GameMode.None;
+        blackMask.gameObject.SetActive(true);
+        iTween.ValueTo(
+            gameObject,
+            iTween.Hash(
+                "time", 3f
+                , "from", 0f
+                , "to", 1f
+                , "onupdate", "OnBlackMaskUpdate"
+                , "oncomplete", "OnBlackMaskComplete"
+            )
+        );
+    }
+
+    public void SwitchOffBlackMask()
+    {
+        isBlackMaskOn = false;
+        GameManager.Instance.CurrentGameMode = e_GameMode.None;
+        iTween.ValueTo(
+            gameObject,
+            iTween.Hash(
+                "time", 3f
+                , "from", 1f
+                , "to", 0f
+                , "onupdate", "OnBlackMaskUpdate"
+                , "oncomplete", "OnBlackMaskComplete"
+            )
+        );
+    }
+
+    private void OnBlackMaskUpdate(float alpha)
+    {
+        var c = blackMask.color;
+        blackMask.color = new Color(c.r, c.g, c.b, alpha);
+    }
+
+    private void OnBlackMaskComplete()
+    {
+        if (isBlackMaskOn)
+        {
+            GameManager.Instance.IsGameClear = true;
+        }
+        else
+        {
+            blackMask.gameObject.SetActive(false);
+            gm.CurrentGameMode = e_GameMode.Normal;
+        }
     }
 }

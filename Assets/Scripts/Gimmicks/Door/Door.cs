@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using UnityEngine;
 
 public sealed class Door : MonoBehaviour
@@ -28,17 +30,16 @@ public sealed class Door : MonoBehaviour
         {
             IsOnDoor = false;
             doorArrow.SetActive(false);
-            DoAnime(false);
+            //StartCoroutine(DoAnime(false));
         }
     }
 
     public void OpenDoorAnimation()
     {
         if (!IsOnDoor) return;
-        DoAnime(true);
+
         doorArrow.SetActive(false);
 
-        miniGameObj.transform.parent = null;
         miniGameObj.SetActive(true);
         iTween.RotateTo(
             miniGameObj
@@ -69,8 +70,17 @@ public sealed class Door : MonoBehaviour
         GameManager.Instance.CurrentGameMode = e_GameMode.MiniGame;
     }
 
-    private void DoAnime(bool flag)
+
+    public void DoAnime(bool flag, Action callback = null) {
+        StartCoroutine(DoAnimeCo(flag, callback));
+    }
+
+    private IEnumerator DoAnimeCo(bool flag, Action callback = null)
     {
         doorAnimator.SetBool("isOpen", flag);
+        
+        yield return new WaitForSeconds(1f);
+
+        if (callback != null) callback();
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public enum e_GameMode
 {
+    None,
     Normal,
     MiniGame,
 }
