@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public enum e_GameMode
 {
     None,
+    StageSelection,
     Normal,
     MiniGame,
 }
@@ -20,14 +21,14 @@ public enum e_StageName
 }
 
 public sealed class GameManager : SingletonMonoBehaviour<GameManager>
-{   
+{
     private bool isInitialized;
     public bool IsInitialized { get { return isInitialized; } }
 
     public bool IsGameOver { get; set; }
     public bool IsGameClear { get; set; }
 
-    public e_GameMode CurrentGameMode = e_GameMode.Normal;
+    public e_GameMode CurrentGameMode = e_GameMode.StageSelection;
     private e_StageName currentStage;
 
     public int PlayerMaxHp { get { return PlayerPrefs.GetInt(GameConfig.PlayerMaxHp, 1); } }
@@ -61,13 +62,8 @@ public sealed class GameManager : SingletonMonoBehaviour<GameManager>
 
     private void Start()
     {
-        currentStage = e_StageName.Stage1;
-        LoadSceneTo(currentStage.ToString());
-    }
-
-    private void Update()
-    {
-
+        Debug.Log("LoadStageSelection");
+        //LoadStageSelection();
     }
 
     private void OnActiveSceneChanged(Scene scene1, Scene scene2)
@@ -76,7 +72,11 @@ public sealed class GameManager : SingletonMonoBehaviour<GameManager>
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Initialize();
+        e_StageName stageName;
+        if (Enum.TryParse(scene.name, out stageName) && Enum.IsDefined(typeof(e_StageName), stageName))
+        {
+            Initialize();
+        }
     }
 
     private void OnSceneUnloaded(Scene scene)
@@ -103,9 +103,21 @@ public sealed class GameManager : SingletonMonoBehaviour<GameManager>
         IsGameOver = false;
     }
 
+    private void LoadStageSelection()
+    {
+        CurrentGameMode = e_GameMode.StageSelection;
+        LoadSceneTo(GameConfig.StageSelectionSceneName);
+    }
+
     public void LoadSceneTo(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
+    }
+
+    public void LoadToTargetStage(e_StageName stage)
+    {
+        CurrentGameMode = e_GameMode.Normal;
+        LoadSceneTo(stage.ToString());
     }
 
     public void LoadToNextStage()
@@ -117,6 +129,6 @@ public sealed class GameManager : SingletonMonoBehaviour<GameManager>
             nextStage = e_StageName.Stage1;
             currentStage = e_StageName.Stage1;
         }
-        LoadSceneTo(nextStage.ToString());
+        LoadToTargetStage(nextStage);
     }
 }

@@ -1,5 +1,7 @@
 public static class GameConfig
 {
+    public const string StageSelectionSceneName = "StageSelection";
+
     public const string PlayerTag = "Player";
     public const string DoorTag = "Door";
     public const string WallTag = "Wall";
