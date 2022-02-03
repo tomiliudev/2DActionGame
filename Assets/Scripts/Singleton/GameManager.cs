@@ -61,6 +61,7 @@ public sealed class GameManager : SingletonMonoBehaviour<GameManager>
     }
     private int beforePlayerHp;
 
+    public SceneController sceneController;
     public StageUiView stageUiView;
     public PopupView popupView;
     public Treasure[] treasures;
@@ -106,6 +107,7 @@ public sealed class GameManager : SingletonMonoBehaviour<GameManager>
         // ハートは最初からショップで購入できるよう追加しておく
         ShopItemListUtility.SaveShopItemList(e_ItemType.heart);
         cinemachineCamera = FindObjectOfType<CinemachineVirtualCamera>();
+        sceneController = FindObjectOfType<SceneController>();
         stageUiView = FindObjectOfType<StageUiView>();
         popupView = FindObjectOfType<PopupView>();
         treasures = FindObjectsOfType<Treasure>();

@@ -33,7 +33,7 @@ public sealed class StageUiView : MonoBehaviour
         SetCountDownSec();
 
         InitPlayerHp();
-        totalPoint.text = PlayerPrefsUtility.Load(GameConfig.TotalPoint, 0).ToString();
+        totalPoint.text = 0.ToString();
     }
 
     // Update is called once per frame

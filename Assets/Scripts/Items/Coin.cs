@@ -8,14 +8,14 @@ public sealed class Coin : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Player")
+        if (collision.tag == GameConfig.PlayerTag)
         {
             SoundManager.Instance.Play(coinPickupSe);
 
-            int fromPoint = PlayerPrefsUtility.Load(GameConfig.TotalPoint, 0);
-            int toPoint = fromPoint + point;
-            GameManager.Instance.stageUiView.UpdateTotalPointView(fromPoint, toPoint);
-            PlayerPrefsUtility.Save(GameConfig.TotalPoint, toPoint);
+            GameManager gm = GameManager.Instance;
+            int toPoint = gm.sceneController.GetPoints + point;
+            gm.stageUiView.UpdateTotalPointView(gm.sceneController.GetPoints, toPoint);
+            gm.sceneController.GetPoints = toPoint;
 
             score.SetActive(true);
             Destroy(gameObject);

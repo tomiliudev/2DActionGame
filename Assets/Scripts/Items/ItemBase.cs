@@ -18,7 +18,7 @@ public abstract class ItemBase : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Player")
+        if (collision.tag == GameConfig.PlayerTag)
         {
             SoundManager.Instance.Play(itemPickupSe);
 

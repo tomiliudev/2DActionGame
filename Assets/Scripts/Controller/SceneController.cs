@@ -1,5 +1,5 @@
-using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -12,6 +12,9 @@ public sealed class SceneController : MonoBehaviour
     [SerializeField] AudioClip gameOverSe;
     [SerializeField] GameObject[] doors;
     bool isDoorApear;
+
+    public int GetPoints { get; set; }
+    public List<ItemBase> GetItems { get; set; }
 
     // Start is called before the first frame update
     void Start()
@@ -102,43 +105,40 @@ public sealed class SceneController : MonoBehaviour
         {
             isDoGameClear = true;
 
-            //if (Input.touchSupported && Input.touchCount > 0)
-            //{
-            //    if (Input.GetTouch(0).phase == TouchPhase.Began)
-            //    {
-            //        // 画面タッチで次のステージへ
-            //        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            //        GameManager.Instance.LoadToNextStage();
-            //    }
-            //}
+            // クリアしたステージを保存する
+            SaveClearedStage();
 
-            //if (Application.isEditor)
-            //{
-            //    if (Input.GetMouseButtonDown(0))
-            //    {
-            //        // 画面タッチで次のステージへ
-            //        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            //        GameManager.Instance.LoadToNextStage();
-            //    }
-            //}
 
-            // クリアしたステージを記録する
-            string clearStageName = SceneManager.GetActiveScene().name;
-            var clearStageDic = PlayerPrefsUtility.LoadDict<string, int>(GameConfig.ClearStageDic);
-            if (!clearStageDic.ContainsKey(clearStageName))
-            {
-                clearStageDic.Add(clearStageName, 1);
-            }
-            else
-            {
-                int clearLevel = clearStageDic[clearStageName];
-                clearStageDic[clearStageName] = clearLevel + 1;
-            }
-            PlayerPrefsUtility.SaveDict(GameConfig.ClearStageDic, clearStageDic);
+            // クリアしたら獲得したポイントを保存する
+            SavePoints();
 
             // 次のステージへ
             gm.LoadToNextStage();
             return;
         }
+    }
+
+    // クリアしたステージを保存する
+    private void SaveClearedStage()
+    {
+        // クリアしたステージを記録する
+        string clearStageName = SceneManager.GetActiveScene().name;
+        var clearStageDic = PlayerPrefsUtility.LoadDict<string, int>(GameConfig.ClearStageDic);
+        if (!clearStageDic.ContainsKey(clearStageName))
+        {
+            clearStageDic.Add(clearStageName, 1);
+        }
+        else
+        {
+            int clearLevel = clearStageDic[clearStageName];
+            clearStageDic[clearStageName] = clearLevel + 1;
+        }
+        PlayerPrefsUtility.SaveDict(GameConfig.ClearStageDic, clearStageDic);
+    }
+
+    private void SavePoints()
+    {
+        int totalPoint = PlayerPrefsUtility.Load(GameConfig.TotalPoint, 0);
+        PlayerPrefsUtility.Save(GameConfig.TotalPoint, totalPoint + GetPoints);
     }
 }
