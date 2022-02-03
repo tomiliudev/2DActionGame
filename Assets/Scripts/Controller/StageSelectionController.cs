@@ -12,10 +12,15 @@ public sealed class StageSelectionController : MonoBehaviour, IStageSelectionBut
     List<StageSelectionParts> stageSelectionList = new List<StageSelectionParts>();
     void Start()
     {
+        // クリアしたステージ一覧
+        var clearStageList = PlayerPrefsUtility.LoadList<string>(GameConfig.ClearStageList);
+
         foreach (e_StageName stageName in Enum.GetValues(typeof(e_StageName)))
         {
             var stageSelectionObj = Instantiate(stageSelectionParts, parent, false);
             stageSelectionObj.StageName = stageName;
+            stageSelectionObj.IsClearStage = clearStageList.Contains(stageName.ToString());
+
             stageSelectionList.Add(stageSelectionObj);
         }
     }

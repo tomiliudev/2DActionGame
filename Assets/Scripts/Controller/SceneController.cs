@@ -120,7 +120,14 @@ public sealed class SceneController : MonoBehaviour
             //}
 
 
-            GameManager.Instance.LoadToNextStage();
+            // クリアしたステージを記録する
+            var clearStageList = PlayerPrefsUtility.LoadList<string>(GameConfig.ClearStageList);
+            string clearStageName = SceneManager.GetActiveScene().name;
+            if (!clearStageList.Contains(clearStageName))
+            {
+                clearStageList.Add(clearStageName);
+                PlayerPrefsUtility.SaveList<string>(GameConfig.ClearStageList, clearStageList);
+            }
             return;
         }
     }

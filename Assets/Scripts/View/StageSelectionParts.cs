@@ -18,6 +18,8 @@ public sealed class StageSelectionParts : ButtonBase<IStageSelectionButton>
         }
     }
 
+    public bool IsClearStage { get; set; }
+
     private void Start()
     {
         targetObj = FindObjectOfType<StageSelectionController>().gameObject;
@@ -25,7 +27,11 @@ public sealed class StageSelectionParts : ButtonBase<IStageSelectionButton>
 
     public override void Click(IStageSelectionButton controller)
     {
-        controller.OnStageSelectionButtonClick(this);
+        // Stage1またはクリア済みのステージなら選択可能
+        if (StageName == e_StageName.Stage1 || IsClearStage)
+        {
+            controller.OnStageSelectionButtonClick(this);
+        }
     }
 
     public void SwitchFrameImage(bool flag)

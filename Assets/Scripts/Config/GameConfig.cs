@@ -1,6 +1,7 @@
 public static class GameConfig
 {
     public const string StageSelectionSceneName = "StageSelection";
+    public const string ClearStageList = "ClearStageList";
 
     public const string PlayerTag = "Player";
     public const string DoorTag = "Door";
