@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class BatEnemy : Enemy
+public sealed class BatEnemy : Enemy
 {
     private bool isFollowPlayer;
 
@@ -64,7 +64,7 @@ public class BatEnemy : Enemy
     protected override void OnCollisionEnter2D(Collision2D collision)
     {
         base.OnCollisionEnter2D(collision);
-        if (collision.collider.tag == playerTag)
+        if (collision.collider.tag == GameConfig.PlayerTag)
         {
             if (base.gm.player.CheckCollisionDetectionWithEnemy(transform))
             {

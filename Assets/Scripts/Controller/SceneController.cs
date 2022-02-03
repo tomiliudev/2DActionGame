@@ -93,12 +93,15 @@ public sealed class SceneController : MonoBehaviour
         }
     }
 
+    bool isDoGameClear = false;
     private void GameClear()
     {
         if (gm.IsGameOver) return;
 
-        if (gm.IsGameClear)
+        if (gm.IsGameClear && !isDoGameClear)
         {
+            isDoGameClear = true;
+
             //if (Input.touchSupported && Input.touchCount > 0)
             //{
             //    if (Input.GetTouch(0).phase == TouchPhase.Began)
@@ -119,7 +122,6 @@ public sealed class SceneController : MonoBehaviour
             //    }
             //}
 
-
             // クリアしたステージを記録する
             string clearStageName = SceneManager.GetActiveScene().name;
             var clearStageDic = PlayerPrefsUtility.LoadDict<string, int>(GameConfig.ClearStageDic);
@@ -132,8 +134,10 @@ public sealed class SceneController : MonoBehaviour
                 int clearLevel = clearStageDic[clearStageName];
                 clearStageDic[clearStageName] = clearLevel + 1;
             }
-
             PlayerPrefsUtility.SaveDict(GameConfig.ClearStageDic, clearStageDic);
+
+            // 次のステージへ
+            gm.LoadToNextStage();
             return;
         }
     }

@@ -30,6 +30,21 @@ public sealed class GameManager : SingletonMonoBehaviour<GameManager>
 
     public e_GameMode CurrentGameMode = e_GameMode.StageSelection;
     private e_StageName currentStage;
+    public int CurrentStageLevel
+    {
+        get
+        {
+            int stageLevel = 0;
+            var clearStageDic = PlayerPrefsUtility.LoadDict<string, int>(GameConfig.ClearStageDic);
+            if (clearStageDic.ContainsKey(currentStage.ToString()))
+            {
+                stageLevel = clearStageDic[currentStage.ToString()];
+                Debug.Log(string.Format("Stage{0}のレベルは{1}", currentStage, stageLevel));
+            }
+            if (stageLevel > 5) stageLevel = 5;
+            return stageLevel;
+        }
+    }
 
     public int PlayerMaxHp { get { return PlayerPrefs.GetInt(GameConfig.PlayerMaxHp, 1); } }
     private int playerCurrentHp;
@@ -117,6 +132,7 @@ public sealed class GameManager : SingletonMonoBehaviour<GameManager>
     public void LoadToTargetStage(e_StageName stage)
     {
         CurrentGameMode = e_GameMode.Normal;
+        currentStage = stage;
         LoadSceneTo(stage.ToString());
     }
 

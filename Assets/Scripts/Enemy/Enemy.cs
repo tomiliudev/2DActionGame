@@ -17,7 +17,6 @@ public class Enemy : MonoBehaviour
 
     protected GameManager gm;
 
-    protected const string playerTag = "Player";
     protected const string playerLayer = "Player";
 
     bool isDead = false;
@@ -25,10 +24,15 @@ public class Enemy : MonoBehaviour
     public float BoundHight { get { return boundHight; } }
 
     protected Vector3 playerVector;
+
+    protected int Hp = 1;
     
     private void Awake()
     {
         gm = GameManager.Instance;
+
+        // ステージレベルでHPが決まる
+        Hp = gm.CurrentStageLevel + 1;
     }
 
     private void Start()
@@ -54,15 +58,19 @@ public class Enemy : MonoBehaviour
 
     public void OnDamage()
     {
-        isDead = true;
-
-        if (dropItem != null)
+        Hp--;
+        if (Hp <= 0)
         {
-            var dropItemObj = Instantiate(dropItem, transform.parent);
-            dropItemObj.transform.position = transform.position;
-        }
+            isDead = true;
 
-        Destroy(gameObject);
+            if (dropItem != null)
+            {
+                var dropItemObj = Instantiate(dropItem, transform.parent);
+                dropItemObj.transform.position = transform.position;
+            }
+
+            Destroy(gameObject);
+        }
     }
 
     /// <summary>
@@ -85,7 +93,7 @@ public class Enemy : MonoBehaviour
 
     protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.tag == playerTag)
+        if (collision.collider.tag == GameConfig.PlayerTag)
         {
             if (gm.player.CheckCollisionDetectionWithEnemy(transform))
             {
