@@ -138,6 +138,7 @@ public sealed class StageUiView : MonoBehaviour
     public void SwitchOffBlackMask()
     {
         isBlackMaskOn = false;
+        blackMask.gameObject.SetActive(true);
         GameManager.Instance.CurrentGameMode = e_GameMode.None;
         iTween.ValueTo(
             gameObject,

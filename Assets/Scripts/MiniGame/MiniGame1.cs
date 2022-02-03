@@ -36,10 +36,7 @@ public sealed class MiniGame1 : MonoBehaviour
         {
             if (miniGame1Gauge.IsHit)
             {
-                Debug.Log("あたり！！！");
                 successCount++;
-                Debug.Log("成功カウント" + successCount);
-
                 if (successCount >= 3)
                 {
                     // 3回連続で成功したら
@@ -58,9 +55,9 @@ public sealed class MiniGame1 : MonoBehaviour
             }
             else
             {
-                Debug.Log("残念！！！");
+                // 失敗したらリセット
                 successCount = 0;
-                Debug.Log("成功カウント" + successCount);
+
                 mainCamera = Camera.main;
                 mainCamera.GetComponent<CinemachineBrain>().enabled = false;
                 iTween.ShakePosition(
