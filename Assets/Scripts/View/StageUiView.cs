@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,9 +16,7 @@ public sealed class StageUiView : MonoBehaviour
 
     GameManager gm;// GameManagerのインスタンス
 
-    float countDownSec = 600f;
-    int _currentTotalPoint = 0;
-    int _totalPoint = 0;
+    float countDownSec = 180f;
     public int CountDownSec
     {
         get { return (int)countDownSec; }
@@ -32,6 +29,9 @@ public sealed class StageUiView : MonoBehaviour
     void Start()
     {
         gm = GameManager.Instance;
+
+        SetCountDownSec();
+
         InitPlayerHp();
         totalPoint.text = PlayerPrefsUtility.Load(GameConfig.TotalPoint, 0).ToString();
     }
@@ -169,5 +169,12 @@ public sealed class StageUiView : MonoBehaviour
             blackMask.gameObject.SetActive(false);
             gm.CurrentGameMode = e_GameMode.Normal;
         }
+    }
+
+    private void SetCountDownSec()
+    {
+        int sec = CountDownSec - (int)(gm.CurrentStageLevel * 0.1f * CountDownSec);
+        if (sec < 60) sec = 60;
+        CountDownSec = sec;
     }
 }
