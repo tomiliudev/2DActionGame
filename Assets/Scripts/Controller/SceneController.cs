@@ -121,13 +121,19 @@ public sealed class SceneController : MonoBehaviour
 
 
             // クリアしたステージを記録する
-            var clearStageList = PlayerPrefsUtility.LoadList<string>(GameConfig.ClearStageList);
             string clearStageName = SceneManager.GetActiveScene().name;
-            if (!clearStageList.Contains(clearStageName))
+            var clearStageDic = PlayerPrefsUtility.LoadDict<string, int>(GameConfig.ClearStageDic);
+            if (!clearStageDic.ContainsKey(clearStageName))
             {
-                clearStageList.Add(clearStageName);
-                PlayerPrefsUtility.SaveList<string>(GameConfig.ClearStageList, clearStageList);
+                clearStageDic.Add(clearStageName, 1);
             }
+            else
+            {
+                int clearLevel = clearStageDic[clearStageName];
+                clearStageDic[clearStageName] = clearLevel + 1;
+            }
+
+            PlayerPrefsUtility.SaveDict(GameConfig.ClearStageDic, clearStageDic);
             return;
         }
     }

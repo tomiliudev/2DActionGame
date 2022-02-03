@@ -13,13 +13,13 @@ public sealed class StageSelectionController : MonoBehaviour, IStageSelectionBut
     void Start()
     {
         // クリアしたステージ一覧
-        var clearStageList = PlayerPrefsUtility.LoadList<string>(GameConfig.ClearStageList);
-
+        var clearStageDic = PlayerPrefsUtility.LoadDict<string, int>(GameConfig.ClearStageDic);
+        
         foreach (e_StageName stageName in Enum.GetValues(typeof(e_StageName)))
         {
             var stageSelectionObj = Instantiate(stageSelectionParts, parent, false);
             stageSelectionObj.StageName = stageName;
-            stageSelectionObj.IsClearStage = clearStageList.Contains(stageName.ToString());
+            stageSelectionObj.IsClearStage = clearStageDic.ContainsKey(stageName.ToString());
 
             stageSelectionList.Add(stageSelectionObj);
         }
