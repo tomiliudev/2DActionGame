@@ -107,20 +107,38 @@ public class EquipPopup : PopupBase, ISlotButton, IBuyButton
 
     void GenerateItemSlot()
     {
+        // 所持アイテムのグループ情報
         List<string> slotDataList = PlayerPrefsUtility.LoadList<string>(GameConfig.ItemList);
         var groupedSlotList = slotDataList.Select(slotJsonData => JsonUtility.FromJson<ItemInfo>(slotJsonData)).Where(x => x.Type != e_ItemType.none).GroupBy(x => x.Type);
+
+        // 獲得したアイテムのリスト
+        var getItems = base.gm.sceneController.GetItems;
+
+        // 所持アイテムと獲得アイテムを混ぜる
+        List<ItemInfo> itemList = new List<ItemInfo>();
+        foreach (var itemGroup in groupedSlotList)
+        {
+            itemList.AddRange(itemGroup.Select(x => x));
+        }
+        itemList.AddRange(getItems);
+        var itemGroupList = itemList.GroupBy(x => x.Type);
 
         int slotIdx = 0;
         foreach (SlotFrame slotFrame in itemSlotList.GetComponentsInChildren<SlotFrame>())
         {
-            if (slotIdx >= groupedSlotList.Count()) break;
-            var group = groupedSlotList.ElementAt(slotIdx);
+            if (slotIdx >= itemGroupList.Count()) break;
+            var group = itemGroupList.ElementAt(slotIdx);
+
+            var itemInfo = group.First();
+
+            // 所持中アイテムの数　＋　獲得したアイテムの数
+            int itemCount = group.Count();
 
             // 所持数
-            slotFrame.SetNumText(group.Count());
+            slotFrame.SetNumText(itemCount);
 
             // Slotの設定
-            SetItemSlot(group.First(), slotFrame);
+            SetItemSlot(itemInfo, slotFrame);
 
             slotIdx++;
         }
@@ -157,6 +175,14 @@ public class EquipPopup : PopupBase, ISlotButton, IBuyButton
             SetItemSlot(itemInfo, slotFrame, isShopItem:true);
             slotIdx++;
         }
+    }
+
+    IEnumerable<T> Merge<T>(T[] ary1, T[] ary2)
+    {
+        foreach (T i in ary1)
+            yield return i;
+        foreach (T i in ary2)
+            yield return i;
     }
 
     private void SetItemSlot(ItemInfo itemInfo, SlotFrame slotFrame, bool isShopItem = false)

@@ -14,7 +14,9 @@ public sealed class SceneController : MonoBehaviour
     bool isDoorApear;
 
     public int GetPoints { get; set; }
-    public List<ItemBase> GetItems { get; set; }
+
+    private List<ItemInfo> getItems = new List<ItemInfo>();
+    public List<ItemInfo> GetItems { get { return getItems; } set { getItems = value; } }
 
     // Start is called before the first frame update
     void Start()
@@ -112,6 +114,9 @@ public sealed class SceneController : MonoBehaviour
             // クリアしたら獲得したポイントを保存する
             SavePoints();
 
+            // 獲得データを保存する
+            SaveItems();
+
             // 次のステージへ
             gm.LoadToNextStage();
             return;
@@ -140,5 +145,13 @@ public sealed class SceneController : MonoBehaviour
     {
         int totalPoint = PlayerPrefsUtility.Load(GameConfig.TotalPoint, 0);
         PlayerPrefsUtility.Save(GameConfig.TotalPoint, totalPoint + GetPoints);
+    }
+
+    private void SaveItems()
+    {
+        foreach (var itemInfo in GetItems)
+        {
+            PlayerPrefsUtility.AddToJsonList(GameConfig.ItemList, itemInfo, itemInfo.IsMultiple);
+        }
     }
 }

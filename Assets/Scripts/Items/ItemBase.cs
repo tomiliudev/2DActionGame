@@ -16,14 +16,20 @@ public abstract class ItemBase : MonoBehaviour
     [SerializeField] protected ItemInfo itemInfo;
     [SerializeField] protected AudioClip itemPickupSe;
 
+    bool isGetItem = false;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == GameConfig.PlayerTag)
         {
+            if (isGetItem) return;
+            isGetItem = true;
+
             SoundManager.Instance.Play(itemPickupSe);
 
-            // 獲得データを保存する
-            PlayerPrefsUtility.AddToJsonList(GameConfig.ItemList, itemInfo, itemInfo.IsMultiple);
+            var gm = GameManager.Instance;
+
+            // 獲得したアイテムを追加
+            gm.sceneController.GetItems.Add(itemInfo);
 
             // アイテムを獲得したらショップで購入できるようにリストに追加
             ShopItemListUtility.SaveShopItemList(itemInfo.Type);
@@ -38,7 +44,7 @@ public abstract class ItemBase : MonoBehaviour
             if (GameConfig.GetEquippedItem().Type == e_ItemType.none)
             {
                 PlayerPrefsUtility.SaveToJson(GameConfig.EquippedItem, itemInfo);
-                GameManager.Instance.stageUiView.SetItemIconImage(itemInfo);
+                gm.stageUiView.SetItemIconImage(itemInfo);
             }
         }
     }
