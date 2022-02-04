@@ -75,12 +75,13 @@ public sealed class GameManager : SingletonMonoBehaviour<GameManager>
         SceneManager.sceneLoaded += OnSceneLoaded;
         SceneManager.activeSceneChanged += OnActiveSceneChanged;
         SceneManager.sceneUnloaded += OnSceneUnloaded;
+
+        Debug.Log("awake");
     }
 
     private void Start()
     {
-        Debug.Log("LoadStageSelection");
-        //LoadStageSelection();
+        InitializeCommon();
     }
 
     private void OnActiveSceneChanged(Scene scene1, Scene scene2)
@@ -89,6 +90,8 @@ public sealed class GameManager : SingletonMonoBehaviour<GameManager>
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        InitializeCommon();
+
         e_StageName stageName;
         if (Enum.TryParse(scene.name, out stageName) && Enum.IsDefined(typeof(e_StageName), stageName))
         {
@@ -101,6 +104,11 @@ public sealed class GameManager : SingletonMonoBehaviour<GameManager>
         isInitialized = false;
     }
 
+    private void InitializeCommon()
+    {
+        popupView = FindObjectOfType<PopupView>();
+    }
+
     private void Initialize()
     {
         isInitialized = true;
@@ -110,7 +118,6 @@ public sealed class GameManager : SingletonMonoBehaviour<GameManager>
         cinemachineCamera = FindObjectOfType<CinemachineVirtualCamera>();
         sceneController = FindObjectOfType<SceneController>();
         stageUiView = FindObjectOfType<StageUiView>();
-        popupView = FindObjectOfType<PopupView>();
         treasures = FindObjectsOfType<Treasure>();
         player = FindObjectOfType<Player>();
         cameraCollider = GameObject.FindGameObjectWithTag("CameraCollider").GetComponent<PolygonCollider2D>();

@@ -7,19 +7,17 @@ public class SlotBase<T> : ButtonBase<ISlotButton>
     [SerializeField] Image slotImage;
     protected T slotInfo;
     private SlotFrame _slotFrame;
-    private bool isShopItem = false;
-    public void SetSlotInfo(GameObject targetObj, SlotFrame slotFrame, T slotInfo, Sprite objSprite, bool isShopItem = false)
+    public void SetSlotInfo(GameObject targetObj, SlotFrame slotFrame, T slotInfo, Sprite objSprite)
     {
         base.targetObj = targetObj;
         _slotFrame = slotFrame;
         this.slotInfo = slotInfo;
-        this.isShopItem = isShopItem;
         SetSlotImage(objSprite);
     }
 
     public override void Click(ISlotButton controller)
     {
-        controller.OnSlotClicked(_slotFrame, slotInfo, isShopItem);
+        controller.OnSlotClicked(_slotFrame, slotInfo);
     }
 
     private void SetSlotImage(Sprite objSprite)

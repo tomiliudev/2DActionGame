@@ -2,5 +2,5 @@ using UnityEngine.EventSystems;
 
 public interface ISlotButton : IEventSystemHandler
 {
-    void OnSlotClicked(SlotFrame slotFrame, IEquipObjectInfo info, bool isShopItem = false);
+    void OnSlotClicked(SlotFrame slotFrame, IEquipObjectInfo info);
 }

@@ -6,9 +6,10 @@ public enum e_PopupName
     none,
     equipPopup,
     gameOverPopup,
+    shopPopup
 }
 
-public class PopupView : MonoBehaviour
+public sealed class PopupView : MonoBehaviour
 {
     [SerializeField] GameObject BackMaskImage;
     [SerializeField] PopupBase[] popupList;

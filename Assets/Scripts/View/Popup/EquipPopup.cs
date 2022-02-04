@@ -3,35 +3,24 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EquipPopup : PopupBase, ISlotButton, IBuyButton
+public sealed class EquipPopup : PopupBase, ISlotButton
 {
-    [SerializeField] GameObject equipView;
-    [SerializeField] GameObject shopView;
     [SerializeField] Toggle weaponToggle;
     [SerializeField] Toggle itemToggle;
-    [SerializeField] Toggle shopToggle;
     [SerializeField] GameObject weaponToggleOnText;
     [SerializeField] GameObject itemToggleOnText;
-    [SerializeField] GameObject shopToggleOnText;
     [SerializeField] ScrollRect weaponScroll;
     [SerializeField] ScrollRect itemScroll;
-    [SerializeField] ScrollRect shopScroll;
     [SerializeField] Transform weaponSlotList;
     [SerializeField] Transform itemSlotList;
-    [SerializeField] Transform itemShopSlotList;
-    [SerializeField] Text totalPoint;
-    [SerializeField] Text selectItemPrice;
-    [SerializeField] BuyButton buyButton;
 
     [SerializeField] WeaponSlot weaponSlotPrefab;
     [SerializeField] ItemSlot itemSlotPrefab;
     [SerializeField] Image equippedWeaponImage;
     [SerializeField] Image equippedItemImage;
-    [SerializeField] Image selectShopItemImage;
     [SerializeField] Sprite[] weaponSprites;
-    [SerializeField] Sprite[] itemSprites;
+    [SerializeField] ItemImageScriptableObject itemImageData;
 
-    int _totalPoint = 0;
     private void Start()
     {
         SwitchToggle();
@@ -39,37 +28,18 @@ public class EquipPopup : PopupBase, ISlotButton, IBuyButton
         SetEquippedItemImage();
         GenerateWeaponSlot();
         GenerateItemSlot();
-        GenerateItemShopSlot();
-
-        _totalPoint = PlayerPrefsUtility.Load(GameConfig.TotalPoint, 0);
-        totalPoint.text = _totalPoint.ToString();
     }
 
     public void OnWeaponToggleChanged()
     {
         weaponToggleOnText.SetActive(weaponToggle.isOn);
         weaponScroll.gameObject.SetActive(weaponToggle.isOn);
-        SwitchView();
     }
 
     public void OnItemToggleChanged()
     {
         itemToggleOnText.SetActive(itemToggle.isOn);
         itemScroll.gameObject.SetActive(itemToggle.isOn);
-        SwitchView();
-    }
-
-    public void OnShopToggleChanged()
-    {
-        shopToggleOnText.SetActive(shopToggle.isOn);
-        shopScroll.gameObject.SetActive(shopToggle.isOn);
-        SwitchView();
-    }
-
-    private void SwitchView()
-    {
-        shopView.SetActive(shopToggle.isOn);
-        equipView.SetActive(!shopView.activeSelf);
     }
 
     void SwitchToggle()
@@ -78,8 +48,6 @@ public class EquipPopup : PopupBase, ISlotButton, IBuyButton
         weaponScroll.gameObject.SetActive(weaponToggle.isOn);
         itemToggleOnText.SetActive(itemToggle.isOn);
         itemScroll.gameObject.SetActive(itemToggle.isOn);
-        shopToggleOnText.SetActive(shopToggle.isOn);
-        SwitchView();
     }
 
     void GenerateWeaponSlot()
@@ -144,51 +112,10 @@ public class EquipPopup : PopupBase, ISlotButton, IBuyButton
         }
     }
 
-    void GenerateItemShopSlot()
-    {
-        List<string> slotDataList = PlayerPrefsUtility.LoadList<string>(GameConfig.ItemList);
-        var groupedSlotList = slotDataList.Select(slotJsonData => JsonUtility.FromJson<ItemInfo>(slotJsonData)).Where(x => x.Type != e_ItemType.none).GroupBy(x => x.Type);
-
-        var itemShopList = PlayerPrefsUtility.LoadList<int>(GameConfig.ItemShopList);
-
-        int slotIdx = 0;
-        foreach (SlotFrame slotFrame in itemShopSlotList.GetComponentsInChildren<SlotFrame>())
-        {
-            if (slotIdx >= itemShopList.Count()) break;
-            var itemType = itemShopList.ElementAt(slotIdx);
-
-            ItemInfo itemInfo = new ItemInfo();
-            if (groupedSlotList.Any(x => x.Key == (e_ItemType)itemType))
-            {
-                var group = groupedSlotList.First(x => x.Key == (e_ItemType)itemType);
-                itemInfo = group.First();
-                slotFrame.SetNumText(group.Count());
-            }
-            else
-            {
-                var itemInfoDatas = DataManager.Instance.GetItemInfoDatas();
-                itemInfo.itemInfoData = itemInfoDatas.First(x => x.type == (e_ItemType)itemType);
-                slotFrame.SetNumText();
-            }
-
-            // Slotの設定
-            SetItemSlot(itemInfo, slotFrame, isShopItem:true);
-            slotIdx++;
-        }
-    }
-
-    IEnumerable<T> Merge<T>(T[] ary1, T[] ary2)
-    {
-        foreach (T i in ary1)
-            yield return i;
-        foreach (T i in ary2)
-            yield return i;
-    }
-
-    private void SetItemSlot(ItemInfo itemInfo, SlotFrame slotFrame, bool isShopItem = false)
+    private void SetItemSlot(ItemInfo itemInfo, SlotFrame slotFrame)
     {
         var slotObj = Instantiate(itemSlotPrefab, slotFrame.transform, false);
-        slotObj.SetSlotInfo(gameObject, slotFrame, itemInfo, GetItemSprite(itemInfo.Type), isShopItem);
+        slotObj.SetSlotInfo(gameObject, slotFrame, itemInfo, GetItemSprite(itemInfo.Type));
         slotObj.transform.SetAsFirstSibling();
         slotObj.gameObject.SetActive(true);
     }
@@ -199,26 +126,10 @@ public class EquipPopup : PopupBase, ISlotButton, IBuyButton
     /// スロットをクリックした時
     /// </summary>
     /// <param name="info"></param>
-    /// <param name="isShopItem"></param>
-    public void OnSlotClicked(SlotFrame slotFrame, IEquipObjectInfo info, bool isShopItem)
+    public void OnSlotClicked(SlotFrame slotFrame, IEquipObjectInfo info)
     {
         selectSlotFrame = slotFrame;
-        if (isShopItem)
-        {
-            SetShopItem((ItemInfo)info);
-        }
-        else
-        {
-            SetEquipObj(info);
-        }
-    }
-
-    private void SetShopItem(ItemInfo info)
-    {
-        buyButton.ObjInfo = info;
-        SetSelectItemImage(selectShopItemImage, info.Type);
-        var itemInfoDatas = DataManager.Instance.GetItemInfoDatas();
-        selectItemPrice.text = itemInfoDatas.First(x => x.type == info.Type).price.ToString();
+        SetEquipObj(info);
     }
 
     private void SetEquipObj(IEquipObjectInfo info)
@@ -264,7 +175,7 @@ public class EquipPopup : PopupBase, ISlotButton, IBuyButton
     Sprite GetItemSprite(e_ItemType type)
     {
         if (type == e_ItemType.none) return null;
-        return itemSprites[(int)type - 1];
+        return itemImageData.itemSpriteList[(int)type - 1];
     }
 
     // 選択中のアイテム画像
@@ -273,44 +184,5 @@ public class EquipPopup : PopupBase, ISlotButton, IBuyButton
         target.sprite = GetItemSprite(itemType);
         target.preserveAspect = true;
         target.gameObject.SetActive(itemType != e_ItemType.none);
-    }
-
-    public void OnBuyButtonClicked(IEquipObjectInfo info)
-    {
-        if (info == null) return;
-        if (_totalPoint >= info.Price)
-        {
-            buyButton.DoBuySe();
-
-            // 金額の計算
-            int fromPoint = _totalPoint;
-            int toPoint = _totalPoint - info.Price;
-            _totalPoint = toPoint;
-            UpdateTotalPointView(fromPoint, toPoint);
-            GameManager.Instance.stageUiView.UpdateTotalPointView(fromPoint, toPoint);
-            PlayerPrefsUtility.Save(GameConfig.TotalPoint, _totalPoint);
-
-            // 購入したオブジェクトを追加
-            PlayerPrefsUtility.AddToJsonList(GameConfig.ItemList, info, info.IsMultiple);
-            selectSlotFrame.AddNum(1);
-        }
-    }
-
-    private void UpdateTotalPointView(int from, int to)
-    {
-        iTween.ValueTo(
-            gameObject,
-            iTween.Hash(
-                "from", from,
-                "to", to,
-                "time", 0.5f,
-                "onupdate", "OnUpdateTotalPointView"
-            )
-        );
-    }
-
-    private void OnUpdateTotalPointView(int point)
-    {
-        totalPoint.text = point.ToString();
     }
 }
