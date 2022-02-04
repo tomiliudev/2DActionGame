@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public sealed class SceneController : MonoBehaviour
+public sealed class SceneController : BaseController
 {
     GameManager gm;
 
@@ -117,9 +117,8 @@ public sealed class SceneController : MonoBehaviour
             // 獲得データを保存する
             SaveItems();
 
-            // 次のステージへ
-            gm.LoadToNextStage();
-            return;
+            // ステージ選択画面へ
+            gm.LoadSceneWithData(e_SceneName.StageSelection.ToString(), new StageSelectionController.InitData(gm.GetNextStage()));
         }
     }
 

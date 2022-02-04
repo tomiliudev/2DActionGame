@@ -1,25 +1,68 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public sealed class StageSelectionController : MonoBehaviour, IStageSelectionButton
+public sealed class StageSelectionController : BaseController, IStageSelectionButton
 {
     [SerializeField] StageSelectionParts stageSelectionParts;
     [SerializeField] Transform parent;
 
     StageSelectionParts selectedStageParts = null;
     List<StageSelectionParts> stageSelectionList = new List<StageSelectionParts>();
+
+    public sealed class InitData : BaseInitData
+    {
+        public e_StageName selectStage;
+        public InitData(e_StageName selectStage)
+        {
+            this.selectStage = selectStage;
+        }
+    }
+
+    InitData initData;
+    public override void Initialize(BaseInitData initBaseData)
+    {
+        initData = initBaseData as InitData;
+    }
+
     void Start()
     {
         // クリアしたステージ一覧
         var clearStageDic = PlayerPrefsUtility.LoadDict<string, int>(GameConfig.ClearStageDic);
-        
-        foreach (e_StageName stageName in Enum.GetValues(typeof(e_StageName)))
+
+        var stageNames = Enum.GetValues(typeof(e_StageName));
+        e_StageName[] stageNameList = new e_StageName[stageNames.Length];
+        stageNames.CopyTo(stageNameList, 0);
+
+        foreach (var (stageName, index) in stageNameList.Select((stageName, index) => (stageName, index)))
         {
             var stageSelectionObj = Instantiate(stageSelectionParts, parent, false);
             stageSelectionObj.StageName = stageName;
-            stageSelectionObj.IsClearStage = clearStageDic.ContainsKey(stageName.ToString());
+
+            if (initData != null && initData.selectStage == stageName)
+            {
+                selectedStageParts = stageSelectionObj;
+                stageSelectionObj.IsCanSelect = true;
+                stageSelectionObj.SwitchFrameImage(true);
+            }
+            else
+            {
+                // 一つ前のステージクリア済みなら選択可能
+                bool isCanSelect = false;
+                int preIndex = index - 1;
+
+                if (stageName == e_StageName.Stage1)
+                {
+                    // ステージ１なら問答無用で選択可能
+                    isCanSelect = true;
+                }
+                else if (preIndex >= 0)
+                {
+                    isCanSelect = clearStageDic.ContainsKey(stageNameList[preIndex].ToString());
+                }
+                stageSelectionObj.IsCanSelect = isCanSelect;
+            }
 
             stageSelectionList.Add(stageSelectionObj);
         }

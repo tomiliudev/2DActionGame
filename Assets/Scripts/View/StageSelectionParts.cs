@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,7 +16,8 @@ public sealed class StageSelectionParts : ButtonBase<IStageSelectionButton>
         }
     }
 
-    public bool IsClearStage { get; set; }
+    // 選択可能か
+    public bool IsCanSelect { get; set; }
 
     private void Start()
     {
@@ -27,8 +26,7 @@ public sealed class StageSelectionParts : ButtonBase<IStageSelectionButton>
 
     public override void Click(IStageSelectionButton controller)
     {
-        // Stage1またはクリア済みのステージなら選択可能
-        if (StageName == e_StageName.Stage1 || IsClearStage)
+        if (IsCanSelect)
         {
             controller.OnStageSelectionButtonClick(this);
         }

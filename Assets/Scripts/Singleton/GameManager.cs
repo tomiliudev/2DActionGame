@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Cinemachine;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -120,10 +121,30 @@ public sealed class GameManager : SingletonMonoBehaviour<GameManager>
         IsGameOver = false;
     }
 
-    private void LoadStageSelection()
+
+    public void LoadSceneWithData(string sceneName, BaseController.BaseInitData initData)
     {
-        CurrentGameMode = e_GameMode.StageSelection;
-        LoadSceneTo(GameConfig.StageSelectionSceneName);
+        StartCoroutine(LoadSceneWithDataCo(sceneName, initData));
+    }
+
+    IEnumerator LoadSceneWithDataCo(string sceneName, BaseController.BaseInitData initData)
+    {
+        var asyncOperation = SceneManager.LoadSceneAsync(sceneName);
+        //asyncOperation.allowSceneActivation = false;
+        //yield return new WaitForSeconds(0.3f);
+        //asyncOperation.allowSceneActivation = true;
+        yield return asyncOperation;
+
+        Debug.Log("Test");
+        var sence = SceneManager.GetSceneByName(sceneName);
+        foreach (var root in sence.GetRootGameObjects())
+        {
+            BaseController con = root.GetComponent<BaseController>();
+            if (con != null)
+            {
+                con.Initialize(initData);
+            }
+        }
     }
 
     public void LoadSceneTo(string sceneName)
@@ -148,5 +169,15 @@ public sealed class GameManager : SingletonMonoBehaviour<GameManager>
             currentStage = e_StageName.Stage1;
         }
         LoadToTargetStage(nextStage);
+    }
+
+    public e_StageName GetNextStage()
+    {
+        var nextStage = currentStage + 1;
+        if (!Enum.IsDefined(typeof(e_StageName), nextStage))
+        {
+            nextStage = e_StageName.Stage1;
+        }
+        return nextStage;
     }
 }

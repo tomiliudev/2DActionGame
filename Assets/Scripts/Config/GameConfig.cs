@@ -1,6 +1,15 @@
+public enum e_SceneName
+{
+    StageSelection,
+    Stage1,
+    Stage2,
+    Stage3,
+    Stage4,
+    Stage5
+}
+
 public static class GameConfig
 {
-    public const string StageSelectionSceneName = "StageSelection";
     public const string ClearStageDic = "ClearStageDic";
 
     public const string PlayerTag = "Player";
