@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 1
   price: 20000
-  isMultiple: 0
+  isMultiple: 1

@@ -117,8 +117,8 @@ public sealed class SceneController : BaseController
             // 獲得データを保存する
             SaveItems();
 
-            // ステージ選択画面へ
-            gm.LoadSceneWithData(e_SceneName.StageSelection.ToString(), new StageSelectionController.InitData(gm.GetNextStage()));
+            // ステージクリアポップアップ
+            gm.popupView.ShowPopup(e_PopupName.stageClearPopup);
         }
     }
 

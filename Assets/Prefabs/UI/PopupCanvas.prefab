@@ -57,6 +57,7 @@ MonoBehaviour:
   popupList:
   - {fileID: 8308501823441336393, guid: fb378e696cbea4b1aad0cba3cca5fdd9, type: 3}
   - {fileID: 8621420370754912403, guid: a8f78dc58fab24accbf863b6482b6885, type: 3}
+  - {fileID: 3425381287109828685, guid: 73493d23955af4cddb7a28293a2ebe0d, type: 3}
   popupPosition: {fileID: 6837724783850444056}
 --- !u!223 &7729849736665123374
 Canvas:

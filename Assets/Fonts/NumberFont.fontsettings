@@ -194,6 +194,38 @@ Font:
       height: -9.142858
     advance: 7.111111
     flipped: 0
+  - serializedVersion: 2
+    index: 43
+    uv:
+      serializedVersion: 2
+      x: 0.4444444
+      y: 0.28571427
+      width: 0.11111111
+      height: 0.07142857
+    vert:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 7.111111
+      height: -9.142858
+    advance: 7.111111
+    flipped: 0
+  - serializedVersion: 2
+    index: 45
+    uv:
+      serializedVersion: 2
+      x: 0.5555555
+      y: 0.42857143
+      width: 0.11111111
+      height: 0.07142857
+    vert:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 7.111111
+      height: -9.142858
+    advance: 7.111111
+    flipped: 0
   m_KerningValues: []
   m_PixelScale: 0.1
   m_FontData: 
