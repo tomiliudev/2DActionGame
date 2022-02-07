@@ -61,16 +61,29 @@ public class Enemy : MonoBehaviour
         Hp--;
         if (Hp <= 0)
         {
-            isDead = true;
-
-            if (dropItem != null)
-            {
-                var dropItemObj = Instantiate(dropItem, transform.parent);
-                dropItemObj.transform.position = transform.position;
-            }
-
-            Destroy(gameObject);
+            Die();
         }
+    }
+
+    // 撃破される
+    private void Die()
+    {
+        if (Hp > 0) return;
+        isDead = true;
+
+        if (dropItem != null)
+        {
+            var dropItemObj = Instantiate(dropItem, transform.parent);
+            dropItemObj.transform.position = transform.position;
+        }
+
+        // クリアレベルに応じてポイントを与える
+        int point = gm.CurrentStageLevel;
+        int toPoint = gm.sceneController.GetPoints + point;
+        gm.stageUiView.UpdateTotalPointView(gm.sceneController.GetPoints, toPoint);
+        gm.sceneController.GetPoints = toPoint;
+
+        Destroy(gameObject);
     }
 
     /// <summary>
