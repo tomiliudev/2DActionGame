@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public enum e_SceneName
 {
     StageSelection,
@@ -42,5 +44,10 @@ public static class GameConfig
     public static ItemInfo GetEquippedItem()
     {
         return PlayerPrefsUtility.Load(EquippedItem, new ItemInfo());
+    }
+
+    public static void ResetEquippedItem()
+    {
+        PlayerPrefs.DeleteKey(EquippedItem);
     }
 }

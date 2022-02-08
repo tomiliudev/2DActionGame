@@ -76,7 +76,7 @@ public sealed class UseItemButton : MonoBehaviour
             GameManager.Instance.stageUiView.SetItemIconImage(new ItemInfo());
 
             // 装備中のアイテムをリセット
-            PlayerPrefs.DeleteKey(GameConfig.EquippedItem);
+            GameConfig.ResetEquippedItem();
         }
     }
 }
