@@ -10,6 +10,23 @@ public enum e_SceneName
     Stage5
 }
 
+public enum e_GameMode
+{
+    None,
+    StageSelection,
+    Normal,
+    MiniGame,
+}
+
+public enum e_StageName
+{
+    Stage1,
+    Stage2,
+    Stage3,
+    Stage4,
+    Stage5
+}
+
 public static class GameConfig
 {
     public const string ClearStageDic = "ClearStageDic";
@@ -25,6 +42,7 @@ public static class GameConfig
     public const string MiniGameNeedleTag = "MiniGameNeedle";
 
     public const string PlayerMaxHp = "playerMaxHp";
+    public const int MaxHp = 5;
     public const string WeaponList = "weaponList";
     public const string ItemList = "itemList";
     public const string ItemShopList = "itemShopList";

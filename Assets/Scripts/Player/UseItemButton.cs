@@ -35,7 +35,11 @@ public sealed class UseItemButton : MonoBehaviour
                 }
                 break;
             case e_ItemType.heart:
-                heartPrefab.Use();
+                int maxHp = PlayerPrefsUtility.Load(GameConfig.PlayerMaxHp, 1);
+                if (maxHp < GameConfig.MaxHp)
+                {
+                    heartPrefab.Use();
+                }
                 break;
         }
     }

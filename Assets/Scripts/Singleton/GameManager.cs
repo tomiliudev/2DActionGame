@@ -4,23 +4,6 @@ using Cinemachine;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public enum e_GameMode
-{
-    None,
-    StageSelection,
-    Normal,
-    MiniGame,
-}
-
-public enum e_StageName
-{
-    Stage1,
-    Stage2,
-    Stage3,
-    Stage4,
-    Stage5
-}
-
 public sealed class GameManager : SingletonMonoBehaviour<GameManager>
 {
     private bool isInitialized;
@@ -47,7 +30,7 @@ public sealed class GameManager : SingletonMonoBehaviour<GameManager>
         }
     }
 
-    public int PlayerMaxHp { get { return PlayerPrefs.GetInt(GameConfig.PlayerMaxHp, 1); } }
+    public int PlayerMaxHp { get { return PlayerPrefsUtility.Load(GameConfig.PlayerMaxHp, 1); } }
     private int playerCurrentHp;
     public int PlayerCurrentHp {
         get { return playerCurrentHp; }
@@ -75,8 +58,6 @@ public sealed class GameManager : SingletonMonoBehaviour<GameManager>
         SceneManager.sceneLoaded += OnSceneLoaded;
         SceneManager.activeSceneChanged += OnActiveSceneChanged;
         SceneManager.sceneUnloaded += OnSceneUnloaded;
-
-        Debug.Log("awake");
     }
 
     private void Start()
