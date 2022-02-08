@@ -10,13 +10,15 @@ public sealed class UseBombItem : UseItemBase
 
     public override void Use()
     {
-        if (base.gm.player.IsOnRight)
+        base.Use();
+        var gm = GameManager.Instance;
+        if (gm.player.IsOnRight)
         {
-            transform.position = base.gm.player.transform.position + new Vector3(0.5f, 0f, 0f);
+            transform.position = gm.player.transform.position + new Vector3(0.5f, 0f, 0f);
         }
         else
         {
-            transform.position = base.gm.player.transform.position + new Vector3(-0.5f, 0f, 0f);
+            transform.position = gm.player.transform.position + new Vector3(-0.5f, 0f, 0f);
         }
     }
 

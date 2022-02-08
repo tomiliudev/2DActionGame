@@ -146,9 +146,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77be8069931e54a96955267cac1f50d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  magnetPrefab: {fileID: 608143515316562748, guid: 8b23bea3ceda74defb9846aad9987528, type: 3}
-  bombPrefab: {fileID: 4449478671871960226, guid: f7ea5161e6303467f80ddc7f41d9c97c, type: 3}
-  smallKeyPrefab: {fileID: 6227136569343372579, guid: 60c9897dce52b48cc81e1ada39025679, type: 3}
+  magnetPrefab: {fileID: 5962260748009489999, guid: 8b23bea3ceda74defb9846aad9987528, type: 3}
+  bombPrefab: {fileID: 5585233607684546526, guid: f7ea5161e6303467f80ddc7f41d9c97c, type: 3}
+  smallKeyPrefab: {fileID: 7463484945095528316, guid: 60c9897dce52b48cc81e1ada39025679, type: 3}
+  heartPrefab: {fileID: 3810193148950370359, guid: e54ac8d518ac5451082f6cda887e677c, type: 3}
 --- !u!1 &1663212610262021812
 GameObject:
   m_ObjectHideFlags: 0
