@@ -6,7 +6,7 @@ public sealed class BatEnemy : Enemy
     private bool isFollowPlayer;
 
     // 一時停止
-    bool isFreeze;
+    bool isAttackPlayer;
 
     // Start is called before the first frame update
     void Start()
@@ -27,10 +27,8 @@ public sealed class BatEnemy : Enemy
 
             if (base.IsDead) yield break;
 
-            if (isFreeze)
-            {
-                continue;
-            }
+            // 一時停止
+            if (base.IsDoFreeze(isAttackPlayer)) continue;
 
             if (base.sr.isVisible)
             {
@@ -77,8 +75,7 @@ public sealed class BatEnemy : Enemy
     // 一時フリーズ
     IEnumerator DoFreeze()
     {
-        isFreeze = true;
-        base.rb2D.Sleep();
+        isAttackPlayer = true;
 
         var x = transform.position.x;
         var y = transform.position.y;
@@ -90,6 +87,6 @@ public sealed class BatEnemy : Enemy
         iTween.MoveTo(gameObject, hash);
 
         yield return new WaitForSeconds(2f);
-        isFreeze = false;
+        isAttackPlayer = false;
     }
 }

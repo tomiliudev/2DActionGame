@@ -22,6 +22,7 @@ public class Enemy : MonoBehaviour
     bool isDead = false;
     protected bool IsDead { get { return this.isDead; } }
     public float BoundHight { get { return boundHight; } }
+    protected bool IsOnDamage { get; private set; }
 
     protected Vector3 playerVector;
 
@@ -56,6 +57,7 @@ public class Enemy : MonoBehaviour
         playerVector = gm.player.transform.position - transform.position;
     }
 
+    Coroutine updateIsOnDamageFlagCo = null;
     public void OnDamage()
     {
         Hp--;
@@ -66,7 +68,17 @@ public class Enemy : MonoBehaviour
         else
         {
             animator.SetTrigger("hit");
+
+            if (updateIsOnDamageFlagCo != null) StopCoroutine(updateIsOnDamageFlagCo);
+            updateIsOnDamageFlagCo = StartCoroutine(UpdateIsOnDamageFlag());
         }
+    }
+
+    private IEnumerator UpdateIsOnDamageFlag()
+    {
+        IsOnDamage = true;
+        yield return new WaitForSeconds(0.5f);
+        IsOnDamage = false;
     }
 
     // 撃破される
@@ -123,5 +135,20 @@ public class Enemy : MonoBehaviour
                 gm.player.OnBound(boundHight);
             }
         }
+    }
+
+    protected bool IsDoFreeze(bool isFreeze = false)
+    {
+        bool _isFreeze =
+            gm.CurrentGameMode != e_GameMode.Normal
+            || IsOnDamage
+            || isFreeze;
+
+        if (_isFreeze)
+        {
+            rb2D.Sleep();
+        }
+
+        return _isFreeze;
     }
 }
