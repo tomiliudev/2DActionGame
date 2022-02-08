@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class SlimeEnemy : Enemy
+public sealed class SlimeEnemy : Enemy
 {
     [SerializeField] GroundCheck groundCheck;
     [SerializeField] GroundCheck headCheck;

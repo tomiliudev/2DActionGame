@@ -63,6 +63,10 @@ public class Enemy : MonoBehaviour
         {
             Die();
         }
+        else
+        {
+            animator.SetTrigger("hit");
+        }
     }
 
     // 撃破される
