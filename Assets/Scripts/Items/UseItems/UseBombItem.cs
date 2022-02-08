@@ -6,6 +6,8 @@ public sealed class UseBombItem : UseItemBase
 {
     [SerializeField] Text countDown;
     [SerializeField] Explosion explosionAnimator;
+    [SerializeField] AudioClip explosionSe;
+
     public override void Use()
     {
         if (base.gm.player.IsOnRight)
@@ -47,6 +49,7 @@ public sealed class UseBombItem : UseItemBase
     {
         explosionAnimator.transform.parent = null;
         explosionAnimator.OnExplosion();
+        SoundManager.Instance.Play(explosionSe);
         Destroy(gameObject);
     }
 }

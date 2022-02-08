@@ -219,6 +219,7 @@ MonoBehaviour:
     itemInfoData: {fileID: 11400000, guid: df8f84e06cb0d4cc09bba3536c01d59f, type: 2}
   countDown: {fileID: 9170267863880298535}
   explosionAnimator: {fileID: 8549090243760436101}
+  explosionSe: {fileID: 8300000, guid: e71404b6c702743c5b3a5145ebfeaf5b, type: 3}
 --- !u!1 &8307714512518579869
 GameObject:
   m_ObjectHideFlags: 0

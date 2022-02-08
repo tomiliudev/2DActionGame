@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2489453725949101750}
+  - component: {fileID: 1734911035212565641}
   - component: {fileID: 3877135751594367481}
   - component: {fileID: 2911085782798292448}
   - component: {fileID: 206871791538305305}
-  - component: {fileID: 1734911035212565641}
   m_Layer: 0
   m_Name: Explosion
   m_TagString: Untagged
@@ -34,6 +34,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1734911035212565641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 429816547835990780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18270c451ada44ab69da71be287df70a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosionAnimator: {fileID: 3877135751594367481}
 --- !u!95 &3877135751594367481
 Animator:
   serializedVersion: 3
@@ -120,16 +133,3 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1.2
---- !u!114 &1734911035212565641
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 429816547835990780}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18270c451ada44ab69da71be287df70a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  explosionAnimator: {fileID: 3877135751594367481}
