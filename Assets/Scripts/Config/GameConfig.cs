@@ -68,4 +68,11 @@ public static class GameConfig
     {
         PlayerPrefs.DeleteKey(EquippedItem);
     }
+
+    public static string GetPlayerHpText()
+    {
+        var gm = GameManager.Instance;
+        string maxHpStr = gm.PlayerMaxHp < GameConfig.MaxHp ? gm.PlayerMaxHp.ToString() : "MAX";
+        return string.Format("{0}/{1}", gm.PlayerCurrentHp, maxHpStr);
+    }
 }

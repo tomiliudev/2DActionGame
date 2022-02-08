@@ -7,6 +7,7 @@ public sealed class UseHeart : UseItemBase
         {
             base.Use();
             PlayerPrefsUtility.Save(GameConfig.PlayerMaxHp, maxHp + 1);
+            GameManager.Instance.stageUiView.HpPickAnim();
         }
     }
 }

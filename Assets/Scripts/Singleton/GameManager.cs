@@ -168,4 +168,10 @@ public sealed class GameManager : SingletonMonoBehaviour<GameManager>
         }
         return nextStage;
     }
+
+    public string GetPlayerHpText()
+    {
+        string maxHpStr = PlayerMaxHp < GameConfig.MaxHp ? PlayerMaxHp.ToString() : "MAX";
+        return string.Format("{0}/{1}", PlayerCurrentHp, maxHpStr);
+    }
 }

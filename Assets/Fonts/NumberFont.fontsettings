@@ -226,6 +226,70 @@ Font:
       height: -9.142858
     advance: 7.111111
     flipped: 0
+  - serializedVersion: 2
+    index: 47
+    uv:
+      serializedVersion: 2
+      x: 0.1111111
+      y: 0.2857143
+      width: 0.11111111
+      height: 0.07142857
+    vert:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 7.111111
+      height: -9.142858
+    advance: 7.111111
+    flipped: 0
+  - serializedVersion: 2
+    index: 77
+    uv:
+      serializedVersion: 2
+      x: 0.3333333
+      y: 0.8571429
+      width: 0.11111111
+      height: 0.07142857
+    vert:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 7.111111
+      height: -9.142858
+    advance: 7.111111
+    flipped: 0
+  - serializedVersion: 2
+    index: 65
+    uv:
+      serializedVersion: 2
+      x: 0
+      y: 0.9285714
+      width: 0.11111111
+      height: 0.07142857
+    vert:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 7.111111
+      height: -9.142858
+    advance: 7.111111
+    flipped: 0
+  - serializedVersion: 2
+    index: 88
+    uv:
+      serializedVersion: 2
+      x: 0.5555555
+      y: 0.7857143
+      width: 0.11111111
+      height: 0.07142857
+    vert:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 7.111111
+      height: -9.142858
+    advance: 7.111111
+    flipped: 0
   m_KerningValues: []
   m_PixelScale: 0.1
   m_FontData: 
