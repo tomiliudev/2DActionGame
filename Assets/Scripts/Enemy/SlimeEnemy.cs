@@ -36,6 +36,9 @@ public sealed class SlimeEnemy : Enemy
 
             if (base.IsDead) yield break;
 
+            // 一時停止
+            if (base.IsDoFreeze()) continue;
+
             if (base.sr.isVisible)
             {
                 isPlayerHit = base.IsHitPlayer();

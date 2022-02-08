@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class PatrolGuyEnemy : Enemy
+public sealed class PatrolGuyEnemy : Enemy
 {
     private bool isRight;
 
@@ -26,6 +26,9 @@ public class PatrolGuyEnemy : Enemy
             yield return new WaitForFixedUpdate();
 
             if (base.IsDead) yield break;
+
+            // 一時停止
+            if (base.IsDoFreeze()) continue;
 
             if (base.sr.isVisible)
             {
