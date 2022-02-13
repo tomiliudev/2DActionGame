@@ -43,9 +43,9 @@ public class Enemy : MonoBehaviour
         // Awakeも同じ
     }
 
-    protected void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
-        if (!gm.IsInitialized) return;
+        //if (!gm.IsInitialized) return;
 
         // ゲームクリアしたら何もしない
         if (gm.IsGameClear)
@@ -112,8 +112,10 @@ public class Enemy : MonoBehaviour
         RaycastHit2D[] results = new RaycastHit2D[2];
         Physics2D.Raycast(transform.position, playerVector, filter2d, results, 5f);
         var tran = results[0].transform;
+        Debug.Log("aaaaaa");
         if (tran != null)
         {
+            Debug.Log(tran.gameObject.name);
             return playerLayer == LayerMask.LayerToName(tran.gameObject.layer);
         }
 

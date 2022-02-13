@@ -5,6 +5,7 @@ public sealed class Fly : Enemy
 {
     private Vector3 originPos;
     private Vector3 movePos;
+
     const float MaxChangeValue = 1f;
 
     // Start is called before the first frame update
@@ -14,10 +15,17 @@ public sealed class Fly : Enemy
         StartCoroutine(UpdateMovePos());
     }
 
-    private Vector3 prePos = Vector3.zero;
-    private void FixedUpdate()
+    protected override void FixedUpdate()
     {
-        rb2D.MovePosition(Vector2.MoveTowards(transform.position, movePos, moveSpeed * Time.fixedDeltaTime));
+        base.FixedUpdate();
+        if (base.IsHitPlayer())
+        {
+            rb2D.MovePosition(Vector2.MoveTowards(transform.position, gm.player.transform.position, moveSpeed * Time.fixedDeltaTime));
+        }
+        else
+        {
+            rb2D.MovePosition(Vector2.MoveTowards(transform.position, movePos, moveSpeed * Time.fixedDeltaTime));
+        }
     }
 
 

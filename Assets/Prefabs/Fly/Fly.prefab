@@ -120,7 +120,7 @@ MonoBehaviour:
   rb2D: {fileID: 101665687002400590}
   cc2D: {fileID: 0}
   capsuleCollider2D: {fileID: 0}
-  moveSpeed: 10
+  moveSpeed: 1
   gravity: 0
   wallCollisionCheck: {fileID: 0}
   animator: {fileID: 0}
@@ -128,14 +128,14 @@ MonoBehaviour:
   boundHight: 0
   filter2d:
     useTriggers: 0
-    useLayerMask: 0
+    useLayerMask: 1
     useDepth: 0
     useOutsideDepth: 0
     useNormalAngle: 0
     useOutsideNormalAngle: 0
     layerMask:
       serializedVersion: 2
-      m_Bits: 0
+      m_Bits: 576
     minDepth: 0
     maxDepth: 0
     minNormalAngle: 0
