@@ -140,7 +140,7 @@ public class Enemy : MonoBehaviour
     protected bool IsDoFreeze(bool isFreeze = false)
     {
         bool _isFreeze =
-            gm.CurrentGameMode != e_GameMode.Normal
+            GameUtility.IsGamePause
             || IsOnDamage
             || isFreeze;
 

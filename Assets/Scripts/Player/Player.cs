@@ -138,7 +138,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if (gm.CurrentGameMode != e_GameMode.Normal) return;
+        if (GameUtility.IsGamePause) return;
 
         // スマホによる動きの操作（Run、Jump）
         DoMovementOperationByPhone();
@@ -1077,31 +1077,31 @@ public class Player : MonoBehaviour
 
     public void OnLeftButtonDown()
     {
-        if (gm.CurrentGameMode != e_GameMode.Normal) return;
+        if (GameUtility.IsGamePause) return;
         xPositionStatus = XPositionStatus.left;
     }
 
     public void OnLeftButtonUp()
     {
-        if (gm.CurrentGameMode != e_GameMode.Normal) return;
+        if (GameUtility.IsGamePause) return;
         xPositionStatus = XPositionStatus.none;
     }
 
     public void OnRightButtonDown()
     {
-        if (gm.CurrentGameMode != e_GameMode.Normal) return;
+        if (GameUtility.IsGamePause) return;
         xPositionStatus = XPositionStatus.right;
     }
 
     public void OnRightButtonUp()
     {
-        if (gm.CurrentGameMode != e_GameMode.Normal) return;
+        if (GameUtility.IsGamePause) return;
         xPositionStatus = XPositionStatus.none;
     }
 
     public void OnUpButtonDown()
     {
-        if (gm.CurrentGameMode != e_GameMode.Normal) return;
+        if (GameUtility.IsGamePause) return;
         if (canClimbUp)
         {
             isCliming = true;
@@ -1112,19 +1112,32 @@ public class Player : MonoBehaviour
 
         if (door != null)
         {
-            door.OpenDoorAnimation();
+            if(gm.CurrentGameMode == e_GameMode.Title)
+            {
+                // タイトル画面なら
+                door.DoAnime(true,
+                    () =>
+                    {
+                        gm.LoadSceneTo(e_SceneName.StageSelection.ToString());
+                    }
+                );
+            }
+            else if (gm.CurrentGameMode == e_GameMode.Normal) 
+            {
+                door.OpenDoorAnimation();
+            }
         }
     }
 
     public void OnUpButtonUp()
     {
-        if (gm.CurrentGameMode != e_GameMode.Normal) return;
+        if (GameUtility.IsGamePause) return;
         climbType = e_ClimbType.none;
     }
 
     public void OnDownButtonDown()
     {
-        if (gm.CurrentGameMode != e_GameMode.Normal) return;
+        if (GameUtility.IsGamePause) return;
         if (canClimbDown)
         {
             isCliming = true;
@@ -1136,7 +1149,7 @@ public class Player : MonoBehaviour
 
     public void OnDownButtonUp()
     {
-        if (gm.CurrentGameMode != e_GameMode.Normal) return;
+        if (GameUtility.IsGamePause) return;
         climbType = e_ClimbType.none;
     }
 }

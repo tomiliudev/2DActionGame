@@ -2,6 +2,7 @@ using UnityEngine;
 
 public enum e_SceneName
 {
+    Title,
     StageSelection,
     Stage1,
     Stage2,
@@ -13,6 +14,7 @@ public enum e_SceneName
 public enum e_GameMode
 {
     None,
+    Title,
     StageSelection,
     Normal,
     MiniGame,

@@ -58,11 +58,13 @@ public sealed class GameManager : SingletonMonoBehaviour<GameManager>
         SceneManager.sceneLoaded += OnSceneLoaded;
         SceneManager.activeSceneChanged += OnActiveSceneChanged;
         SceneManager.sceneUnloaded += OnSceneUnloaded;
+
+        InitializeCommon();
     }
 
     private void Start()
     {
-        InitializeCommon();
+        
     }
 
     private void OnActiveSceneChanged(Scene scene1, Scene scene2)
@@ -76,7 +78,7 @@ public sealed class GameManager : SingletonMonoBehaviour<GameManager>
         e_StageName stageName;
         if (Enum.TryParse(scene.name, out stageName) && Enum.IsDefined(typeof(e_StageName), stageName))
         {
-            Initialize();
+            InitializeStage();
         }
     }
 
@@ -87,10 +89,11 @@ public sealed class GameManager : SingletonMonoBehaviour<GameManager>
 
     private void InitializeCommon()
     {
+        player = FindObjectOfType<Player>();
         popupView = FindObjectOfType<PopupView>();
     }
 
-    private void Initialize()
+    private void InitializeStage()
     {
         isInitialized = true;
 
@@ -100,7 +103,7 @@ public sealed class GameManager : SingletonMonoBehaviour<GameManager>
         sceneController = FindObjectOfType<SceneController>();
         stageUiView = FindObjectOfType<StageUiView>();
         treasures = FindObjectsOfType<Treasure>();
-        player = FindObjectOfType<Player>();
+        
         cameraCollider = GameObject.FindGameObjectWithTag("CameraCollider").GetComponent<PolygonCollider2D>();
 
         PlayerCurrentHp = PlayerMaxHp;
