@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 245948230}
   - component: {fileID: 245948229}
   - component: {fileID: 245948228}
+  - component: {fileID: 245948232}
   m_Layer: 0
   m_Name: PlayButton
   m_TagString: Ground
@@ -256,6 +257,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &245948232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 245948227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 947c2d263f82942eb97031637400ea10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &287718556
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2012,6 +2025,28 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &1311176457 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2346895267458441559, guid: 12e65ab506d8649678523aa70f2b8766, type: 3}
+  m_PrefabInstance: {fileID: 7788058468488049752}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a37b53755cf54977819e7dad76ff76c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1319507973 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8928447842819035252, guid: d4e020ef7fc6e481e91ea87cbd41761f, type: 3}
+  m_PrefabInstance: {fileID: 1831866987}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48d5be049164b4ea0b6c54916376abe0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1535121247
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3023,6 +3058,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0acd16605aef4f958c692ce8f187ba8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  torchTrigger: {fileID: 1319507973}
+  playButtonObj: {fileID: 245948232}
+  fly: {fileID: 1311176457}
 --- !u!222 &3895442754518191529
 CanvasRenderer:
   m_ObjectHideFlags: 0

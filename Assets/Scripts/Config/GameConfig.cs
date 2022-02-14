@@ -43,6 +43,7 @@ public static class GameConfig
     public const string SpikeTag = "Spike";
     public const string MiniGameGaugeTag = "MiniGameGauge";
     public const string MiniGameNeedleTag = "MiniGameNeedle";
+    public const string FlyTag = "Fly";
 
     public const string PlayerName = "Player";
     public const string TorchName = "Torch";

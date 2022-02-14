@@ -138,7 +138,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if (GameUtility.IsGamePause) return;
+        if (GameUtility.Instance.IsGamePause) return;
 
         // スマホによる動きの操作（Run、Jump）
         DoMovementOperationByPhone();
@@ -1080,33 +1080,38 @@ public class Player : MonoBehaviour
         playerAnimator.Play("PlayerIddle");
     }
 
+    public void WakeUp()
+    {
+        playerRg2d.WakeUp();
+    }
+
     public void OnLeftButtonDown()
     {
-        if (GameUtility.IsGamePause) return;
+        if (GameUtility.Instance.IsGamePause) return;
         xPositionStatus = XPositionStatus.left;
     }
 
     public void OnLeftButtonUp()
     {
-        if (GameUtility.IsGamePause) return;
+        if (GameUtility.Instance.IsGamePause) return;
         xPositionStatus = XPositionStatus.none;
     }
 
     public void OnRightButtonDown()
     {
-        if (GameUtility.IsGamePause) return;
+        if (GameUtility.Instance.IsGamePause) return;
         xPositionStatus = XPositionStatus.right;
     }
 
     public void OnRightButtonUp()
     {
-        if (GameUtility.IsGamePause) return;
+        if (GameUtility.Instance.IsGamePause) return;
         xPositionStatus = XPositionStatus.none;
     }
 
     public void OnUpButtonDown()
     {
-        if (GameUtility.IsGamePause) return;
+        if (GameUtility.Instance.IsGamePause) return;
         if (canClimbUp)
         {
             isCliming = true;
@@ -1136,13 +1141,13 @@ public class Player : MonoBehaviour
 
     public void OnUpButtonUp()
     {
-        if (GameUtility.IsGamePause) return;
+        if (GameUtility.Instance.IsGamePause) return;
         climbType = e_ClimbType.none;
     }
 
     public void OnDownButtonDown()
     {
-        if (GameUtility.IsGamePause) return;
+        if (GameUtility.Instance.IsGamePause) return;
         if (canClimbDown)
         {
             isCliming = true;
@@ -1154,7 +1159,7 @@ public class Player : MonoBehaviour
 
     public void OnDownButtonUp()
     {
-        if (GameUtility.IsGamePause) return;
+        if (GameUtility.Instance.IsGamePause) return;
         climbType = e_ClimbType.none;
     }
 }

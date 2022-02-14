@@ -62,7 +62,7 @@ public sealed class StageUiView : MonoBehaviour
 
     private void OnCountDown()
     {
-        if (GameUtility.IsGamePause) return;
+        if (GameUtility.Instance.IsGamePause) return;
         if (gm.IsGameClear) return;
         if (countDownSec > 0f)
         {

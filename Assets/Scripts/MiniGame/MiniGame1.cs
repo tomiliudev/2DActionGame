@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using Cinemachine;
 using UnityEngine;
 
 public sealed class MiniGame1 : MonoBehaviour
@@ -18,7 +17,6 @@ public sealed class MiniGame1 : MonoBehaviour
     float gaugeSizeMin = 0.07f;
     float gaugeSizeMax = 0.5f;
 
-    Camera mainCamera;
     MiniGame1Gauge miniGame1Gauge;
     private void Start()
     {
@@ -58,17 +56,8 @@ public sealed class MiniGame1 : MonoBehaviour
                 // 失敗したらリセット
                 successCount = 0;
 
-                mainCamera = Camera.main;
-                mainCamera.GetComponent<CinemachineBrain>().enabled = false;
-                iTween.ShakePosition(
-                    mainCamera.gameObject,
-                    iTween.Hash(
-                        "time", 0.5f,
-                        "x", 0.1f,
-                        "y", 0.1f,
-                        "oncomplete", "OnShakeCameraFinish"
-                    )
-                );
+                // 画面を揺らす
+                GameUtility.Instance.ShakeScreen(0.5f, 0.1f, 0.1f);
 
                 penaltys.OrderBy(_ => Guid.NewGuid()).First().ExePenalty();
             }
@@ -79,11 +68,6 @@ public sealed class MiniGame1 : MonoBehaviour
 
         // 針の移動
         MoveNeedle();
-    }
-
-    private void OnShakeCameraFinish()
-    {
-        mainCamera.GetComponent<CinemachineBrain>().enabled = true;
     }
 
     private void MoveNeedle()

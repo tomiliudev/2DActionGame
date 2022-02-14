@@ -10,7 +10,8 @@ public sealed class Fly : Enemy
     private Vector3 originMovePos;
     private Vector3 playerMovePos;
 
-    bool isHitTorch = false;
+    public bool IsHitTorch { get; private set; }
+
     Vector3 torchPos = Vector3.zero;
 
     const float MaxChangeValue = 1f;
@@ -30,19 +31,17 @@ public sealed class Fly : Enemy
         List<Collider2D> hitObjs = base.GetAllHitObjs(2f);
         List<string> hitObjNames = hitObjs.Select(x => x.name).ToList();
 
-        if (hitObjNames.Contains(GameConfig.TorchName) && !isHitTorch)
+        if (hitObjNames.Contains(GameConfig.TorchName) && !IsHitTorch)
         {
-            isHitTorch = true;
+            IsHitTorch = true;
 
             Collider2D torchObj = hitObjs.First(x => x.name == GameConfig.TorchName);
             torchPos = torchObj.transform.position;
             torchPos += new Vector3(0f, torchObj.bounds.size.y / 2, 0f);
         }
 
-        if (isHitTorch)
+        if (IsHitTorch)
         {
-            gm.CurrentGameMode = e_GameMode.CutinAnimation;
-            gm.player.Sleep();
             movePos = torchPos;
         }
         else if (hitObjNames.Contains(GameConfig.PlayerName))

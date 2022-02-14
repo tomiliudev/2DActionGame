@@ -156,7 +156,7 @@ public class Enemy : MonoBehaviour
     protected bool IsDoFreeze(bool isFreeze = false)
     {
         bool _isFreeze =
-            GameUtility.IsGamePause
+            GameUtility.Instance.IsGamePause
             || IsOnDamage
             || isFreeze;
 
