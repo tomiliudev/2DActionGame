@@ -4,7 +4,8 @@ using UnityEngine;
 public sealed class Fly : Enemy
 {
     private Vector3 originPos;
-    private Vector3 movePos;
+    private Vector3 originMovePos;
+    private Vector3 playerMovePos;
 
     const float MaxChangeValue = 1f;
 
@@ -12,7 +13,8 @@ public sealed class Fly : Enemy
     void Start()
     {
         originPos = transform.position;
-        StartCoroutine(UpdateMovePos());
+        StartCoroutine(UpdateOriginMovePos());
+        StartCoroutine(UpdatePlayerMovePos());
     }
 
     protected override void FixedUpdate()
@@ -20,16 +22,16 @@ public sealed class Fly : Enemy
         base.FixedUpdate();
         if (base.IsHitPlayer(2f))
         {
-            rb2D.MovePosition(Vector2.MoveTowards(transform.position, gm.player.transform.position, moveSpeed * Time.fixedDeltaTime));
+            rb2D.MovePosition(Vector2.MoveTowards(transform.position, playerMovePos, moveSpeed * Time.fixedDeltaTime));
         }
         else
         {
-            rb2D.MovePosition(Vector2.MoveTowards(transform.position, movePos, moveSpeed * Time.fixedDeltaTime));
+            rb2D.MovePosition(Vector2.MoveTowards(transform.position, originMovePos, moveSpeed * Time.fixedDeltaTime));
         }
     }
 
 
-    IEnumerator UpdateMovePos()
+    IEnumerator UpdateOriginMovePos()
     {
         while (true)
         {
@@ -38,8 +40,24 @@ public sealed class Fly : Enemy
             x = ConvertPos(x);
             y = ConvertPos(y);
 
-            movePos = new Vector3(originPos.x + x, originPos.y + y, originPos.z);
+            originMovePos = new Vector3(originPos.x + x, originPos.y + y, originPos.z);
 
+            var sec = UnityEngine.Random.Range(0.1f, 2f);
+            yield return new WaitForSeconds(sec);
+        }
+    }
+
+    IEnumerator UpdatePlayerMovePos()
+    {
+        while (true)
+        {
+            float x = UnityEngine.Random.Range(0.2f, 0.5f);
+            float y = UnityEngine.Random.Range(0.2f, 0.5f);
+            x = ConvertPos(x);
+            y = ConvertPos(y);
+
+            var playerPos = gm.player.transform.position;
+            playerMovePos = new Vector3(playerPos.x + x, playerPos.y + y, playerPos.z);
 
             var sec = UnityEngine.Random.Range(0.1f, 2f);
             yield return new WaitForSeconds(sec);

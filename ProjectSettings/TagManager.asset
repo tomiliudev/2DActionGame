@@ -71,6 +71,9 @@ TagManager:
   - name: Player
     uniqueID: 673632487
     locked: 0
+  - name: Fly
+    uniqueID: 2840064901
+    locked: 0
   - name: UI
     uniqueID: 3818821831
     locked: 0
