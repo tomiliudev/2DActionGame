@@ -32,7 +32,9 @@ public sealed class BatEnemy : Enemy
 
             if (base.sr.isVisible)
             {
-                if (!isFollowPlayer && base.IsHitPlayer())
+                GameObject hitObj = base.GetHitClosestObj();
+                if (!isFollowPlayer
+                    && hitObj != null && hitObj.name == GameConfig.PlayerName)
                 {
                     isFollowPlayer = true;
                 }

@@ -1072,7 +1072,12 @@ public class Player : MonoBehaviour
         playerRg2d.bodyType = RigidbodyType2D.Static;
         iTween.MoveAdd(gameObject, iTween.Hash("y", 0.3f, "time", 0.5f, "easeType", iTween.EaseType.easeOutBounce));
         iTween.MoveAdd(gameObject, iTween.Hash("y", -10f, "time", 5f, "delay", 0.5f));
+    }
 
+    public void Sleep()
+    {
+        playerRg2d.Sleep();
+        playerAnimator.Play("PlayerIddle");
     }
 
     public void OnLeftButtonDown()

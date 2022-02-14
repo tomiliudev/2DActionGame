@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -107,19 +108,32 @@ public class Enemy : MonoBehaviour
     /// プレイヤーとの間に障害物（床や壁）があるとヒットしない
     /// </summary>
     /// <returns></returns>
-    protected bool IsHitPlayer(float distance = 5f)
+    protected GameObject GetHitClosestObj(float distance = 5f)
     {
         RaycastHit2D[] results = new RaycastHit2D[2];
         Physics2D.Raycast(transform.position, playerVector, filter2d, results, distance);
         var tran = results[0].transform;
-        Debug.Log("aaaaaa");
         if (tran != null)
         {
-            Debug.Log(tran.gameObject.name);
-            return playerLayer == LayerMask.LayerToName(tran.gameObject.layer);
+            return tran.gameObject;
         }
+        return null;
+    }
 
-        return false;
+    protected List<Collider2D> GetAllHitObjs(float distance = 5f)
+    {
+        List<Collider2D> resObjs = new List<Collider2D>();
+        RaycastHit2D[] results = new RaycastHit2D[2];
+        Physics2D.Raycast(transform.position, playerVector, filter2d, results, distance);
+        foreach (var res in results)
+        {
+            if (res.transform != null)
+            {
+                
+                resObjs.Add(res.collider);
+            }
+        }
+        return resObjs;
     }
 
     protected virtual void OnCollisionEnter2D(Collision2D collision)

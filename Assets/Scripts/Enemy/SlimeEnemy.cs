@@ -41,7 +41,8 @@ public sealed class SlimeEnemy : Enemy
 
             if (base.sr.isVisible)
             {
-                isPlayerHit = base.IsHitPlayer();
+                GameObject hitObj = base.GetHitClosestObj();
+                isPlayerHit = hitObj != null && hitObj.name == GameConfig.PlayerName;
 
                 if (groundCheck.IsInGround)
                 {

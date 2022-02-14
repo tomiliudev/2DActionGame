@@ -1,11 +1,17 @@
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public sealed class Fly : Enemy
 {
+    private Vector3 movePos;
     private Vector3 originPos;
     private Vector3 originMovePos;
     private Vector3 playerMovePos;
+
+    bool isHitTorch = false;
+    Vector3 torchPos = Vector3.zero;
 
     const float MaxChangeValue = 1f;
 
@@ -20,14 +26,35 @@ public sealed class Fly : Enemy
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
-        if (base.IsHitPlayer(2f))
+
+        List<Collider2D> hitObjs = base.GetAllHitObjs(2f);
+        List<string> hitObjNames = hitObjs.Select(x => x.name).ToList();
+
+        if (hitObjNames.Contains(GameConfig.TorchName) && !isHitTorch)
         {
-            rb2D.MovePosition(Vector2.MoveTowards(transform.position, playerMovePos, moveSpeed * Time.fixedDeltaTime));
+            isHitTorch = true;
+
+            Collider2D torchObj = hitObjs.First(x => x.name == GameConfig.TorchName);
+            torchPos = torchObj.transform.position;
+            torchPos += new Vector3(0f, torchObj.bounds.size.y / 2, 0f);
+        }
+
+        if (isHitTorch)
+        {
+            gm.CurrentGameMode = e_GameMode.CutinAnimation;
+            gm.player.Sleep();
+            movePos = torchPos;
+        }
+        else if (hitObjNames.Contains(GameConfig.PlayerName))
+        {
+            movePos = playerMovePos;
         }
         else
         {
-            rb2D.MovePosition(Vector2.MoveTowards(transform.position, originMovePos, moveSpeed * Time.fixedDeltaTime));
+            movePos = originMovePos;
         }
+
+        rb2D.MovePosition(Vector2.MoveTowards(transform.position, movePos, moveSpeed * Time.fixedDeltaTime));
     }
 
 

@@ -14,6 +14,7 @@ public enum e_SceneName
 public enum e_GameMode
 {
     None,
+    CutinAnimation,
     Title,
     StageSelection,
     Normal,
@@ -42,6 +43,9 @@ public static class GameConfig
     public const string SpikeTag = "Spike";
     public const string MiniGameGaugeTag = "MiniGameGauge";
     public const string MiniGameNeedleTag = "MiniGameNeedle";
+
+    public const string PlayerName = "Player";
+    public const string TorchName = "Torch";
 
     public const string PlayerMaxHp = "playerMaxHp";
     public const int MaxHp = 5;
