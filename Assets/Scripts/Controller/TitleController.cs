@@ -66,7 +66,7 @@ public sealed class TitleController : BaseController
 
     private void DoCutinAnime()
     {
-        gm.CurrentGameMode = e_GameMode.CutinAnimation;
         gm.player.Sleep();
+        gm.CurrentGameMode = e_GameMode.CutinAnimation;
     }
 }

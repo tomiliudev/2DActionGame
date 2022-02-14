@@ -1076,6 +1076,8 @@ public class Player : MonoBehaviour
 
     public void Sleep()
     {
+        xPositionStatus = XPositionStatus.none;
+        playerRg2d.velocity = Vector2.zero;
         playerRg2d.Sleep();
         playerAnimator.Play("PlayerIddle");
     }

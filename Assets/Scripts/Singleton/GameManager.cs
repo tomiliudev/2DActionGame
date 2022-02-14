@@ -126,7 +126,6 @@ public sealed class GameManager : SingletonMonoBehaviour<GameManager>
         //asyncOperation.allowSceneActivation = true;
         yield return asyncOperation;
 
-        Debug.Log("Test");
         var sence = SceneManager.GetSceneByName(sceneName);
         foreach (var root in sence.GetRootGameObjects())
         {
