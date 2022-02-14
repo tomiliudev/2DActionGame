@@ -18,7 +18,7 @@ public sealed class Fly : Enemy
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
-        if (base.IsHitPlayer())
+        if (base.IsHitPlayer(2f))
         {
             rb2D.MovePosition(Vector2.MoveTowards(transform.position, gm.player.transform.position, moveSpeed * Time.fixedDeltaTime));
         }

@@ -107,10 +107,10 @@ public class Enemy : MonoBehaviour
     /// プレイヤーとの間に障害物（床や壁）があるとヒットしない
     /// </summary>
     /// <returns></returns>
-    protected bool IsHitPlayer()
+    protected bool IsHitPlayer(float distance = 5f)
     {
         RaycastHit2D[] results = new RaycastHit2D[2];
-        Physics2D.Raycast(transform.position, playerVector, filter2d, results, 5f);
+        Physics2D.Raycast(transform.position, playerVector, filter2d, results, distance);
         var tran = results[0].transform;
         Debug.Log("aaaaaa");
         if (tran != null)
