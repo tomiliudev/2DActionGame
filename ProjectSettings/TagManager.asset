@@ -23,6 +23,7 @@ TagManager:
   - MiniGameGauge
   - MiniGameNeedle
   - Fly
+  - Bridge
   layers:
   - Default
   - TransparentFX
@@ -32,7 +33,7 @@ TagManager:
   - UI
   - Player
   - Enemy
-  - Platform
+  - OneWayPlatform
   - Ground
   - Spike
   - Ladder

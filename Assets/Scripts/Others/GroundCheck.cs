@@ -16,7 +16,8 @@ public class GroundCheck : MonoBehaviour
         WeakBlock,
         Box,
         Mushroom,
-        Treasure
+        Treasure,
+        Bridge
     }
 
     GameManager gm;
@@ -37,6 +38,9 @@ public class GroundCheck : MonoBehaviour
         GroundTagType tagType;
         if (Enum.TryParse(collision.tag, out tagType))
         {
+            // 上に立つもののLayerを設定
+            gm.standOnLayerMask = collision.gameObject.layer;
+
             CheckInGround(tagType);
             ShowDust(tagType, collision);
         }
@@ -71,6 +75,7 @@ public class GroundCheck : MonoBehaviour
             case GroundTagType.Platform:
             case GroundTagType.Box:
             case GroundTagType.Treasure:
+            case GroundTagType.Bridge:
                 IsInGround = checkType == e_CheckType.foot ? true : false;
                 break;
             case GroundTagType.Mushroom:
@@ -93,6 +98,8 @@ public class GroundCheck : MonoBehaviour
             case GroundTagType.Box:
             case GroundTagType.Mushroom:
             case GroundTagType.Treasure:
+            case GroundTagType.Bridge:
+
                 Bounds bounds = collision.bounds;
                 float appearYpos = bounds.center.y + bounds.extents.y;
                 if (transform.position.y >= appearYpos)

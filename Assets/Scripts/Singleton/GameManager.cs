@@ -52,6 +52,7 @@ public sealed class GameManager : SingletonMonoBehaviour<GameManager>
     public Player player;
     public PolygonCollider2D cameraCollider;
     public CinemachineVirtualCamera cinemachineCamera;
+    public LayerMask standOnLayerMask;
 
     private void Awake()
     {

@@ -1,7 +1,7 @@
 using System.Linq;
 using UnityEngine;
 
-public class Platform : MonoBehaviour
+public sealed class Platform : MonoBehaviour
 {
     [SerializeField] Rigidbody2D rb2d;
     [SerializeField] SpriteRenderer sr;

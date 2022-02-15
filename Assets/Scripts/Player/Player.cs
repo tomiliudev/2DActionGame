@@ -910,6 +910,7 @@ public class Player : MonoBehaviour
         RunOperationUseKeyborad();
         JumpOperationUseKeyborad();
         ClimbOperationUseKeyborad();
+        FallDownOperationUseKeyborad();
     }
 
     /// <summary>
@@ -988,6 +989,14 @@ public class Player : MonoBehaviour
                 climbType = e_ClimbType.none;
             }
         }
+    }
+
+    private void FallDownOperationUseKeyborad()
+    {
+        if (isCliming) return;
+        if (LayerMask.LayerToName(gm.standOnLayerMask) != GameConfig.OneWayPlatformLayer) return;
+        if (Input.GetAxis("Vertical") >= 0f) return;
+        StartCoroutine(IgnoreCollision(GameConfig.OneWayPlatformLayer, "Player", 0.1f));
     }
 
     /// <summary>
@@ -1163,5 +1172,12 @@ public class Player : MonoBehaviour
     {
         if (GameUtility.Instance.IsGamePause) return;
         climbType = e_ClimbType.none;
+    }
+
+    private IEnumerator IgnoreCollision(string layerName1, string layerName2, float time)
+    {
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer(layerName1), LayerMask.NameToLayer(layerName2), true);
+        yield return new WaitForSeconds(time);
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer(layerName1), LayerMask.NameToLayer(layerName2), false);
     }
 }
