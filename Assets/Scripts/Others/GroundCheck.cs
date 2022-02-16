@@ -38,8 +38,8 @@ public class GroundCheck : MonoBehaviour
         GroundTagType tagType;
         if (Enum.TryParse(collision.tag, out tagType))
         {
-            // 上に立つもののLayerを設定
-            gm.standOnLayerMask = collision.gameObject.layer;
+            // 上に立つもののGameObjectを設定
+            gm.standOnObj = collision.gameObject;
 
             CheckInGround(tagType);
             ShowDust(tagType, collision);

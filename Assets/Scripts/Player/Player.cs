@@ -71,6 +71,7 @@ public class Player : MonoBehaviour
         jumpTouch
     }
 
+    private Vector2 playerVelocity;
     private float _playerRunSpeed = 0f;
     private float dushTime;
 
@@ -113,9 +114,6 @@ public class Player : MonoBehaviour
     {
         get; set;
     }
-
-    // 動く床の移動速度
-    private Vector2 platformVelocity;
 
     // 画面タッチのfingerIdを管理する
     Dictionary<TouchType, int> fingerIdDic = new Dictionary<TouchType, int>();
@@ -305,7 +303,21 @@ public class Player : MonoBehaviour
             iskickJump = false;
         }
 
-        playerRg2d.velocity = new Vector2(velocity_x, velocity_y) + platformVelocity;
+        //playerRg2d.velocity = new Vector2(velocity_x, velocity_y) + platformVelocity;
+        playerVelocity.x = velocity_x;
+        playerVelocity.y = velocity_y;
+        playerRg2d.velocity = GetMergedMovePlatformVelocity(playerVelocity);
+    }
+
+    private Vector2 GetMergedMovePlatformVelocity(Vector2 originVelocity)
+    {
+        Vector2 resVelocity = originVelocity;
+        var standOnObj = gm.standOnObj;
+        if (standOnObj != null && standOnObj.GetComponent<Platform>() != null)
+        {
+            resVelocity += standOnObj.GetComponent<Platform>().SelfVelocity;
+        }
+        return resVelocity;
     }
 
     /// <summary>
@@ -502,9 +514,6 @@ public class Player : MonoBehaviour
             case GameConfig.SpikeTag:
                 OnDamage();
                 break;
-            case GameConfig.PlatformTag:
-                platformVelocity = collision.transform.GetComponent<Platform>().SelfVelocity;
-                break;
         }
     }
 
@@ -519,21 +528,9 @@ public class Player : MonoBehaviour
             case GameConfig.SpikeTag:
                 OnDamage();
                 break;
-            case GameConfig.PlatformTag:
-                platformVelocity = collision.transform.GetComponent<Platform>().SelfVelocity;
-                break;
         }
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        switch (collision.transform.tag)
-        {
-            case GameConfig.PlatformTag:
-                platformVelocity = Vector2.zero;
-                break;
-        }
-    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -997,7 +994,7 @@ public class Player : MonoBehaviour
     private void FallDownOneWayPlatform()
     {
         if (isCliming
-            || LayerMask.LayerToName(gm.standOnLayerMask) != GameConfig.OneWayPlatformLayer)
+            || LayerMask.LayerToName(gm.standOnObj.layer) != GameConfig.OneWayPlatformLayer)
         {
             isFallDown = false;
             return;
