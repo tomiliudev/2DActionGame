@@ -146,6 +146,8 @@ public class Player : MonoBehaviour
         // キーボードによる動きの操作（Run、Jump）
         DoMovementOperationByKeyborad();
 
+        FallDownOneWayPlatform();
+
         if (gm.IsGameClear)
         {
             InitPlayerStatus();
@@ -991,12 +993,27 @@ public class Player : MonoBehaviour
         }
     }
 
+    bool isFallDown = false;
+    private void FallDownOneWayPlatform()
+    {
+        if (isCliming
+            || LayerMask.LayerToName(gm.standOnLayerMask) != GameConfig.OneWayPlatformLayer)
+        {
+            isFallDown = false;
+            return;
+        }
+
+        if (isFallDown)
+        {
+            isFallDown = false;
+            StartCoroutine(IgnoreCollision(GameConfig.OneWayPlatformLayer, "Player", 0.1f));
+        }
+    }
+
     private void FallDownOperationUseKeyborad()
     {
-        if (isCliming) return;
-        if (LayerMask.LayerToName(gm.standOnLayerMask) != GameConfig.OneWayPlatformLayer) return;
-        if (Input.GetAxis("Vertical") >= 0f) return;
-        StartCoroutine(IgnoreCollision(GameConfig.OneWayPlatformLayer, "Player", 0.1f));
+        // 下キー押したらOneWayPlatformのフラグをtrueにする、実際にできるかどうかは実行時に判断している
+        if (Input.GetAxis("Vertical") < 0f) isFallDown = true;
     }
 
     /// <summary>
@@ -1166,6 +1183,9 @@ public class Player : MonoBehaviour
             Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Ground"), LayerMask.NameToLayer("Player"), true);
             climbType = e_ClimbType.climbDown;
         }
+
+        // 下キー押したらOneWayPlatformのフラグをtrueにする、実際にできるかどうかは実行時に判断している
+        isFallDown = true;
     }
 
     public void OnDownButtonUp()
