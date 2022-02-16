@@ -51,12 +51,18 @@ public class GroundCheck : MonoBehaviour
         GroundTagType tagType;
         if (Enum.TryParse(collision.tag, out tagType))
         {
+            // 上に立つもののGameObjectを設定
+            gm.standOnObj = collision.gameObject;
+
             CheckInGround(tagType);
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        // 上に立つものから離れればnullでリセット
+        gm.standOnObj = null;
+
         if (Enum.IsDefined(typeof(GroundTagType), collision.tag))
         {
             IsInGround = false;

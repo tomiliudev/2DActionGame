@@ -993,8 +993,9 @@ public class Player : MonoBehaviour
     bool isFallDown = false;
     private void FallDownOneWayPlatform()
     {
+        GameObject standOnObj = gm.standOnObj;
         if (isCliming
-            || LayerMask.LayerToName(gm.standOnObj.layer) != GameConfig.OneWayPlatformLayer)
+            || standOnObj == null || standOnObj != null && LayerMask.LayerToName(standOnObj.layer) != GameConfig.OneWayPlatformLayer)
         {
             isFallDown = false;
             return;
