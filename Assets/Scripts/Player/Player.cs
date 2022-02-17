@@ -371,9 +371,9 @@ public class Player : MonoBehaviour
         if (isJump)
         {
             canJumpHeight = playerJumpPos + jumpLimitHight > transform.position.y;
-            bool canTime = playerJumpLimitTime > playerJumpTime;
+            bool isCanJumpTime = playerJumpLimitTime > playerJumpTime;
 
-            if (canJumpHeight && canTime && !headCheck.IsInGround)
+            if (canJumpHeight && isCanJumpTime && !headCheck.IsInGround)
             {
                 _playerJumpSpeed = playerJumpSpeed;
                 playerJumpTime += Time.deltaTime;
@@ -1148,20 +1148,21 @@ public class Player : MonoBehaviour
 
         if (door != null)
         {
-            if(gm.CurrentGameMode == e_GameMode.Title)
-            {
-                // タイトル画面なら
-                door.DoAnime(true,
-                    () =>
+            door.DoAnime(
+                true,
+                () =>
+                {
+                    switch (gm.CurrentGameMode)
                     {
-                        gm.LoadSceneTo(e_SceneName.StageSelection.ToString());
+                        case e_GameMode.Title:
+                            gm.LoadSceneTo(e_SceneName.StageSelection.ToString());
+                            break;
+                        case e_GameMode.Normal:
+                            gm.stageUiView.SwitchOnBlackMask();
+                            break;
                     }
-                );
-            }
-            else if (gm.CurrentGameMode == e_GameMode.Normal) 
-            {
-                door.OpenDoorAnimation();
-            }
+                }
+            );
         }
     }
 

@@ -32,14 +32,14 @@ public sealed class SceneController : BaseController
     {
         if (!gm.IsInitialized) return;
 
-        DoorApearEvent();
+        //DoorApearEvent();
 
         GameClear();
         GameOver();
     }
 
     /// <summary>
-    /// 扉が表示するイベント
+    /// 扉が表示するイベント TODO 廃止。最初から表示
     /// </summary>
     private void DoorApearEvent()
     {

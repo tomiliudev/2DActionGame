@@ -30,33 +30,35 @@ public sealed class PatrolGuyEnemy : Enemy
             // 一時停止
             if (base.IsDoFreeze()) continue;
 
-            if (base.sr.isVisible)
+            //if (base.sr.isVisible)
+            //{
+                
+            //}
+            //else
+            //{
+            //    rb2D.Sleep();
+            //}
+
+            var hit_ground = Physics2D.Raycast(transform.position, Vector2.down, 0.6f, groundLayerMask);
+
+            if (base.wallCollisionCheck != null && base.wallCollisionCheck.IsOn
+                || hit_ground.collider == null
+            )
             {
-                var hit_ground = Physics2D.Raycast(transform.position, Vector2.down, 0.6f, groundLayerMask);
+                isRight = !isRight;
+            }
 
-                if (base.wallCollisionCheck != null && base.wallCollisionCheck.IsOn
-                    || hit_ground.collider == null
-                )
-                {
-                    isRight = !isRight;
-                }
-
-                float xVector = -1f;
-                if (isRight)
-                {
-                    xVector = 1f;
-                    transform.localScale = new Vector3(-1f, 1f, 1f);
-                }
-                else
-                {
-                    transform.localScale = new Vector3(1f, 1f, 1f);
-                }
-                rb2D.velocity = new Vector2(xVector * moveSpeed, -gravity);
+            float xVector = -1f;
+            if (isRight)
+            {
+                xVector = 1f;
+                transform.localScale = new Vector3(-1f, 1f, 1f);
             }
             else
             {
-                rb2D.Sleep();
+                transform.localScale = new Vector3(1f, 1f, 1f);
             }
+            rb2D.velocity = new Vector2(xVector * moveSpeed, -gravity);
         }
     }
 }
