@@ -262,7 +262,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  stepOnRate: 10
+  stepOnRate: 20
   grippingPower: 10
   bowLine: {fileID: 1704043116779442424, guid: 26eb15764958b4f259b15420b4a4f6dc, type: 3}
   bow: {fileID: 7290078826120544080, guid: adebd84ae498e444db5acb6f933cc1e9, type: 3}
