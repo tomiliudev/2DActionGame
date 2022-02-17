@@ -21,7 +21,6 @@ public sealed class DynamicSpike : MonoBehaviour
     Vector2 originPos;
     float originYpos;
     float originXpos;
-    Vector3 originAngle;
     BoxCollider2D boxCo2d;
 
     Vector2 _boundsTopLeftCorner;
@@ -37,9 +36,6 @@ public sealed class DynamicSpike : MonoBehaviour
         originPos = transform.position;
         originXpos = transform.position.x;
         originYpos = transform.position.y;
-        originAngle = transform.localEulerAngles;
-
-        Debug.Log(originAngle);
 
         if (isTorigger)
         {
@@ -90,7 +86,7 @@ public sealed class DynamicSpike : MonoBehaviour
 
         Vector2 dir = (Vector2)gm.player.transform.position - originPos;
         hit = Physics2D.Raycast(originPos, dir, distance, PlayerLayerMask);
-        Debug.DrawRay(originPos, dir * distance, Color.red);
+        //Debug.DrawRay(originPos, dir * distance, Color.red);
 
         if (hit.collider != null && LayerMask.LayerToName(hit.collider.gameObject.layer) == "Player")
         {

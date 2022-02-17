@@ -3,6 +3,7 @@ using UnityEngine;
 
 public sealed class Platform : MonoBehaviour
 {
+    [SerializeField] Transform movString;
     [SerializeField] Rigidbody2D rb2d;
     [SerializeField] SpriteRenderer sr;
     [SerializeField] PlatformEffector2D pe2d;
@@ -74,28 +75,47 @@ public sealed class Platform : MonoBehaviour
     private float _delayTime;
     private bool isSetLayerMask = false;
 
-
     // Start is called before the first frame update
     void Start()
     {
         gm = GameManager.Instance;
-        cameraCollider = gm.cameraCollider;
 
-        position = transform.position;
-        selfColor = sr.color;
+        if (movString == null)
+        {
+            cameraCollider = gm.cameraCollider;
 
-        hideType = firstHideType;
+            position = transform.position;
+            selfColor = sr.color;
 
-        SetupFirstMovePos();
-        SetupFirstHideMode();
+            hideType = firstHideType;
+
+            SetupFirstMovePos();
+            SetupFirstHideMode();
+        }
+        else
+        {
+            SetupToriggerMoveFirstDirction();
+        }
     }
 
-    
+    private void Update()
+    {
+        
+    }
+
     private void FixedUpdate()
     {
-        Move();
+        if (movString == null)
+        {
+            SetMoveParams();
+            UpdateHideMode();
+        }
+        else
+        {
 
-        UpdateHideMode();
+        }
+
+        Move();
     }
 
     private void SetupFirstMovePos()
@@ -145,7 +165,29 @@ public sealed class Platform : MonoBehaviour
         }
     }
 
-    private void Move()
+    private void SetupToriggerMoveFirstDirction()
+    {
+        switch (firstDirection)
+        {
+            case e_FirstDirectionType.up:
+                direction = Vector2.up;
+                break;
+            case e_FirstDirectionType.down:
+                direction = Vector2.down;
+                break;
+            case e_FirstDirectionType.left:
+                direction = Vector2.left;
+                break;
+            case e_FirstDirectionType.right:
+                direction = Vector2.right;
+                break;
+        }
+
+        movePos = transform.position;
+        targetPositionY = movePos.y;
+    }
+
+    private void SetMoveParams()
     {
         switch (moveType)
         {
@@ -193,7 +235,28 @@ public sealed class Platform : MonoBehaviour
          * Rigidbodyは物理演算を行うため、transformを使っての移動は物理演算を再計算してしまうので重くなる原因で避けるべき。
          */
         //transform.Translate(direction * moveSpeed * Time.fixedDeltaTime);
+    }
 
+    private void SetToriggerMoveParams()
+    {
+        if (movePos.y != targetPositionY) return;
+
+        if (direction == Vector2.up)
+        {
+            direction = Vector2.down;
+            targetPositionY = movString.GetComponent<MovString>().Top;
+        }
+        else if (direction == Vector2.down)
+        {
+            direction = Vector2.up;
+            targetPositionY = movString.GetComponent<MovString>().Bottom;
+        }
+
+        movePos = new Vector2(transform.position.x, targetPositionY);
+    }
+
+    private void Move()
+    {
         rb2d.MovePosition(Vector2.MoveTowards(transform.position, movePos, moveSpeed * Time.fixedDeltaTime));
 
         // 速度 = 距離 / 時間
@@ -272,7 +335,16 @@ public sealed class Platform : MonoBehaviour
             }
         }
     }
-    
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == GameConfig.PlayerFootTag)
+        {
+            Debug.Log("aaaaaaabbbbbbbbbccccccccc");
+            SetToriggerMoveParams();
+        }
+    }
+
     private void OnTriggerExit2D(Collider2D collision)
     {
         if(collision.tag == "CameraCollider")

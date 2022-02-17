@@ -24,6 +24,7 @@ TagManager:
   - MiniGameNeedle
   - Fly
   - Bridge
+  - MovString
   layers:
   - Default
   - TransparentFX
