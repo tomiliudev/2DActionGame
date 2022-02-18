@@ -40,7 +40,7 @@ public sealed class PatrolGuyEnemy : Enemy
             {
                 rayStart -= new Vector2(0.2f, 0f);
             }
-            var hit_ground = Physics2D.Raycast(rayStart, Vector2.down, 1f, groundLayerMask);
+            var hit_ground = Physics2D.Raycast(rayStart, Vector2.down, 0.6f, groundLayerMask);
 
             if (base.wallCollisionCheck != null && base.wallCollisionCheck.IsOn
                 || hit_ground.collider == null
