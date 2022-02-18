@@ -119,7 +119,7 @@ public sealed class StageUiView : MonoBehaviour
         iTween.ValueTo(
             gameObject,
             iTween.Hash(
-                "time", 3f
+                "time", 1f
                 , "from", 0f
                 , "to", 1f
                 , "onupdate", "OnBlackMaskUpdate"
@@ -136,7 +136,7 @@ public sealed class StageUiView : MonoBehaviour
         iTween.ValueTo(
             gameObject,
             iTween.Hash(
-                "time", 3f
+                "time", 1f
                 , "from", 1f
                 , "to", 0f
                 , "onupdate", "OnBlackMaskUpdate"
