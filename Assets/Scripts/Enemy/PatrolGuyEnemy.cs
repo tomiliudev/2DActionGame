@@ -3,6 +3,7 @@ using UnityEngine;
 
 public sealed class PatrolGuyEnemy : Enemy
 {
+    Vector2 rayStart;
     private bool isRight;
 
     private int groundLayerMask;
@@ -10,6 +11,7 @@ public sealed class PatrolGuyEnemy : Enemy
     // Start is called before the first frame update
     void Start()
     {
+        rayStart = Vector2.zero;
         groundLayerMask = 1 << LayerMask.NameToLayer("WeakBlock") | 1 << LayerMask.NameToLayer("Ground");
         StartCoroutine(Move());
     }
@@ -17,7 +19,6 @@ public sealed class PatrolGuyEnemy : Enemy
     /// <summary>
     /// プレイヤーを追従する
     /// </summary>
-    /// <returns></returns>
     IEnumerator Move()
     {
         yield return new WaitForEndOfFrame();
@@ -30,16 +31,16 @@ public sealed class PatrolGuyEnemy : Enemy
             // 一時停止
             if (base.IsDoFreeze()) continue;
 
-            //if (base.sr.isVisible)
-            //{
-                
-            //}
-            //else
-            //{
-            //    rb2D.Sleep();
-            //}
-
-            var hit_ground = Physics2D.Raycast(transform.position, Vector2.down, 0.6f, groundLayerMask);
+            rayStart = transform.position;
+            if (isRight)
+            {
+                rayStart += new Vector2(0.2f, 0f);
+            }
+            else
+            {
+                rayStart -= new Vector2(0.2f, 0f);
+            }
+            var hit_ground = Physics2D.Raycast(rayStart, Vector2.down, 1f, groundLayerMask);
 
             if (base.wallCollisionCheck != null && base.wallCollisionCheck.IsOn
                 || hit_ground.collider == null
@@ -58,7 +59,7 @@ public sealed class PatrolGuyEnemy : Enemy
             {
                 transform.localScale = new Vector3(1f, 1f, 1f);
             }
-            rb2D.velocity = new Vector2(xVector * moveSpeed, -gravity);
+            rb2D.velocity = new Vector2(xVector * moveSpeed * Time.fixedDeltaTime, -gravity);
         }
     }
 }

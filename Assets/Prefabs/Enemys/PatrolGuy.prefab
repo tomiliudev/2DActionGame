@@ -232,11 +232,11 @@ MonoBehaviour:
   rb2D: {fileID: 109629449863652748}
   cc2D: {fileID: 109629449863652744}
   capsuleCollider2D: {fileID: 0}
-  moveSpeed: 3
+  moveSpeed: 150
   gravity: 3
   wallCollisionCheck: {fileID: 109629448808575614}
   animator: {fileID: 109629449863652745}
-  pickHeart: {fileID: 4477351285677921095, guid: ca4221de429fa4b8e9c36954e10b0dfc, type: 3}
+  dropItem: {fileID: 0}
   boundHight: 1.5
   filter2d:
     useTriggers: 0
