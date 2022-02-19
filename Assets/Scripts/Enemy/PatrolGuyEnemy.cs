@@ -12,7 +12,10 @@ public sealed class PatrolGuyEnemy : Enemy
     void Start()
     {
         rayStart = Vector2.zero;
-        groundLayerMask = 1 << LayerMask.NameToLayer("WeakBlock") | 1 << LayerMask.NameToLayer("Ground");
+        groundLayerMask =
+            1 << LayerMask.NameToLayer("WeakBlock")
+            | 1 << LayerMask.NameToLayer("Ground")
+            | 1 << LayerMask.NameToLayer("OneWayPlatform");
         StartCoroutine(Move());
     }
 
@@ -59,7 +62,8 @@ public sealed class PatrolGuyEnemy : Enemy
             {
                 transform.localScale = new Vector3(1f, 1f, 1f);
             }
-            rb2D.velocity = new Vector2(xVector * moveSpeed * Time.fixedDeltaTime, -gravity);
+
+            rb2D.velocity = new Vector2(xVector * moveSpeed * Time.fixedDeltaTime, -gravity); ;
         }
     }
 }

@@ -105,6 +105,8 @@ public sealed class Platform : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (GameUtility.Instance.IsGamePause) return;
+
         if (movString == null)
         {
             SetMoveParams();
