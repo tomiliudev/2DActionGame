@@ -68,13 +68,19 @@ TagManager:
   - name: Gimmick
     uniqueID: 1671720205
     locked: 0
+  - name: Ground
+    uniqueID: 1030737953
+    locked: 0
+  - name: ForegroundGround
+    uniqueID: 2552821143
+    locked: 0
   - name: Enemy
     uniqueID: 796347903
     locked: 0
   - name: Player
     uniqueID: 673632487
     locked: 0
-  - name: Fly
+  - name: ForegroundPlayer
     uniqueID: 2840064901
     locked: 0
   - name: UI

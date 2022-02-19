@@ -239,6 +239,7 @@ public sealed class Platform : MonoBehaviour
 
     private void SetToriggerMoveParams()
     {
+        if (movString == null) return;
         if (movePos.y != targetPositionY) return;
 
         if (direction == Vector2.up)

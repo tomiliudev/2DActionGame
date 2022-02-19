@@ -21,12 +21,7 @@ public sealed class DynamicSpike : MonoBehaviour
     Vector2 originPos;
     float originYpos;
     float originXpos;
-    BoxCollider2D boxCo2d;
 
-    Vector2 _boundsTopLeftCorner;
-    Vector2 _boundsTopRightCorner;
-    Vector2 _boundsBottomLeftCorner;
-    Vector2 _boundsBottomRightCorner;
     private void Start()
     {
         gm = GameManager.Instance;
@@ -37,12 +32,7 @@ public sealed class DynamicSpike : MonoBehaviour
         originXpos = transform.position.x;
         originYpos = transform.position.y;
 
-        if (isTorigger)
-        {
-            // トリガーで発動
-            SetRaycastInfo();
-        }
-        else
+        if (!isTorigger)
         {
             // 自動発動
             UpAnime();
@@ -52,32 +42,6 @@ public sealed class DynamicSpike : MonoBehaviour
     private void Update()
     {
         CheckTorigger();
-    }
-
-    private void SetRaycastInfo()
-    {
-        boxCo2d = GetComponent<BoxCollider2D>();
-        float top = boxCo2d.offset.y + (boxCo2d.size.y / 2f);
-        float bottom = boxCo2d.offset.y - (boxCo2d.size.y / 2f);
-        float left = boxCo2d.offset.x - (boxCo2d.size.x / 2f);
-        float right = boxCo2d.offset.x + (boxCo2d.size.x / 2f);
-        _boundsTopLeftCorner.x = left;
-        _boundsTopLeftCorner.y = top;
-        _boundsTopRightCorner.x = right;
-        _boundsTopRightCorner.y = top;
-        _boundsBottomLeftCorner.x = left;
-        _boundsBottomLeftCorner.y = bottom;
-        _boundsBottomRightCorner.x = right;
-        _boundsBottomRightCorner.y = bottom;
-        _boundsTopLeftCorner = transform.TransformPoint(_boundsTopLeftCorner);
-        _boundsTopRightCorner = transform.TransformPoint(_boundsTopRightCorner);
-        _boundsBottomLeftCorner = transform.TransformPoint(_boundsBottomLeftCorner);
-        _boundsBottomRightCorner = transform.TransformPoint(_boundsBottomRightCorner);
-
-        _boundsTopLeftCorner += new Vector2(0f, 0.5f);
-        _boundsTopRightCorner += new Vector2(0f, 0.5f);
-        _boundsBottomLeftCorner += new Vector2(0f, -0.5f);
-        _boundsBottomRightCorner += new Vector2(0f, -0.5f);
     }
 
     private void CheckTorigger()

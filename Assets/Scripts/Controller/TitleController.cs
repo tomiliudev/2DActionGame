@@ -34,6 +34,8 @@ public sealed class TitleController : BaseController
         gm = GameManager.Instance;
         gm.CurrentGameMode = e_GameMode.Title;
 
+
+        gm.LoadSceneTo("Stage2");
     }
 
     private void Update()
