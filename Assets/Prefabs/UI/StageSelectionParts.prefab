@@ -246,6 +246,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetObj: {fileID: 0}
+  thumbnail: {fileID: 3504726226754307795}
   stageNameText: {fileID: 5163934561598634391}
   frameImage: {fileID: 2701556748256352963}
 --- !u!114 &5011115511971825335

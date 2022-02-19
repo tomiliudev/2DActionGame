@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public sealed class StageSelectionParts : ButtonBase<IStageSelectionButton>
 {
+    [SerializeField] Image thumbnail;
     [SerializeField] Text stageNameText;
     [SerializeField] GameObject frameImage;
 
@@ -30,6 +31,13 @@ public sealed class StageSelectionParts : ButtonBase<IStageSelectionButton>
         {
             controller.OnStageSelectionButtonClick(this);
         }
+    }
+
+    public void SetThumbnail()
+    {
+        Sprite thumbnailSprite = DataManager.Instance.GetTargetThumbnail(StageName.ToString());
+        if (thumbnailSprite == null) return;
+        thumbnail.sprite = thumbnailSprite;
     }
 
     public void SwitchFrameImage(bool flag)

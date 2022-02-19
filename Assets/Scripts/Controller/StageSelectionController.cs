@@ -43,6 +43,7 @@ public sealed class StageSelectionController : BaseController, IStageSelectionBu
         {
             var stageSelectionObj = Instantiate(stageSelectionParts, parent, false);
             stageSelectionObj.StageName = stageName;
+            stageSelectionObj.SetThumbnail();
 
             if (initData != null && initData.selectStage == stageName)
             {
