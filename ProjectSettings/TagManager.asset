@@ -74,14 +74,14 @@ TagManager:
   - name: ForegroundGround
     uniqueID: 2552821143
     locked: 0
-  - name: Item
-    uniqueID: 2706922597
-    locked: 0
   - name: Enemy
     uniqueID: 796347903
     locked: 0
   - name: Player
     uniqueID: 673632487
+    locked: 0
+  - name: Item
+    uniqueID: 2706922597
     locked: 0
   - name: ForegroundPlayer
     uniqueID: 2840064901
