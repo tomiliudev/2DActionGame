@@ -258,6 +258,7 @@ public sealed class Platform : MonoBehaviour
 
     private void Move()
     {
+        if (moveType == e_MoveType.freeze) return;
         rb2d.MovePosition(Vector2.MoveTowards(transform.position, movePos, moveSpeed * Time.fixedDeltaTime));
 
         // 速度 = 距離 / 時間

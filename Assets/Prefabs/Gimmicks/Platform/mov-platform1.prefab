@@ -98,6 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ebaf2d3da4444c798ddcbd9751a24f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movString: {fileID: 0}
   rb2d: {fileID: 5418330001747943508}
   sr: {fileID: 3620942242636635213}
   pe2d: {fileID: 5309024033059932309}
@@ -145,7 +146,7 @@ PlatformEffector2D:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3620942242636635211}
   m_Enabled: 1
-  m_UseColliderMask: 0
+  m_UseColliderMask: 1
   m_ColliderMask:
     serializedVersion: 2
     m_Bits: 4294967295
