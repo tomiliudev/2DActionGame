@@ -23,6 +23,8 @@ public sealed class SlimeEnemy : Enemy
         StartCoroutine(Move());
     }
 
+    int hitPlayerCount = 0;
+
     /// <summary>
     /// スライムの移動
     /// </summary>
@@ -91,6 +93,8 @@ public sealed class SlimeEnemy : Enemy
             {
                 rb2D.Sleep();
             }
+
+            Debug.Log("hitPlayerCount = "+ hitPlayerCount);
         }
     }
 

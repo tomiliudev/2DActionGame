@@ -58,7 +58,7 @@ MonoBehaviour:
   gravity: 10
   wallCollisionCheck: {fileID: 7093392002339172005}
   animator: {fileID: 3906090396950797092}
-  dropItem: {fileID: 2920539737978896308, guid: c91c64b4c8ead4fe99658ccd96e8805f, type: 3}
+  dropItem: {fileID: 0}
   boundHight: 1.5
   filter2d:
     useTriggers: 0
@@ -114,7 +114,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 796347903
-  m_SortingLayer: 2
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 57d8e6e821d142f41bb2db6e48a220af, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
