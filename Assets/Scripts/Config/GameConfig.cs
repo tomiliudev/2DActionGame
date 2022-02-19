@@ -45,6 +45,7 @@ public static class GameConfig
     public const string MiniGameGaugeTag = "MiniGameGauge";
     public const string MiniGameNeedleTag = "MiniGameNeedle";
     public const string FlyTag = "Fly";
+    public const string GroundTag = "Ground";
 
     public const string OneWayPlatformLayer = "OneWayPlatform";
 

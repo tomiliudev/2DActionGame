@@ -1,16 +1,17 @@
 using System.Collections;
 using UnityEngine;
 
-public class WeakBlock : MonoBehaviour
+public sealed class WeakBlock : MonoBehaviour
 {
     [SerializeField] Rigidbody2D rg2d;
     [SerializeField] ParticleSystem ps;
 
+    bool isCrush = false;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         switch (collision.tag)
         {
-            case "PlayerFoot":
+            case GameConfig.PlayerFootTag:
                 StartCoroutine(CrushAnimation());
                 break;
         }
@@ -20,7 +21,7 @@ public class WeakBlock : MonoBehaviour
     {
         switch (collision.collider.tag)
         {
-            case "Ground":
+            case GameConfig.GroundTag:
                 Destroy(gameObject);
                 break;
         }
@@ -28,6 +29,8 @@ public class WeakBlock : MonoBehaviour
 
     IEnumerator CrushAnimation()
     {
+        if (isCrush) yield break;
+        isCrush = true;
         float shackTime = 1.5f;
         iTween.ShakePosition(gameObject, new Vector2(0.1f, 0f), shackTime);
         
