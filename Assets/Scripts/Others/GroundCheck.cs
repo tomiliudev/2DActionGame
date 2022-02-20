@@ -75,9 +75,9 @@ public class GroundCheck : MonoBehaviour
         switch (tagType)
         {
             case GroundTagType.Ground:
-            case GroundTagType.WeakBlock:
                 IsInGround = true;
                 break;
+            case GroundTagType.WeakBlock:
             case GroundTagType.Platform:
             case GroundTagType.Box:
             case GroundTagType.Treasure:

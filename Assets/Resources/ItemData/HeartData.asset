@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: HeartData
   m_EditorClassIdentifier: 
   type: 4
-  price: 3
+  price: 100000
   isMultiple: 1
