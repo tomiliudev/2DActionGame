@@ -292,6 +292,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7746019509988195847}
     m_Modifications:
+    - target: {fileID: 128493581505494604, guid: 0b0cfbeacc4034b4cbf6399627783d05, type: 3}
+      propertyPath: m_Color.a
+      value: 0.1764706
+      objectReference: {fileID: 0}
+    - target: {fileID: 309925167129582404, guid: 0b0cfbeacc4034b4cbf6399627783d05, type: 3}
+      propertyPath: m_Color.a
+      value: 0.1764706
+      objectReference: {fileID: 0}
+    - target: {fileID: 1668691287903868301, guid: 0b0cfbeacc4034b4cbf6399627783d05, type: 3}
+      propertyPath: m_Color.a
+      value: 0.1764706
+      objectReference: {fileID: 0}
     - target: {fileID: 1955463096523343072, guid: 0b0cfbeacc4034b4cbf6399627783d05, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -379,6 +391,26 @@ PrefabInstance:
     - target: {fileID: 1955463096523343076, guid: 0b0cfbeacc4034b4cbf6399627783d05, type: 3}
       propertyPath: m_Name
       value: UICanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 6415389363005216561, guid: 0b0cfbeacc4034b4cbf6399627783d05, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6415389363005216561, guid: 0b0cfbeacc4034b4cbf6399627783d05, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6415389363005216561, guid: 0b0cfbeacc4034b4cbf6399627783d05, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 145
+      objectReference: {fileID: 0}
+    - target: {fileID: 6415389363005216561, guid: 0b0cfbeacc4034b4cbf6399627783d05, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 145
+      objectReference: {fileID: 0}
+    - target: {fileID: 8349645954534586253, guid: 0b0cfbeacc4034b4cbf6399627783d05, type: 3}
+      propertyPath: m_Color.a
+      value: 0.1764706
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b0cfbeacc4034b4cbf6399627783d05, type: 3}
