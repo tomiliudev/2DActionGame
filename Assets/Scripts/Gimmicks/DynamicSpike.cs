@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public sealed class DynamicSpike : DynamicSpikeBase
@@ -30,28 +31,27 @@ public sealed class DynamicSpike : DynamicSpikeBase
         originPos = transform.position;
         originXpos = transform.position.x;
         originYpos = transform.position.y;
-
-        if (!isTorigger)
-        {
-            // 自動発動
-            UpAnime();
-        }
     }
 
     private void Update()
     {
-        CheckTorigger();
+        Attack();
     }
 
-    private void CheckTorigger()
+    private void Attack()
     {
-        if (!isTorigger) return;
+        if (isTorigger)
+        {
+            Vector2 dir = (Vector2)gm.player.transform.position - originPos;
+            hit = Physics2D.Raycast(originPos, dir, distance, PlayerLayerMask);
+            //Debug.DrawRay(originPos, dir * distance, Color.red);
 
-        Vector2 dir = (Vector2)gm.player.transform.position - originPos;
-        hit = Physics2D.Raycast(originPos, dir, distance, PlayerLayerMask);
-        //Debug.DrawRay(originPos, dir * distance, Color.red);
-
-        if (hit.collider != null && LayerMask.LayerToName(hit.collider.gameObject.layer) == "Player")
+            if (hit.collider != null && LayerMask.LayerToName(hit.collider.gameObject.layer) == "Player")
+            {
+                if (!isAniming) UpAnime();
+            }
+        }
+        else
         {
             if (!isAniming) UpAnime();
         }
@@ -61,6 +61,9 @@ public sealed class DynamicSpike : DynamicSpikeBase
     bool isAniming;
     private void UpAnime()
     {
+        // 見えていない時は何もしない
+        if (!sr.isVisible) return;
+
         isAniming = true;
 
         SoundManager.Instance.Play(se);
@@ -118,11 +121,19 @@ public sealed class DynamicSpike : DynamicSpikeBase
 
     private void OnDownAnimeComplete()
     {
-        isAniming = false;
-
-        if (!isTorigger)
+        if (isTorigger)
         {
-            Invoke("UpAnime", 2f);
+            isAniming = false;
         }
+        else
+        {
+            StartCoroutine(NotTriggerWaitTime(2f));
+        }
+    }
+
+    private IEnumerator NotTriggerWaitTime(float time)
+    {
+        yield return new WaitForSeconds(time);
+        isAniming = false;
     }
 }
