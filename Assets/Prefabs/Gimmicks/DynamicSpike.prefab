@@ -96,6 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e83040e244a0b496c92e3ef3487b0fa3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  se: {fileID: 8300000, guid: 387ae6e2479a7445f85bc7f972c0e198, type: 3}
   direction: 0
   distance: 2
   isTorigger: 0

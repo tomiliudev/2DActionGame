@@ -163,6 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e73f7fe1d829740b78a4aac73d59be2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  se: {fileID: 8300000, guid: 387ae6e2479a7445f85bc7f972c0e198, type: 3}
   direction: 0
   headCheck: {fileID: 4745815716044740332}
   headCheck1: {fileID: 5686279229460185977}

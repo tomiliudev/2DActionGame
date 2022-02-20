@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public sealed class DynamicSpike : MonoBehaviour
+public sealed class DynamicSpike : DynamicSpikeBase
 {
     enum Direction
     {
@@ -12,7 +12,6 @@ public sealed class DynamicSpike : MonoBehaviour
     [SerializeField] Direction direction;
     [SerializeField] float distance = 2f;
     [SerializeField] bool isTorigger;
-
 
     GameManager gm;
     RaycastHit2D hit;
@@ -63,6 +62,8 @@ public sealed class DynamicSpike : MonoBehaviour
     private void UpAnime()
     {
         isAniming = true;
+
+        SoundManager.Instance.Play(se);
 
         float moveToX = originXpos + 1;
         float moveToY = originYpos + 1f;

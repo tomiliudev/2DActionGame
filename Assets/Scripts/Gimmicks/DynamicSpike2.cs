@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public sealed class DynamicSpike2 : MonoBehaviour
+public sealed class DynamicSpike2 : DynamicSpikeBase
 {
     enum Direction
     {
@@ -104,6 +104,9 @@ public sealed class DynamicSpike2 : MonoBehaviour
     {
         if (isFired) return;
         isFired = true;
+
+        SoundManager.Instance.Play(se);
+
         iTween.MoveTo(gameObject,
             iTween.Hash(
                 "x", targetMovePos.x,
