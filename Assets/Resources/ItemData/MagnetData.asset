@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: MagnetData
   m_EditorClassIdentifier: 
   type: 1
-  price: 20000
+  price: 200000
   isMultiple: 1

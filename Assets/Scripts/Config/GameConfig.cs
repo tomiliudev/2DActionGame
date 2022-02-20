@@ -26,8 +26,8 @@ public enum e_StageName
     Stage1,
     Stage2,
     Stage3,
-    Stage4,
-    Stage5
+    //Stage4,
+    //Stage5
 }
 
 public static class GameConfig

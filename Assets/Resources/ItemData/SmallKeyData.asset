@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: SmallKeyData
   m_EditorClassIdentifier: 
   type: 3
-  price: 5
+  price: 30000
   isMultiple: 1
