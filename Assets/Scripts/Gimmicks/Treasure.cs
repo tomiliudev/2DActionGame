@@ -99,6 +99,6 @@ public sealed class Treasure : MonoBehaviour
 
     private string GetTreasureKeyName()
     {
-        return SceneManager.GetActiveScene().name + gameObject.name;
+        return GameUtility.Instance.GetCurrentSceneName() + gameObject.name;
     }
 }

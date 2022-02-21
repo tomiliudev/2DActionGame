@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected GameObject dropItem;
     [SerializeField] protected float boundHight;// プレイヤーが踏みつけた時にバウンドする力
     [SerializeField] private ContactFilter2D filter2d = default;
+    [SerializeField] protected bool isOnetimeDrop;
 
     protected GameManager gm;
 
@@ -88,10 +89,19 @@ public class Enemy : MonoBehaviour
         if (Hp > 0) return;
         isDead = true;
 
-        if (dropItem != null)
+        if (isOnetimeDrop)
         {
-            var dropItemObj = Instantiate(dropItem, transform.parent);
-            dropItemObj.transform.position = transform.position;
+            bool isDropped = PlayerPrefsUtility.Load(GetUniqueEnemyKey(), 0) == 1;
+            if (!isDropped)
+            {
+                Debug.Log("aaaaaaa");
+                DropItem();
+            }
+        }
+        else
+        {
+            Debug.Log("bbbbbbb");
+            DropItem();
         }
 
         // クリアレベルに応じてポイントを与える
@@ -101,6 +111,17 @@ public class Enemy : MonoBehaviour
         gm.sceneController.GetPoints = toPoint;
 
         Destroy(gameObject);
+    }
+
+    private void DropItem()
+    {
+        if (dropItem != null)
+        {
+            if (isOnetimeDrop) PlayerPrefsUtility.Save(GetUniqueEnemyKey(), 1);
+
+            var dropItemObj = Instantiate(dropItem, transform.parent);
+            dropItemObj.transform.position = transform.position;
+        }
     }
 
     /// <summary>
@@ -166,5 +187,10 @@ public class Enemy : MonoBehaviour
         }
 
         return _isFreeze;
+    }
+
+    private string GetUniqueEnemyKey()
+    {
+        return GameUtility.Instance.GetCurrentSceneName() + gameObject.name;
     }
 }

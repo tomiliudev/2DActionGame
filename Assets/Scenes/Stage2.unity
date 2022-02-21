@@ -1867,7 +1867,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.1111107, y: 0.00000023841858, z: -10}
+  m_LocalPosition: {x: -1.1111107, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2124,7 +2124,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3906090396950797089, guid: b6f42f8392b02433fa3eeb48661641fd, type: 3}
       propertyPath: m_Name
-      value: Slime (1)
+      value: Slime3
       objectReference: {fileID: 0}
     - target: {fileID: 3906090396950797089, guid: b6f42f8392b02433fa3eeb48661641fd, type: 3}
       propertyPath: m_IsActive
@@ -3330,9 +3330,13 @@ PrefabInstance:
       propertyPath: dropItem
       value: 
       objectReference: {fileID: 2920539737978896308, guid: c91c64b4c8ead4fe99658ccd96e8805f, type: 3}
+    - target: {fileID: 1516010496049764790, guid: b6f42f8392b02433fa3eeb48661641fd, type: 3}
+      propertyPath: isOnetimeDrop
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3906090396950797089, guid: b6f42f8392b02433fa3eeb48661641fd, type: 3}
       propertyPath: m_Name
-      value: Slime
+      value: Slime2
       objectReference: {fileID: 0}
     - target: {fileID: 3906090396950797089, guid: b6f42f8392b02433fa3eeb48661641fd, type: 3}
       propertyPath: m_IsActive
@@ -3344,7 +3348,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3906090396950797094, guid: b6f42f8392b02433fa3eeb48661641fd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.42
+      value: 0.08
       objectReference: {fileID: 0}
     - target: {fileID: 3906090396950797094, guid: b6f42f8392b02433fa3eeb48661641fd, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3398,7 +3402,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3906090396950797089, guid: b6f42f8392b02433fa3eeb48661641fd, type: 3}
       propertyPath: m_Name
-      value: Slime
+      value: Slime1
       objectReference: {fileID: 0}
     - target: {fileID: 3906090396950797094, guid: b6f42f8392b02433fa3eeb48661641fd, type: 3}
       propertyPath: m_RootOrder
@@ -10319,7 +10323,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1582558226}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.55, y: -3.34, z: -10}
+  m_LocalPosition: {x: -6.84, y: -3.33, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 839482774}
@@ -10513,7 +10517,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3906090396950797089, guid: b6f42f8392b02433fa3eeb48661641fd, type: 3}
       propertyPath: m_Name
-      value: Slime (1)
+      value: Slime4
       objectReference: {fileID: 0}
     - target: {fileID: 3906090396950797094, guid: b6f42f8392b02433fa3eeb48661641fd, type: 3}
       propertyPath: m_RootOrder
@@ -11908,11 +11912,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6968699690490263138, guid: 0cdb95a2609724b10850a5d43ee892ac, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.55
+      value: -6.84
       objectReference: {fileID: 0}
     - target: {fileID: 6968699690490263138, guid: 0cdb95a2609724b10850a5d43ee892ac, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.34
+      value: -3.33
       objectReference: {fileID: 0}
     - target: {fileID: 6968699690490263138, guid: 0cdb95a2609724b10850a5d43ee892ac, type: 3}
       propertyPath: m_LocalPosition.z

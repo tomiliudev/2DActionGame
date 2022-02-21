@@ -1,5 +1,6 @@
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameUtility : SingletonMonoBehaviour<GameUtility>
 {
@@ -33,5 +34,10 @@ public class GameUtility : SingletonMonoBehaviour<GameUtility>
     {
         var mainCamera = Camera.main;
         mainCamera.GetComponent<CinemachineBrain>().enabled = true;
+    }
+
+    public string GetCurrentSceneName()
+    {
+        return SceneManager.GetActiveScene().name;
     }
 }
