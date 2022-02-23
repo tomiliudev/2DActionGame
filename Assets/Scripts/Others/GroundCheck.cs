@@ -10,16 +10,6 @@ public class GroundCheck : MonoBehaviour
     }
     [SerializeField] e_CheckType checkType = e_CheckType.foot;
 
-    enum GroundTagType {
-        Ground,
-        Platform,
-        WeakBlock,
-        Box,
-        Mushroom,
-        Treasure,
-        Bridge
-    }
-
     GameManager gm;
 
     private void Start()
@@ -35,27 +25,12 @@ public class GroundCheck : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        GroundTagType tagType;
-        if (Enum.TryParse(collision.tag, out tagType))
-        {
-            // 上に立つもののGameObjectを設定
-            gm.standOnObj = collision.gameObject;
-
-            CheckInGround(tagType);
-            ShowDust(tagType, collision);
-        }
+        CheckInGround(collision);
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        GroundTagType tagType;
-        if (Enum.TryParse(collision.tag, out tagType))
-        {
-            // 上に立つもののGameObjectを設定
-            gm.standOnObj = collision.gameObject;
-
-            CheckInGround(tagType);
-        }
+        CheckInGround(collision, true);
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -63,56 +38,92 @@ public class GroundCheck : MonoBehaviour
         // 上に立つものから離れればnullでリセット
         gm.standOnObj = null;
 
-        if (Enum.IsDefined(typeof(GroundTagType), collision.tag))
-        {
-            IsInGround = false;
-            IsInMushroom = false;
-        } 
+        IsInGround = false;
+        IsInMushroom = false;
     }
 
-    private void CheckInGround(GroundTagType tagType)
+    private Vector2 GetTopLeftPoint(BoxCollider2D col2d)
     {
-        switch (tagType)
+        float offsetX = col2d.offset.x;
+        float offsetY = col2d.offset.y;
+        float width = col2d.size.x;
+        float height = col2d.size.y;
+        float top = offsetY + height / 2;
+        float left = offsetX - width / 2;
+        Vector2 topLeftCorner = new Vector2(left, top);
+        topLeftCorner = col2d.transform.TransformPoint(topLeftCorner);
+        return topLeftCorner;
+    }
+
+    private void CheckInGround(Collider2D collision, bool isStay = false)
+    {
+        // 上に立つもののGameObjectを設定
+        gm.standOnObj = collision.gameObject;
+
+        switch (collision.tag)
         {
-            case GroundTagType.Ground:
+            case GameConfig.GroundTag:
                 IsInGround = true;
+                if (!isStay) ShowDust();
                 break;
-            case GroundTagType.WeakBlock:
-            case GroundTagType.Platform:
-            case GroundTagType.Box:
-            case GroundTagType.Treasure:
-            case GroundTagType.Bridge:
-                IsInGround = checkType == e_CheckType.foot ? true : false;
-                break;
-            case GroundTagType.Mushroom:
-                IsInMushroom = checkType == e_CheckType.foot ? true : false;
-                break;
-        }
-    }
-
-    private void ShowDust(GroundTagType tagType, Collider2D collision)
-    {
-        if (checkType != e_CheckType.foot) return;
-
-        switch (tagType)
-        {
-            case GroundTagType.Ground:
-                if (gm != null && gm.player != null) gm.player.ShowDust();
-                break;
-            case GroundTagType.WeakBlock:
-            case GroundTagType.Platform:
-            case GroundTagType.Box:
-            case GroundTagType.Mushroom:
-            case GroundTagType.Treasure:
-            case GroundTagType.Bridge:
-
-                Bounds bounds = collision.bounds;
-                float appearYpos = bounds.center.y + bounds.extents.y;
-                if (transform.position.y >= appearYpos)
+            case GameConfig.WeakBlockTag:
+            case GameConfig.PlatformTag:
+            case GameConfig.TreasureTag:
+            case GameConfig.BridgeTag:
+            case GameConfig.BoxTag:
+                if (checkType == e_CheckType.foot)
                 {
-                    if (gm != null && gm.player != null) gm.player.ShowDust();
+                    BoxCollider2D col2d = collision.GetComponent<BoxCollider2D>();
+                    if (col2d != null)
+                    {
+                        Vector2 topLeftCorner = GetTopLeftPoint(col2d);
+                        if (Mathf.Abs(transform.position.y - topLeftCorner.y) < 0.18f)
+                        {
+                            if (!isStay) ShowDust();
+                            IsInGround = true;
+                        }
+                    }
+                }
+                else
+                {
+                    IsInGround = false;
                 }
                 break;
+            case GameConfig.MushroomTag:
+                IsInMushroom = checkType == e_CheckType.foot ? true : false;
+                break;
+            
         }
     }
+
+    private void ShowDust()
+    {
+        if (checkType != e_CheckType.foot) return;
+        if (gm != null && gm.player != null) gm.player.ShowDust();
+    }
+
+    //private void ShowDust(Collider2D collision)
+    //{
+    //    if (checkType != e_CheckType.foot) return;
+
+    //    switch (collision.tag)
+    //    {
+    //        case GameConfig.GroundTag:
+    //            if (gm != null && gm.player != null) gm.player.ShowDust();
+    //            break;
+    //        case GameConfig.WeakBlockTag:
+    //        case GameConfig.PlatformTag:
+    //        case GameConfig.BoxTag:
+    //        case GameConfig.MushroomTag:
+    //        case GameConfig.TreasureTag:
+    //        case GameConfig.BridgeTag:
+    //            Bounds bounds = collision.bounds;
+    //            float appearYpos = bounds.center.y + bounds.extents.y;
+    //            if (transform.position.y >= appearYpos)
+    //            {
+    //                if (gm != null && gm.player != null) gm.player.ShowDust();
+    //            }
+    //            break;
+    //    }
+    //}
 }

@@ -46,6 +46,11 @@ public static class GameConfig
     public const string MiniGameNeedleTag = "MiniGameNeedle";
     public const string FlyTag = "Fly";
     public const string GroundTag = "Ground";
+    public const string WeakBlockTag = "WeakBlock";
+    public const string BoxTag = "Box";
+    public const string BridgeTag = "Bridge";
+    public const string MushroomTag = "Mushroom";
+    public const string CameraColliderTag = "CameraCollider";
 
     public const string OneWayPlatformLayer = "OneWayPlatform";
 

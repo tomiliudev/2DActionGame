@@ -344,14 +344,13 @@ public sealed class Platform : MonoBehaviour
     {
         if (collision.gameObject.tag == GameConfig.PlayerFootTag)
         {
-            Debug.Log("aaaaaaabbbbbbbbbccccccccc");
             SetToriggerMoveParams();
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if(collision.tag == "CameraCollider")
+        if(collision.tag == GameConfig.CameraColliderTag)
         {
             var cameraCollider = collision.GetComponent<PolygonCollider2D>();
             cameraColliderUpY = cameraCollider.points.ElementAt(1).y;
