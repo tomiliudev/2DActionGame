@@ -1,12 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public sealed class SceneController : BaseController
+public sealed class SceneController : BaseController, IRetryButton, IClearPopupOkButton
 {
     GameManager gm;
+    AdmobUtility admob;
 
     [SerializeField] AudioSource bgmAudio;
     [SerializeField] AudioClip gameOverSe;
@@ -21,10 +23,13 @@ public sealed class SceneController : BaseController
     // Start is called before the first frame update
     void Start()
     {
-        gm = GameManager.Instance;
+        admob = AdmobUtility.Instance;
 
+        gm = GameManager.Instance;
         gm.stageUiView.SwitchOffBlackMask();
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Player"), false);
+
+        admob.RequestInterstitial();
     }
 
     // Update is called once per frame
@@ -105,11 +110,12 @@ public sealed class SceneController : BaseController
 
         if (gm.IsGameClear && !isDoGameClear)
         {
+            //admob.Show();
+
             isDoGameClear = true;
 
             // クリアしたステージを保存する
             SaveClearedStage();
-
 
             // クリアしたら獲得したポイントを保存する
             SavePoints();
@@ -152,5 +158,36 @@ public sealed class SceneController : BaseController
         {
             PlayerPrefsUtility.AddToJsonList(GameConfig.ItemList, itemInfo, itemInfo.IsMultiple);
         }
+    }
+
+    public void OnReTryButtonClicked()
+    {
+        gm.popupView.ClosePopup
+        (
+            e_PopupName.gameOverPopup,
+            () =>
+            {
+                admob.Show();
+                admob.OnAdClosed = () => {
+                    gm.LoadSceneTo(SceneManager.GetActiveScene().name);
+                };
+            }
+        );
+    }
+
+    public void OnClearPopupOkButton()
+    {
+        gm.popupView.ClosePopup
+        (
+            e_PopupName.stageClearPopup,
+            () =>
+            {
+                admob.Show();
+                admob.OnAdClosed = () => {
+                    // ステージ選択画面へ
+                    gm.LoadSceneWithData(e_SceneName.StageSelection.ToString(), new StageSelectionController.InitData(gm.GetNextStage()));
+                };
+            }
+        );
     }
 }

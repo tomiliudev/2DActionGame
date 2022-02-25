@@ -44,7 +44,7 @@ public class PopupBase : MonoBehaviour
         StartCoroutine(ClosePopup());
     }
 
-    protected IEnumerator ClosePopup(Action callBack = null)
+    public IEnumerator ClosePopup(Action callBack = null)
     {
         CloseAnimation();
         yield return new WaitUntil(() => isClosed);

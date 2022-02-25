@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -22,15 +21,5 @@ public sealed class StageClearPopup : PopupBase
             getObj.SetObjImage(itemImageData.itemSpriteList[(int)itemGroup.First().Type - 1]);
             getObj.SetObjNum(itemGroup.Count());
         }
-    }
-
-    public void OnOkButtonClicked()
-    {
-        StartCoroutine(base.ClosePopup(
-            () => {
-                // ステージ選択画面へ
-                gm.LoadSceneWithData(e_SceneName.StageSelection.ToString(), new StageSelectionController.InitData(gm.GetNextStage()));
-            }
-        ));
     }
 }

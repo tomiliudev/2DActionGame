@@ -243,6 +243,7 @@ GameObject:
   - component: {fileID: 2612670628255742404}
   - component: {fileID: 6350176808375472025}
   - component: {fileID: 2937152725617400210}
+  - component: {fileID: 2169159558934535116}
   m_Layer: 0
   m_Name: OkButton
   m_TagString: Untagged
@@ -351,19 +352,20 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6350176808375472025}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3425381287109828685}
-        m_TargetAssemblyTypeName: StageClearPopup, Assembly-CSharp
-        m_MethodName: OnOkButtonClicked
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
+--- !u!114 &2169159558934535116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4869308180567365330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9627ef30ec7274c24b79252e4b2da601, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetObj: {fileID: 0}
 --- !u!1 &5391982209123723366
 GameObject:
   m_ObjectHideFlags: 0
