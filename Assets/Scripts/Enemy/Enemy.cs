@@ -15,7 +15,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected GameObject dropItem;
     [SerializeField] protected float boundHight;// プレイヤーが踏みつけた時にバウンドする力
     [SerializeField] private ContactFilter2D filter2d = default;
-    [SerializeField] protected bool isOnetimeDrop;
+    [SerializeField] protected int dropRate;
 
     protected GameManager gm;
 
@@ -89,18 +89,9 @@ public class Enemy : MonoBehaviour
         if (Hp > 0) return;
         isDead = true;
 
-        if (isOnetimeDrop)
+        int lotNum = Random.Range(1, 100);
+        if (lotNum < dropRate)
         {
-            bool isDropped = PlayerPrefsUtility.Load(GetUniqueEnemyKey(), 0) == 1;
-            if (!isDropped)
-            {
-                Debug.Log("aaaaaaa");
-                DropItem();
-            }
-        }
-        else
-        {
-            Debug.Log("bbbbbbb");
             DropItem();
         }
 
@@ -117,8 +108,6 @@ public class Enemy : MonoBehaviour
     {
         if (dropItem != null)
         {
-            if (isOnetimeDrop) PlayerPrefsUtility.Save(GetUniqueEnemyKey(), 1);
-
             var dropItemObj = Instantiate(dropItem, transform.parent);
             dropItemObj.transform.position = transform.position;
         }

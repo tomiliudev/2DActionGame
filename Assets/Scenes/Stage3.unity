@@ -12184,6 +12184,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2920539737978896308, guid: c91c64b4c8ead4fe99658ccd96e8805f, type: 3}
     - target: {fileID: 1516010496049764790, guid: b6f42f8392b02433fa3eeb48661641fd, type: 3}
+      propertyPath: dropRate
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1516010496049764790, guid: b6f42f8392b02433fa3eeb48661641fd, type: 3}
       propertyPath: isOnetimeDrop
       value: 1
       objectReference: {fileID: 0}
