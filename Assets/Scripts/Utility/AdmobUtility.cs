@@ -47,6 +47,7 @@ public sealed class AdmobUtility : SingletonMonoBehaviour<AdmobUtility>
     {
         if (interstitial.IsLoaded())
         {
+            SoundManager.Instance.StopBgm();
             interstitial.Show();
         }
     }

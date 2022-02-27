@@ -9,8 +9,8 @@ public sealed class SceneController : BaseController, IRetryButton, IClearPopupO
 {
     GameManager gm;
     AdmobUtility admob;
+    SoundManager soundMg;
 
-    [SerializeField] AudioSource bgmAudio;
     [SerializeField] AudioClip gameOverSe;
     [SerializeField] GameObject[] doors;
     bool isDoorApear;
@@ -24,8 +24,10 @@ public sealed class SceneController : BaseController, IRetryButton, IClearPopupO
     void Start()
     {
         admob = AdmobUtility.Instance;
-
         gm = GameManager.Instance;
+        soundMg = SoundManager.Instance;
+        soundMg.PlayBgm();
+
         gm.stageUiView.SwitchOffBlackMask();
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Player"), false);
 
@@ -77,7 +79,7 @@ public sealed class SceneController : BaseController, IRetryButton, IClearPopupO
             gm.PlayerCurrentHp--;
         }
 
-        bgmAudio.Stop();
+        soundMg.StopBgm();
         SoundManager.Instance.Play(gameOverSe);
         
         yield return new WaitForSeconds(2f);
