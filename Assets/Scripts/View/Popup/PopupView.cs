@@ -10,6 +10,7 @@ public enum e_PopupName
     gameOverPopup,
     shopPopup,
     stageClearPopup,
+    settingPopup,
 }
 
 public sealed class PopupView : MonoBehaviour

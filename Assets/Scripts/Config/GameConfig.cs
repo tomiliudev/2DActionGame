@@ -66,6 +66,9 @@ public static class GameConfig
     public const string EquippedItem = "equippedItem";
     public const string TotalPoint = "TotalPoint";
 
+    public const string BgmVolumeKey = "BgmVolumeKey";
+    public const string SeVolumeKey = "SeVolumeKey";
+
     /// <summary>
     /// 装備中武器を返却する
     /// </summary>

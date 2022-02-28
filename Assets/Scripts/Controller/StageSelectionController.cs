@@ -30,6 +30,7 @@ public sealed class StageSelectionController : BaseController, IStageSelectionBu
 
     void Start()
     {
+        base.Start();
         gm = GameManager.Instance;
 
         // クリアしたステージ一覧
@@ -95,5 +96,11 @@ public sealed class StageSelectionController : BaseController, IStageSelectionBu
     public void OnShopButtonClicked()
     {
         gm.popupView.ShowPopup(e_PopupName.shopPopup);
+    }
+
+    // Settingボタン
+    public void OnSettingButtonClicked()
+    {
+        gm.popupView.ShowPopup(e_PopupName.settingPopup);
     }
 }

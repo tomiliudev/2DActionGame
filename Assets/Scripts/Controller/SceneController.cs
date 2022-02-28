@@ -9,7 +9,7 @@ public sealed class SceneController : BaseController, IRetryButton, IClearPopupO
 {
     GameManager gm;
     AdmobUtility admob;
-    SoundManager soundMg;
+
 
     [SerializeField] AudioClip gameOverSe;
     [SerializeField] GameObject[] doors;
@@ -23,11 +23,10 @@ public sealed class SceneController : BaseController, IRetryButton, IClearPopupO
     // Start is called before the first frame update
     void Start()
     {
+        base.Start();
+
         admob = AdmobUtility.Instance;
         gm = GameManager.Instance;
-        soundMg = SoundManager.Instance;
-        soundMg.PlayBgm();
-
         gm.stageUiView.SwitchOffBlackMask();
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Player"), false);
 

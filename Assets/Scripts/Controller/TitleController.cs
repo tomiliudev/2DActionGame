@@ -8,7 +8,6 @@ public sealed class TitleController : BaseController
 
 
     GameManager gm;
-    SoundManager soundMg;
 
     bool isPlayButtonObjOpen = false;
     bool isCutinAnimeDone = false;
@@ -30,11 +29,9 @@ public sealed class TitleController : BaseController
 
     void Start()
     {
+        base.Start();
         gm = GameManager.Instance;
         gm.CurrentGameMode = e_GameMode.Title;
-
-        soundMg = SoundManager.Instance;
-        soundMg.PlayBgm();
     }
 
     private void Update()

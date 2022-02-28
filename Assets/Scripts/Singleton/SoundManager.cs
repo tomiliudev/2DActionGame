@@ -31,4 +31,24 @@ public sealed class SoundManager : SingletonMonoBehaviour<SoundManager>
     {
         bgmAudio.Stop();
     }
+
+    public void SetBgmVolume(float vol)
+    {
+        bgmAudio.volume = vol;
+    }
+
+    public void SetSeVolume(float vol)
+    {
+        audioSource.volume = vol;
+    }
+
+    public float GetBgmVolume()
+    {
+        return PlayerPrefsUtility.Load(GameConfig.BgmVolumeKey, 0f);
+    }
+
+    public float GetSeVolume()
+    {
+        return PlayerPrefsUtility.Load(GameConfig.SeVolumeKey, 0f);
+    }
 }
