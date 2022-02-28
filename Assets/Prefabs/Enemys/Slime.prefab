@@ -74,6 +74,8 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
+  dropRate: 0
+  deathAnime: {fileID: 853687571366621320, guid: d22ca390e785448f4a3ff6a9b0dc8a74, type: 3}
   groundCheck: {fileID: 1366413832728222555}
   headCheck: {fileID: 829265706161965925}
 --- !u!212 &3906090396950797093
@@ -114,7 +116,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 796347903
-  m_SortingLayer: 5
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 57d8e6e821d142f41bb2db6e48a220af, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

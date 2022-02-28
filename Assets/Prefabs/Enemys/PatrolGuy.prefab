@@ -253,3 +253,5 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
+  dropRate: 0
+  deathAnime: {fileID: 853687571366621320, guid: d22ca390e785448f4a3ff6a9b0dc8a74, type: 3}

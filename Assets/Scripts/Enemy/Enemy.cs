@@ -16,6 +16,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected float boundHight;// プレイヤーが踏みつけた時にバウンドする力
     [SerializeField] private ContactFilter2D filter2d = default;
     [SerializeField] protected int dropRate;
+    [SerializeField] protected GameObject deathAnime;
 
     protected GameManager gm;
 
@@ -101,8 +102,20 @@ public class Enemy : MonoBehaviour
         gm.stageUiView.UpdateTotalPointView(gm.sceneController.GetPoints, toPoint);
         gm.sceneController.GetPoints = toPoint;
 
+        var _deathAnime = Instantiate(deathAnime, transform.position, Quaternion.identity);
+        var time = _deathAnime.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime;
+
         Destroy(gameObject);
     }
+
+    //IEnumerator ExplotionAnime()
+    //{
+
+    //    var animator = GetComponent<Animator>();
+    //    animator.Play(hashAttack);
+    //    yield return null; // ステートの反映に1フレームいる。解せぬ
+    //    yield return new WaitForAnimation(animator, 0);
+    //}
 
     private void DropItem()
     {
