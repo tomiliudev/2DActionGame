@@ -247,6 +247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 947c2d263f82942eb97031637400ea10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shakeSE: {fileID: 8300000, guid: 37bb1311c17544b8bb3ac54117802c29, type: 3}
 --- !u!1001 &287718556
 PrefabInstance:
   m_ObjectHideFlags: 0

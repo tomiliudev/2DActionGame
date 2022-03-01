@@ -1,28 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayButtonObj : MonoBehaviour
+public sealed class PlayButtonObj : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    [SerializeField] AudioClip shakeSE;
     public void MoveAnime()
     {
+        SoundManager.Instance.Play(shakeSE);
+
         Transform trans = gameObject.transform;
         iTween.MoveTo(gameObject,
             iTween.Hash(
                 "x", trans.position.x + 3,
-                "time", 15f,
+                "time", 5f,
                 //"easeType", iTween.EaseType.easeInOutBack,
                 "oncomplete", "OnCloseAnimationFinished"
             )

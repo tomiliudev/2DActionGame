@@ -47,12 +47,12 @@ public sealed class TitleController : BaseController
             isPlayButtonObjOpen = true;
 
             // 画面を揺らす
-            GameUtility.Instance.ShakeScreen(10f, 0.1f, 0.1f);
+            GameUtility.Instance.ShakeScreen(5f, 0.1f, 0.1f);
 
             // PlayButton移動
             playButtonObj.MoveAnime();
 
-            Invoke("AfterShakeScreen", 10f);
+            Invoke("AfterShakeScreen", 5f);
         }
     }
 
