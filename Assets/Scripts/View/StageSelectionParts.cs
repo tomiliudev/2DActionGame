@@ -5,7 +5,8 @@ public sealed class StageSelectionParts : ButtonBase<IStageSelectionButton>
 {
     [SerializeField] Image thumbnail;
     [SerializeField] Text stageNameText;
-    [SerializeField] GameObject frameImage;
+    [SerializeField] GameObject mask;
+    [SerializeField] GameObject lockIcon;
 
     private e_StageName stageName;
     public e_StageName StageName {
@@ -40,8 +41,13 @@ public sealed class StageSelectionParts : ButtonBase<IStageSelectionButton>
         thumbnail.sprite = thumbnailSprite;
     }
 
-    public void SwitchFrameImage(bool flag)
+    public void SwitchMask(bool flag)
     {
-        frameImage.SetActive(flag);
+        mask.SetActive(flag);
+    }
+
+    public void SetLockIcon()
+    {
+        lockIcon.SetActive(!IsCanSelect);
     }
 }

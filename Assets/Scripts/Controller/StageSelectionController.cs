@@ -50,7 +50,7 @@ public sealed class StageSelectionController : BaseController, IStageSelectionBu
             {
                 selectedStageParts = stageSelectionObj;
                 stageSelectionObj.IsCanSelect = true;
-                stageSelectionObj.SwitchFrameImage(true);
+                stageSelectionObj.SwitchMask(false);
             }
             else
             {
@@ -62,6 +62,7 @@ public sealed class StageSelectionController : BaseController, IStageSelectionBu
                 {
                     // ステージ１なら問答無用で選択可能
                     isCanSelect = true;
+                    stageSelectionObj.SwitchMask(false);
                 }
                 else if (preIndex >= 0)
                 {
@@ -69,6 +70,8 @@ public sealed class StageSelectionController : BaseController, IStageSelectionBu
                 }
                 stageSelectionObj.IsCanSelect = isCanSelect;
             }
+            stageSelectionObj.SetLockIcon();
+            
 
             stageSelectionList.Add(stageSelectionObj);
         }
@@ -78,7 +81,7 @@ public sealed class StageSelectionController : BaseController, IStageSelectionBu
     {
         foreach (var stageSelection in stageSelectionList)
         {
-            stageSelection.SwitchFrameImage(stageSelection == stageSelectionParts);
+            stageSelection.SwitchMask(stageSelection != stageSelectionParts);
             if (stageSelection == stageSelectionParts) {
                 selectedStageParts = stageSelection;
             }
