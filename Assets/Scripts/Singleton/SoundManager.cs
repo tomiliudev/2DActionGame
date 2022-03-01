@@ -44,11 +44,11 @@ public sealed class SoundManager : SingletonMonoBehaviour<SoundManager>
 
     public float GetBgmVolume()
     {
-        return PlayerPrefsUtility.Load(GameConfig.BgmVolumeKey, 0f);
+        return PlayerPrefsUtility.Load(GameConfig.BgmVolumeKey, 0.2f);
     }
 
     public float GetSeVolume()
     {
-        return PlayerPrefsUtility.Load(GameConfig.SeVolumeKey, 0f);
+        return PlayerPrefsUtility.Load(GameConfig.SeVolumeKey, 0.2f);
     }
 }

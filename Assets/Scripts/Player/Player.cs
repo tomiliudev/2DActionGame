@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Player : MonoBehaviour
+public sealed class Player : MonoBehaviour
     , ILeftButton
     , IRightButton
     , IUpButton
@@ -138,14 +138,17 @@ public class Player : MonoBehaviour
     {
         if (GameUtility.Instance.IsGamePause) return;
 
-        // スマホによる動きの操作（Run、Jump）
-        DoMovementOperationByPhone();
+        if (!isDie)
+        {
+            // スマホによる動きの操作（Run、Jump）
+            DoMovementOperationByPhone();
 
-        // キーボードによる動きの操作（Run、Jump）
-        DoMovementOperationByKeyborad();
+            // キーボードによる動きの操作（Run、Jump）
+            DoMovementOperationByKeyborad();
 
-        FallDownOneWayPlatform();
-
+            FallDownOneWayPlatform();
+        }
+        
         if (gm.IsGameClear)
         {
             InitPlayerStatus();
@@ -1081,7 +1084,7 @@ public class Player : MonoBehaviour
 
     public void ShowDust()
     {
-        if (!isJump && !isCliming && !isGripWall)
+        if (!isJump && !isCliming && !isGripWall && !isDie)
         {
             var _dust = Instantiate(dust);
             _dust.transform.position = dust.transform.position;
@@ -1089,11 +1092,11 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void GameOverTask()
+    private void GameOverTask()
     {
         gm.cinemachineCamera.Follow = null;
         playerCollider.enabled = false;
-        playerRg2d.bodyType = RigidbodyType2D.Static;
+        Sleep();
         iTween.MoveAdd(gameObject, iTween.Hash("y", 0.3f, "time", 0.5f, "easeType", iTween.EaseType.easeOutBounce));
         iTween.MoveAdd(gameObject, iTween.Hash("y", -10f, "time", 5f, "delay", 0.5f));
     }
