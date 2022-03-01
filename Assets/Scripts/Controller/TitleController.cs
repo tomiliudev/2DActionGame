@@ -6,9 +6,6 @@ public sealed class TitleController : BaseController
     [SerializeField] PlayButtonObj playButtonObj;
     [SerializeField] Fly fly;
 
-
-    GameManager gm;
-
     bool isPlayButtonObjOpen = false;
     bool isCutinAnimeDone = false;
 
@@ -30,7 +27,6 @@ public sealed class TitleController : BaseController
     void Start()
     {
         base.Start();
-        gm = GameManager.Instance;
         gm.CurrentGameMode = e_GameMode.Title;
     }
 

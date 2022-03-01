@@ -8,8 +8,6 @@ public sealed class StageSelectionController : BaseController, IStageSelectionBu
     [SerializeField] StageSelectionParts stageSelectionParts;
     [SerializeField] Transform parent;
 
-    GameManager gm;
-
     StageSelectionParts selectedStageParts = null;
     List<StageSelectionParts> stageSelectionList = new List<StageSelectionParts>();
 
@@ -31,7 +29,6 @@ public sealed class StageSelectionController : BaseController, IStageSelectionBu
     void Start()
     {
         base.Start();
-        gm = GameManager.Instance;
 
         // クリアしたステージ一覧
         var clearStageDic = PlayerPrefsUtility.LoadDict<string, int>(GameConfig.ClearStageDic);

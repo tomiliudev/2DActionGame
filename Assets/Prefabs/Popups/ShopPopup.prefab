@@ -321,6 +321,7 @@ GameObject:
   - component: {fileID: 2012531304886364637}
   - component: {fileID: 6475534898554447809}
   - component: {fileID: 9101761578336850773}
+  - component: {fileID: 6426368356154399161}
   m_Layer: 0
   m_Name: CloseButton
   m_TagString: Untagged
@@ -428,19 +429,20 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6475534898554447809}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5738796633247095161}
-        m_TargetAssemblyTypeName: PopupBase, Assembly-CSharp
-        m_MethodName: OnCloseButtonClicked
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
+--- !u!114 &6426368356154399161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3238255571862859415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc95e7848df314b4a8a9522cfe332a4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetObj: {fileID: 0}
 --- !u!1 &3696161582195785138
 GameObject:
   m_ObjectHideFlags: 0

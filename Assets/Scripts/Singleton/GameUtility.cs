@@ -2,14 +2,18 @@ using Cinemachine;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameUtility : SingletonMonoBehaviour<GameUtility>
+public sealed class GameUtility : SingletonMonoBehaviour<GameUtility>
 {
+    GameManager gm;
     public bool IsGamePause
     {
         get
         {
+            if (gm == null) gm = GameManager.Instance;
             var currentGamemode = GameManager.Instance.CurrentGameMode;
-            return currentGamemode != e_GameMode.Normal && currentGamemode != e_GameMode.Title;
+            bool isPause = currentGamemode != e_GameMode.Normal && currentGamemode != e_GameMode.Title
+                || gm.popupView.ActivePopupNum > 0;
+            return isPause;
         }
     }
 

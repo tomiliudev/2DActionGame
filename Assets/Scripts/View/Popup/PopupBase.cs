@@ -39,11 +39,6 @@ public class PopupBase : MonoBehaviour
         gm.popupView.SwitchOffMask();
     }
 
-    public void OnCloseButtonClicked()
-    {
-        StartCoroutine(ClosePopup());
-    }
-
     public IEnumerator ClosePopup(Action callBack = null)
     {
         CloseAnimation();

@@ -20,6 +20,11 @@ public sealed class PopupView : MonoBehaviour
 
     List<PopupBase> activePopupList = new List<PopupBase>();
 
+    public int ActivePopupNum
+    {
+        get { return activePopupList.Count; }
+    }
+
     public void ShowPopup(e_PopupName popupName)
     {
         var popup = popupList.First(x => x.PopupName == popupName);
@@ -39,7 +44,12 @@ public sealed class PopupView : MonoBehaviour
         var popup = activePopupList.FirstOrDefault(x => x.PopupName == popupName);
         if (popup != null)
         {
-            StartCoroutine(popup.ClosePopup(callback));
+            Action _callback = () =>
+            {
+                activePopupList.Remove(popup);
+            };
+            
+            StartCoroutine(popup.ClosePopup(_callback + callback));
         }
     }
 

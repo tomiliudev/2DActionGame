@@ -29,7 +29,7 @@ public class ButtonBase<T> : MonoBehaviour
     public void OnPointerClick(PointerEventData eventData)
     {
         ExecuteEvents.Execute<T>(
-            target: targetObj == null ? GameManager.Instance.sceneController.gameObject : targetObj,
+            target: targetObj == null ? GameManager.Instance.baseController.gameObject : targetObj,
             eventData: null,
             functor: (controller, data) => Click(controller)
         );
@@ -38,7 +38,7 @@ public class ButtonBase<T> : MonoBehaviour
     public void OnPointerDown(PointerEventData eventData)
     {
         ExecuteEvents.Execute<T>(
-            target: targetObj == null ? GameManager.Instance.sceneController.gameObject : targetObj,
+            target: targetObj == null ? GameManager.Instance.baseController.gameObject : targetObj,
             eventData: null,
             functor: (controller, data) => Down(controller)
         );
@@ -47,7 +47,7 @@ public class ButtonBase<T> : MonoBehaviour
     public void OnPointerUp(PointerEventData eventData)
     {
         ExecuteEvents.Execute<T>(
-            target: targetObj == null ? GameManager.Instance.sceneController.gameObject : targetObj,
+            target: targetObj == null ? GameManager.Instance.baseController.gameObject : targetObj,
             eventData: null,
             functor: (controller, data) => Up(controller)
         );

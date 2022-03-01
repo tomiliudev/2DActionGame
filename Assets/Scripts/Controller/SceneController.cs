@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,10 +6,6 @@ using UnityEngine.SceneManagement;
 
 public sealed class SceneController : BaseController, IRetryButton, IClearPopupOkButton
 {
-    GameManager gm;
-    AdmobUtility admob;
-
-
     [SerializeField] AudioClip gameOverSe;
     [SerializeField] GameObject[] doors;
     bool isDoorApear;
@@ -25,12 +20,8 @@ public sealed class SceneController : BaseController, IRetryButton, IClearPopupO
     {
         base.Start();
 
-        admob = AdmobUtility.Instance;
-        gm = GameManager.Instance;
         gm.stageUiView.SwitchOffBlackMask();
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Player"), false);
-
-        admob.RequestInterstitial();
     }
 
     // Update is called once per frame
@@ -184,7 +175,8 @@ public sealed class SceneController : BaseController, IRetryButton, IClearPopupO
             () =>
             {
                 admob.Show();
-                admob.OnAdClosed = () => {
+                admob.OnAdClosed = () =>
+                {
                     // ステージ選択画面へ
                     gm.LoadSceneWithData(e_SceneName.StageSelection.ToString(), new StageSelectionController.InitData(gm.GetNextStage()));
                 };
