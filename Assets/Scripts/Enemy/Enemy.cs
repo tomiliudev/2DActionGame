@@ -17,8 +17,10 @@ public class Enemy : MonoBehaviour
     [SerializeField] private ContactFilter2D filter2d = default;
     [SerializeField] protected int dropRate;
     [SerializeField] protected GameObject deathAnime;
+    [SerializeField] protected AudioClip deathSE;
 
     protected GameManager gm;
+    protected SoundManager soundMg;
 
     protected const string playerLayer = "Player";
 
@@ -34,6 +36,7 @@ public class Enemy : MonoBehaviour
     private void Awake()
     {
         gm = GameManager.Instance;
+        soundMg = SoundManager.Instance;
 
         // ステージレベルでHPが決まる
         Hp = gm.CurrentStageLevel + 1;
@@ -89,6 +92,8 @@ public class Enemy : MonoBehaviour
     {
         if (Hp > 0) return;
         isDead = true;
+
+        soundMg.Play(deathSE);
 
         int lotNum = Random.Range(1, 100);
         if (lotNum < dropRate)

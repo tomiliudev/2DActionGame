@@ -76,6 +76,7 @@ MonoBehaviour:
     maxNormalAngle: 0
   dropRate: 0
   deathAnime: {fileID: 853687571366621320, guid: d22ca390e785448f4a3ff6a9b0dc8a74, type: 3}
+  deathSE: {fileID: 8300000, guid: e1ddbe09a6e9e4632a6166eb4464ad6a, type: 3}
   groundCheck: {fileID: 1366413832728222555}
   headCheck: {fileID: 829265706161965925}
 --- !u!212 &3906090396950797093
