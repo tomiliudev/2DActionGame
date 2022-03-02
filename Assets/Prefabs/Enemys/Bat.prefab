@@ -74,6 +74,7 @@ MonoBehaviour:
   dropRate: 0
   deathAnime: {fileID: 853687571366621320, guid: d22ca390e785448f4a3ff6a9b0dc8a74, type: 3}
   deathSE: {fileID: 8300000, guid: e1ddbe09a6e9e4632a6166eb4464ad6a, type: 3}
+  point: 200
 --- !u!212 &4747338750769323008
 SpriteRenderer:
   m_ObjectHideFlags: 0

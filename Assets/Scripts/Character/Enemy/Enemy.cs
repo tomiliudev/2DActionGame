@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected int dropRate;
     [SerializeField] protected GameObject deathAnime;
     [SerializeField] protected AudioClip deathSE;
+    [SerializeField] protected int point;
 
     protected GameManager gm;
     protected SoundManager soundMg;
@@ -102,7 +103,7 @@ public class Enemy : MonoBehaviour
         }
 
         // クリアレベルに応じてポイントを与える
-        int point = gm.CurrentStageLevel;
+        int point = GetPointByStageLevel();
         int toPoint = gm.sceneController.GetPoints + point;
         gm.stageUiView.UpdateTotalPointView(gm.sceneController.GetPoints, toPoint);
         gm.sceneController.GetPoints = toPoint;
@@ -111,6 +112,33 @@ public class Enemy : MonoBehaviour
         var time = _deathAnime.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime;
 
         Destroy(gameObject);
+    }
+
+    private int GetPointByStageLevel()
+    {
+        int _point = 0;
+        if (gm.CurrentStageLevel == 0)
+        {
+            _point = 0;
+        }
+        else if (gm.CurrentStageLevel < 3)
+        {
+            _point = (int)(point * 0.3f);
+        }
+        else if (gm.CurrentStageLevel == 3)
+        {
+            _point = (int)(point * 0.5f);
+        }
+        else if (gm.CurrentStageLevel == 4)
+        {
+            _point = (int)(point * 1f);
+        }
+        else
+        {
+            _point = (int)(point * 2f);
+        }
+
+        return _point;
     }
 
     //IEnumerator ExplotionAnime()
