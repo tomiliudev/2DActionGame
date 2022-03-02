@@ -12,12 +12,12 @@ public class Explosion : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Player")
+        if (collision.tag == GameConfig.PlayerTag)
         {
-            gm.player.OnDamage();
+            gm.player.OnDamage(transform.position);
         }
 
-        if (collision.tag == "Enemy")
+        if (collision.tag == GameConfig.EnemyTag)
         {
             collision.GetComponent<Enemy>().OnDamage();
         }

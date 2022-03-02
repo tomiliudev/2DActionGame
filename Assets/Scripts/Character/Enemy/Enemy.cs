@@ -170,7 +170,7 @@ public class Enemy : MonoBehaviour
         {
             if (gm.player.CheckCollisionDetectionWithEnemy(transform))
             {
-                gm.player.OnDamage();
+                gm.player.OnDamage(transform.position);
             }
             else
             {

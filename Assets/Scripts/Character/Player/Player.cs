@@ -35,6 +35,7 @@ public sealed class Player : MonoBehaviour
     [SerializeField] SpriteRenderer bow;
 
     [SerializeField] ParticleSystem dust;
+    [SerializeField] Vector2 DamageCausedKnockbackForce = new Vector2(10f, 0f);
 
     [Header("Jump入力タイプ")][SerializeField] e_JumpInputType eJumpInputType = e_JumpInputType.upKeyDown;
     private enum e_JumpInputType
@@ -109,11 +110,13 @@ public sealed class Player : MonoBehaviour
     private float playerJumpTime;
     private float jumpLimitHight;
 
-    private float invincibleTime = 2f;
+    private float invincibleTime = 0.5f;
     private bool IsInvincible
     {
         get; set;
     }
+
+    Vector2 knockBackForce = Vector2.zero;
 
     // 画面タッチのfingerIdを管理する
     Dictionary<TouchType, int> fingerIdDic = new Dictionary<TouchType, int>();
@@ -148,7 +151,7 @@ public sealed class Player : MonoBehaviour
 
             FallDownOneWayPlatform();
         }
-        
+
         if (gm.IsGameClear)
         {
             InitPlayerStatus();
@@ -171,10 +174,10 @@ public sealed class Player : MonoBehaviour
             // プレイヤー向きの更新
             UpdatePlayerDirection();
 
-            // プレイヤーの動きの処理
+            //// プレイヤーの動きの処理
             UpdateMovement();
 
-            // プレイヤーの無敵状況を更新
+            //// プレイヤーの無敵状況を更新
             UpdateInvincibleInfo();
         }
     }
@@ -206,7 +209,7 @@ public sealed class Player : MonoBehaviour
             diffPos = hit.point - (Vector2)transform.position;
             ShowBowLine(Mathf.Abs(diffPos.x), bowStartPosition, hit.point);
 
-            if (hit.transform.tag == "Ground")
+            if (hit.transform.tag == GameConfig.GroundTag)
             {
                 SpriteRenderer _bow = Instantiate(bow);
                 float _bowWidth = _bow.size.x;
@@ -218,11 +221,11 @@ public sealed class Player : MonoBehaviour
                 _bow.transform.position = _bowPosition;
                 _bow.transform.localScale = new Vector3(trans.localScale.x, _bow.transform.localScale.y);
             }
-            else if(hit.transform.tag == "Enemy")
+            else if(hit.transform.tag == GameConfig.EnemyTag)
             {
                 hit.transform.GetComponent<Enemy>().OnDamage();
             }
-            else if (hit.transform.tag == "Box")
+            else if (hit.transform.tag == GameConfig.BoxTag)
             {
                 hit.transform.GetComponent<Box>().OnDamage();
             }
@@ -278,6 +281,18 @@ public sealed class Player : MonoBehaviour
     {
         CheckOnMushroom();
 
+        if (knockBackForce != Vector2.zero)
+        {
+            Knockback();
+        }
+        else
+        {
+            Movement();
+        }
+    }
+
+    private void Movement()
+    {
         float velocity_x = isCliming ? 0f : Run();
         float velocity_y = isCliming ? Climb() : isMushroomBounce ? MushroomBounce() : Jump();
 
@@ -310,6 +325,11 @@ public sealed class Player : MonoBehaviour
         playerVelocity.x = velocity_x;
         playerVelocity.y = velocity_y;
         playerRg2d.velocity = GetMergedMovePlatformVelocity(playerVelocity);
+    }
+
+    private void Knockback()
+    {
+        transform.Translate(knockBackForce * Time.fixedDeltaTime, Space.Self);
     }
 
     private Vector2 GetMergedMovePlatformVelocity(Vector2 originVelocity)
@@ -515,7 +535,7 @@ public sealed class Player : MonoBehaviour
         switch (collision.transform.tag)
         {
             case GameConfig.SpikeTag:
-                OnDamage();
+                OnDamage(collision.transform.position);
                 break;
         }
     }
@@ -529,7 +549,7 @@ public sealed class Player : MonoBehaviour
         switch (collision.transform.tag)
         {
             case GameConfig.SpikeTag:
-                OnDamage();
+                OnDamage(collision.transform.position);
                 break;
         }
     }
@@ -654,7 +674,7 @@ public sealed class Player : MonoBehaviour
     /// <summary>
     /// ダメージ受けた時
     /// </summary>
-    public void OnDamage()
+    public void OnDamage(Vector2 damagePos)
     {
         // 無敵期間中
         if (IsInvincible) return;
@@ -684,6 +704,7 @@ public sealed class Player : MonoBehaviour
         {
             // 無敵
             StartCoroutine(DoInvincibleTime());
+            StartCoroutine(ComputeKnockbackPos(damagePos));
         }
     }
 
@@ -718,6 +739,15 @@ public sealed class Player : MonoBehaviour
 
         // 無敵時間が過ぎたらPlayer.Rigidbody2DのSleepを解除する
         playerRg2d.WakeUp();
+    }
+
+    private IEnumerator ComputeKnockbackPos(Vector3 damagePos)
+    {
+        knockBackForce = DamageCausedKnockbackForce;
+        Vector2 relativePosition = transform.position - damagePos;
+        knockBackForce.x *= Mathf.Sign(relativePosition.x);
+        yield return new WaitForSeconds(0.3f);
+        knockBackForce = Vector2.zero;
     }
 
     private void UpdateInvincibleInfo()

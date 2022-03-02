@@ -35,6 +35,7 @@ public static class GameConfig
     public const string ClearStageDic = "ClearStageDic";
 
     public const string PlayerTag = "Player";
+    public const string EnemyTag = "Enemy";
     public const string PlayerFootTag = "PlayerFoot";
     public const string DoorTag = "Door";
     public const string WallTag = "Wall";

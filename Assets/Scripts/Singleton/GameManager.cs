@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using Cinemachine;
-using GoogleMobileAds.Api;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 

@@ -10,17 +10,17 @@ public class Fire : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Player")
+        if (collision.tag == GameConfig.PlayerTag)
         {
-            gm.player.OnDamage();
+            gm.player.OnDamage(transform.position);
         }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.tag == "Player")
+        if (collision.tag == GameConfig.PlayerTag)
         {
-            gm.player.OnDamage();
+            gm.player.OnDamage(transform.position);
         }
     }
 }
