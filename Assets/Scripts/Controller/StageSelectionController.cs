@@ -60,6 +60,7 @@ public sealed class StageSelectionController : BaseController, IStageSelectionBu
                     // ステージ１なら問答無用で選択可能
                     isCanSelect = true;
                     stageSelectionObj.SwitchMask(false);
+                    selectedStageParts = stageSelectionObj;
                 }
                 else if (preIndex >= 0)
                 {
