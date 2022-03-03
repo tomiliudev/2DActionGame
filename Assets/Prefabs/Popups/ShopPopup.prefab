@@ -906,8 +906,10 @@ MonoBehaviour:
   selectItemPrice: {fileID: 5379065868318217552}
   buyButton: {fileID: 8694096142879597051}
   itemSlotPrefab: {fileID: 6536885096496406497, guid: 23390501d6cf14099a1adf784892bafe, type: 3}
+  weaponSlotPrefab: {fileID: 5469082743202035696, guid: 442dda5323f264eeeb66d6d409d99b98, type: 3}
   selectShopItemImage: {fileID: 284749617209215368}
   itemImageData: {fileID: 11400000, guid: 93f883769c34b4fcda2f2c156f6e3b12, type: 2}
+  weaponImageData: {fileID: 11400000, guid: b493b7154dfb24c81acb8b5958f92291, type: 2}
 --- !u!1 &7383836422147871994
 GameObject:
   m_ObjectHideFlags: 0

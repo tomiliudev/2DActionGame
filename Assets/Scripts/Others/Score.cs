@@ -1,12 +1,11 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class Score : MonoBehaviour
+public sealed class Score : MonoBehaviour
 {
     private void OnEnable()
     {
-        transform.parent = null;
+        transform.SetParent(null);
         var _canvas = GetComponent<Canvas>();
         _canvas.enabled = true;
         float yPos = _canvas.transform.position.y;

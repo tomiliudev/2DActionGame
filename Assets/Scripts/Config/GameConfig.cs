@@ -63,6 +63,7 @@ public static class GameConfig
     public const string WeaponList = "weaponList";
     public const string ItemList = "itemList";
     public const string ItemShopList = "itemShopList";
+    public const string WeaponShopList = "weaponShopList";
     public const string EquippedWeapon = "equippedWeapon";
     public const string EquippedItem = "equippedItem";
     public const string TotalPoint = "TotalPoint";

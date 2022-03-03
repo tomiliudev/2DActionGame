@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a994f507d0374b4ba058bf4cfbd0c73, type: 3}
-  m_Name: HeartData
+  m_Script: {fileID: 11500000, guid: 23939b3656d614f59a6ff3087da8be02, type: 3}
+  m_Name: BowInfoData
   m_EditorClassIdentifier: 
-  type: 4
-  price: 5000
-  isMultiple: 1
+  type: 1
+  price: 10000
+  isMultiple: 0

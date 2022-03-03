@@ -53,7 +53,7 @@ public sealed class EquipPopup : PopupBase, ISlotButton
     void GenerateWeaponSlot()
     {
         List<string> slotDataList = PlayerPrefsUtility.LoadList<string>(GameConfig.WeaponList);
-        var groupedSlotList = slotDataList.Select(slotJsonData => JsonUtility.FromJson<WeaponInfo>(slotJsonData)).GroupBy(x => x._type);
+        var groupedSlotList = slotDataList.Select(slotJsonData => JsonUtility.FromJson<WeaponInfo>(slotJsonData)).GroupBy(x => x.Type);
 
         int slotIdx = 0;
         foreach (SlotFrame slotFrame in weaponSlotList.GetComponentsInChildren<SlotFrame>())
@@ -66,7 +66,7 @@ public sealed class EquipPopup : PopupBase, ISlotButton
 
             // Slotの設定
             var slotObj = Instantiate(weaponSlotPrefab, slotFrame.transform, false);
-            slotObj.SetSlotInfo(gameObject, slotFrame, group.First(), GetWeaponSprite(group.First()._type));
+            slotObj.SetSlotInfo(gameObject, slotFrame, group.First(), GetWeaponSprite(group.First().Type));
             slotObj.transform.SetAsFirstSibling();
             slotObj.gameObject.SetActive(true);
             slotIdx++;
@@ -155,9 +155,9 @@ public sealed class EquipPopup : PopupBase, ISlotButton
     private void SetEquippedWeaponImage()
     {
         var info = GameConfig.GetEquippedWeapon();
-        equippedWeaponImage.sprite = GetWeaponSprite(info._type);
+        equippedWeaponImage.sprite = GetWeaponSprite(info.Type);
         equippedWeaponImage.preserveAspect = true;
-        equippedWeaponImage.gameObject.SetActive(info._type != e_WeaponType.none);
+        equippedWeaponImage.gameObject.SetActive(info.Type != e_WeaponType.none);
     }
 
     private void SetEquippedItemImage()

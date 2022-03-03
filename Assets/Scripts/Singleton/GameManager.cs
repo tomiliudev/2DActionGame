@@ -94,14 +94,16 @@ public sealed class GameManager : SingletonMonoBehaviour<GameManager>
         player = FindObjectOfType<Player>();
         popupView = FindObjectOfType<PopupView>();
         baseController = FindObjectOfType<BaseController>();
+
+        // ハートは最初からショップで購入できるよう追加しておく
+        ShopItemListUtility.SaveShopItemList(e_ItemType.heart);
+        ShopItemListUtility.SaveShopWeaponList(e_WeaponType.bow);
     }
 
     private void InitializeStage()
     {
         isInitialized = true;
 
-        // ハートは最初からショップで購入できるよう追加しておく
-        ShopItemListUtility.SaveShopItemList(e_ItemType.heart);
         cinemachineCamera = FindObjectOfType<CinemachineVirtualCamera>();
         
         sceneController = FindObjectOfType<SceneController>();

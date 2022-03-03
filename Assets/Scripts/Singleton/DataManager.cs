@@ -5,6 +5,7 @@ using UnityEngine;
 public sealed class DataManager : SingletonMonoBehaviour<DataManager>
 {
     [SerializeField] ItemInfoScriptableObject[] itemInfoDatas;
+    [SerializeField] WeaponInfoScriptableObject[] weaponInfoDatas;
     [SerializeField] Sprite[] thumbnails;
 
     public List<ItemInfoScriptableObject> GetItemInfoDatas()
@@ -15,8 +16,16 @@ public sealed class DataManager : SingletonMonoBehaviour<DataManager>
             //itemInfoDatas = Resources.FindObjectsOfTypeAll<ItemInfoScriptableObject>();
             itemInfoDatas = Resources.LoadAll<ItemInfoScriptableObject>("ItemData/");
         }
-        
         return itemInfoDatas.ToList();
+    }
+
+    public List<WeaponInfoScriptableObject> GetWeaponInfoDatas()
+    {
+        if (weaponInfoDatas == null || weaponInfoDatas.Count() <= 0)
+        {
+            weaponInfoDatas = Resources.LoadAll<WeaponInfoScriptableObject>("WeaponData/");
+        }
+        return weaponInfoDatas.ToList();
     }
 
     public Sprite GetTargetThumbnail(string thumbnailName)

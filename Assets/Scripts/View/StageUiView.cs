@@ -97,7 +97,7 @@ public sealed class StageUiView : MonoBehaviour
 
     public void SetWeaponIconImage(WeaponInfo weaponInfo)
     {
-        weaponUiSlot.SetWeaponSprite(weaponInfo._type);
+        weaponUiSlot.SetWeaponSprite(weaponInfo.Type);
     }
 
     public void SetItemIconImage(ItemInfo itemInfo)

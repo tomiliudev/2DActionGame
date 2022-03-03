@@ -17,7 +17,7 @@ public abstract class WeaponBase : MonoBehaviour
         if (collision.tag == "Player")
         {
             // 獲得データを保存する
-            PlayerPrefsUtility.AddToJsonList("weaponList", weaponInfo, weaponInfo._isMultiple);
+            PlayerPrefsUtility.AddToJsonList("weaponList", weaponInfo, weaponInfo.IsMultiple);
 
             float yPos = transform.position.y;
             Hashtable hash = new Hashtable();
@@ -26,7 +26,7 @@ public abstract class WeaponBase : MonoBehaviour
             hash.Add("oncomplete", "OnComplete");
             iTween.MoveTo(gameObject, hash);
 
-            if (GameConfig.GetEquippedWeapon()._type == e_WeaponType.none)
+            if (GameConfig.GetEquippedWeapon().Type == e_WeaponType.none)
             {
                 PlayerPrefsUtility.SaveToJson(GameConfig.EquippedWeapon, weaponInfo);
                 GameManager.Instance.stageUiView.SetWeaponIconImage(weaponInfo);
@@ -43,14 +43,21 @@ public abstract class WeaponBase : MonoBehaviour
 [Serializable]
 public class WeaponInfo : IEquipObjectInfo
 {
-    public e_WeaponType _type;
-    public bool _isMultiple;
+    public WeaponInfoScriptableObject weaponInfoData;
+
+    public e_WeaponType Type
+    {
+        get
+        {
+            return weaponInfoData != null ? weaponInfoData.type : e_WeaponType.none;
+        }
+    }
 
     public int Price
     {
         get
         {
-            return 0;
+            return weaponInfoData != null ? weaponInfoData.price : 0;
         }
     }
 
@@ -58,7 +65,7 @@ public class WeaponInfo : IEquipObjectInfo
     {
         get
         {
-            return false;
+            return weaponInfoData != null ? weaponInfoData.isMultiple : false;
         }
     }
 }
