@@ -4851,7 +4851,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeb552df29c614a8187064410c028cc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  col2d: {fileID: 4705054981827580569}
   rg2d: {fileID: 6453757896116451459}
+  image: {fileID: 7791904606185354045}
   ps: {fileID: 1795892915}
 --- !u!50 &6453757896116451459
 Rigidbody2D:

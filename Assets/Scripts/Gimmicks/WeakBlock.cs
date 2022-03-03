@@ -3,10 +3,43 @@ using UnityEngine;
 
 public sealed class WeakBlock : MonoBehaviour
 {
+    [SerializeField] BoxCollider2D col2d;
     [SerializeField] Rigidbody2D rg2d;
+    [SerializeField] SpriteRenderer image;
     [SerializeField] ParticleSystem ps;
 
+    GameManager gm;
+    Vector2 originPos;
     bool isCrush = false;
+
+    private void Start()
+    {
+        gm = GameManager.Instance;
+        originPos = transform.position;
+    }
+
+    private void Update()
+    {
+        if (transform.position.y < gm.cameraCollider.points[2].y)
+        {
+            StartCoroutine(Reset());
+        }
+    }
+
+    private IEnumerator Reset()
+    {
+        image.color = new Color(255, 255, 255, 0f);
+        col2d.enabled = false;
+        rg2d.velocity = Vector2.zero;
+        isCrush = false;
+        transform.position = originPos;
+
+        yield return new WaitForSeconds(1.5f);
+
+        image.color = new Color(255, 255, 255, 255f);
+        col2d.enabled = true;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         switch (collision.tag)
@@ -22,7 +55,7 @@ public sealed class WeakBlock : MonoBehaviour
         switch (collision.collider.tag)
         {
             case GameConfig.GroundTag:
-                Destroy(gameObject);
+                StartCoroutine(Reset());
                 break;
         }
     }

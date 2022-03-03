@@ -6,7 +6,6 @@ public sealed class StageUiView : MonoBehaviour
 {
     [Header("カウントダウン秒")] [SerializeField] Text countDownTime;
     [SerializeField] Text heartText;
-    [SerializeField] GameObject gameClearObj;
     //[SerializeField] Text treasureNum;
     [SerializeField] Text totalPoint;
     [SerializeField] WeaponUiSlot weaponUiSlot;
@@ -38,8 +37,6 @@ public sealed class StageUiView : MonoBehaviour
     {
         if (!gm.IsInitialized) return;
         OnCountDown();
-
-        SetIsGameClear(gm.IsGameClear);
     }
 
     public void UpdateTotalPointView(int from, int to)
@@ -88,11 +85,6 @@ public sealed class StageUiView : MonoBehaviour
     public void HpPickAnim()
     {
         heartText.text = GameConfig.GetPlayerHpText();
-    }
-
-    public void SetIsGameClear(bool flag)
-    {
-        gameClearObj.SetActive(flag);
     }
 
     public void SetWeaponIconImage(WeaponInfo weaponInfo)
