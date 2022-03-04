@@ -29,7 +29,9 @@ public abstract class WeaponBase : MonoBehaviour
             if (GameConfig.GetEquippedWeapon().Type == e_WeaponType.none)
             {
                 PlayerPrefsUtility.SaveToJson(GameConfig.EquippedWeapon, weaponInfo);
-                GameManager.Instance.stageUiView.SetWeaponIconImage(weaponInfo);
+                var gm = GameManager.Instance;
+                gm.stageUiView.SetWeaponIconImage(weaponInfo);
+                gm.stageUiView.ShowUseWeaponButton();
             }
         }
     }

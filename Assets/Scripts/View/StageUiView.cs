@@ -11,6 +11,8 @@ public sealed class StageUiView : MonoBehaviour
     [SerializeField] WeaponUiSlot weaponUiSlot;
     [SerializeField] ItemUiSlot itemUiSlot;
     [SerializeField] Image blackMask;
+    [SerializeField] GameObject useWeaponButton;
+    [SerializeField] GameObject useItemButton;
 
     GameManager gm;// GameManagerのインスタンス
 
@@ -30,6 +32,9 @@ public sealed class StageUiView : MonoBehaviour
 
         InitPlayerHp();
         totalPoint.text = 0.ToString();
+
+        ShowUseWeaponButton();
+        ShowUseItemButton();
     }
 
     // Update is called once per frame
@@ -147,7 +152,7 @@ public sealed class StageUiView : MonoBehaviour
     {
         if (isBlackMaskOn)
         {
-            GameManager.Instance.IsGameClear = true;
+            gm.IsGameClear = true;
         }
         else
         {
@@ -161,5 +166,17 @@ public sealed class StageUiView : MonoBehaviour
         int sec = CountDownSec - (int)(gm.CurrentStageLevel * 0.1f * CountDownSec);
         if (sec < 60) sec = 60;
         CountDownSec = sec;
+    }
+
+    public void ShowUseWeaponButton()
+    {
+        var weaponInfo = PlayerPrefsUtility.Load(GameConfig.EquippedWeapon, new WeaponInfo());
+        useWeaponButton.SetActive(weaponInfo.Type != e_WeaponType.none);
+    }
+
+    public void ShowUseItemButton()
+    {
+        var itemInfo = PlayerPrefsUtility.Load(GameConfig.EquippedItem, new ItemInfo());
+        useItemButton.SetActive(itemInfo.Type != e_ItemType.none);
     }
 }

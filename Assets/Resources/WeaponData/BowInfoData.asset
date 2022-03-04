@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: BowInfoData
   m_EditorClassIdentifier: 
   type: 1
-  price: 10000
+  price: 0
   isMultiple: 0

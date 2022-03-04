@@ -139,7 +139,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.29803923}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -527,6 +527,8 @@ MonoBehaviour:
   weaponUiSlot: {fileID: 1137978595570706013}
   itemUiSlot: {fileID: 1355843012662122509}
   blackMask: {fileID: 9097781529272305427}
+  useWeaponButton: {fileID: 2424437275823552882}
+  useItemButton: {fileID: 1193815050791676468}
 --- !u!223 &1955463096523343073
 Canvas:
   m_ObjectHideFlags: 0
@@ -802,7 +804,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.29803923}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1176,7 +1178,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &9000847295746815885
 RectTransform:
   m_ObjectHideFlags: 0

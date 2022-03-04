@@ -138,6 +138,7 @@ public sealed class EquipPopup : PopupBase, ISlotButton
         {
             PlayerPrefsUtility.SaveToJson(GameConfig.EquippedWeapon, (WeaponInfo)info);
             SetEquippedWeaponImage();
+            gm.stageUiView.ShowUseWeaponButton();
 
             // UIの装備中武器アイコンの設定
             base.gm.stageUiView.SetWeaponIconImage((WeaponInfo)info);
@@ -146,6 +147,7 @@ public sealed class EquipPopup : PopupBase, ISlotButton
         {
             PlayerPrefsUtility.SaveToJson(GameConfig.EquippedItem, (ItemInfo)info);
             SetEquippedItemImage();
+            gm.stageUiView.ShowUseItemButton();
 
             // UIの装備中アイテムアイコンの設定
             base.gm.stageUiView.SetItemIconImage((ItemInfo)info);

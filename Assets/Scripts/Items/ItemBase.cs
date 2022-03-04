@@ -45,6 +45,7 @@ public abstract class ItemBase : MonoBehaviour
             {
                 PlayerPrefsUtility.SaveToJson(GameConfig.EquippedItem, itemInfo);
                 gm.stageUiView.SetItemIconImage(itemInfo);
+                gm.stageUiView.ShowUseItemButton();
             }
         }
     }

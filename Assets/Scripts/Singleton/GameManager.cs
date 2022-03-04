@@ -66,7 +66,6 @@ public sealed class GameManager : SingletonMonoBehaviour<GameManager>
 
     private void Start()
     {
-        AdmobUtility.Instance.InitializeAdmob();
     }
 
     private void OnActiveSceneChanged(Scene scene1, Scene scene2)

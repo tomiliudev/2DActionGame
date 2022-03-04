@@ -41,7 +41,10 @@ public class UseItemBase : MonoBehaviour
             && !itemInfoList.Any(x => x.Type == equippedItem.Type))
         {
             // UIの装備中アイテムアイコンの設定
-            GameManager.Instance.stageUiView.SetItemIconImage(new ItemInfo());
+            gm.stageUiView.SetItemIconImage(new ItemInfo());
+
+            // アイテムボタンの表示更新
+            gm.stageUiView.ShowUseItemButton();
 
             // 装備中のアイテムをリセット
             GameConfig.ResetEquippedItem();
