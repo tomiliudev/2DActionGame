@@ -6,6 +6,7 @@ public sealed class TitleController : BaseController
     [SerializeField] PlayButtonObj playButtonObj;
     [SerializeField] Fly fly;
 
+    int isTitleDoorOpened = 0;
     bool isPlayButtonObjOpen = false;
     bool isCutinAnimeDone = false;
 
@@ -28,9 +29,36 @@ public sealed class TitleController : BaseController
     {
         base.Start();
         gm.CurrentGameMode = e_GameMode.Title;
+        isTitleDoorOpened = PlayerPrefsUtility.Load(GameConfig.IsTitleDoorOpened, 0);
     }
 
     private void Update()
+    {
+        if (isTitleDoorOpened == 0)
+        {
+            OpenDoorAnime();
+        }
+        else
+        {
+            OpenDoorWithoutAnime();
+        }
+    }
+
+    private void AfterShakeScreen()
+    {
+        gm.CurrentGameMode = e_GameMode.Title;
+        gm.player.WakeUp();
+    }
+
+    private void DoCutinAnime()
+    {
+        gm.player.Sleep();
+        gm.CurrentGameMode = e_GameMode.CutinAnimation;
+        PlayerPrefsUtility.Save(GameConfig.IsTitleDoorOpened, 1);
+    }
+
+    // ドア開く演出
+    private void OpenDoorAnime()
     {
         if (!isCutinAnimeDone && fly.IsHitTorch)
         {
@@ -52,15 +80,10 @@ public sealed class TitleController : BaseController
         }
     }
 
-    private void AfterShakeScreen()
+    private void OpenDoorWithoutAnime()
     {
-        gm.CurrentGameMode = e_GameMode.Title;
-        gm.player.WakeUp();
-    }
-
-    private void DoCutinAnime()
-    {
-        gm.player.Sleep();
-        gm.CurrentGameMode = e_GameMode.CutinAnimation;
+        fly.gameObject.SetActive(false);
+        playButtonObj.transform.position = new Vector3(3f, -3.1f, 0f);
+        torchTrigger.FireTorch(true);
     }
 }

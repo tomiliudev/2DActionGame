@@ -71,6 +71,8 @@ public static class GameConfig
     public const string BgmVolumeKey = "BgmVolumeKey";
     public const string SeVolumeKey = "SeVolumeKey";
 
+    public const string IsTitleDoorOpened = "isTitleDoorOpened";
+
     /// <summary>
     /// 装備中武器を返却する
     /// </summary>

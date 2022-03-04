@@ -10,7 +10,7 @@ public sealed class TorchTrigger : MonoBehaviour
 
     private void Start()
     {
-        fireObj.SetActive(isAutoFire);
+        FireTorch(isAutoFire);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -18,7 +18,12 @@ public sealed class TorchTrigger : MonoBehaviour
         if (collision.tag == GameConfig.FlyTag)
         {
             IsFlyOn = true;
-            fireObj.SetActive(true);
+            FireTorch(true);
         }
+    }
+
+    public void FireTorch(bool flag)
+    {
+        fireObj.SetActive(flag);
     }
 }
