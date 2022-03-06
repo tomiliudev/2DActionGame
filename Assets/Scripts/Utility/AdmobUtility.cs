@@ -4,9 +4,11 @@ using GoogleMobileAds.Api;
 public sealed class AdmobUtility : SingletonMonoBehaviour<AdmobUtility>
 {
 #if UNITY_ANDROID
-    public readonly string adUnitId = "ca-app-pub-3940256099942544/1033173712";
+    public readonly string adUnitId = "ca-app-pub-3940256099942544/1033173712";// test mode
+    public readonly string adUnitId = "ca-app-pub-1678604157083558/7635592064";// 本番
 #elif UNITY_IPHONE
-    public readonly string adUnitId = "ca-app-pub-3940256099942544/4411468910";
+    //public readonly string adUnitId = "ca-app-pub-3940256099942544/4411468910";// test mode
+    public readonly string adUnitId = "ca-app-pub-1678604157083558/7130349121";// 本番
 #else
     public readonly string adUnitId = "unexpected_platform";
 #endif
