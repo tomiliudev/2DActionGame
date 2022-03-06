@@ -69,7 +69,6 @@ public class GroundCheck : MonoBehaviour
             case GameConfig.WeakBlockTag:
             case GameConfig.PlatformTag:
             case GameConfig.TreasureTag:
-            case GameConfig.BridgeTag:
             case GameConfig.BoxTag:
                 if (checkType == e_CheckType.foot)
                 {
@@ -88,6 +87,9 @@ public class GroundCheck : MonoBehaviour
                 {
                     IsInGround = false;
                 }
+                break;
+            case GameConfig.BridgeTag:
+                IsInGround = checkType == e_CheckType.foot ? true : false;
                 break;
             case GameConfig.MushroomTag:
                 IsInMushroom = checkType == e_CheckType.foot ? true : false;
